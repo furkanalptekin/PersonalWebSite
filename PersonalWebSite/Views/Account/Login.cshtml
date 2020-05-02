@@ -1,0 +1,34 @@
+﻿@model DB.ViewModels.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/ManagementLayout/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Login</title>
+</head>
+<body>
+    <form asp-controller="Account" asp-action="Login" method="post">
+        @Html.AntiForgeryToken()
+        <div class="form-group ">
+            <div class="col-sm-12">
+                <input asp-for="Email" />
+            </div>
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-12">
+                <input type="password" asp-for="Password" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12 mt-4">
+                <button class="btn btn-primary btn-block" type="submit">Giriş</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+<script src="~/ManagementLayout/Content/js/bootstrap.min.js"></script>
