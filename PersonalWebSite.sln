@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebSite", "PersonelWebSite\PersonalWebSite.csproj", "{7E4864F9-C0FA-483C-98B4-9677794A24AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{9CBBF001-9632-4223-A599-393D52DEFDA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{B5F3347A-E27B-4AEC-9966-6552A65E3026}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E4864F9-C0FA-483C-98B4-9677794A24AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E4864F9-C0FA-483C-98B4-9677794A24AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E4864F9-C0FA-483C-98B4-9677794A24AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E4864F9-C0FA-483C-98B4-9677794A24AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CBBF001-9632-4223-A599-393D52DEFDA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CBBF001-9632-4223-A599-393D52DEFDA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CBBF001-9632-4223-A599-393D52DEFDA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CBBF001-9632-4223-A599-393D52DEFDA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5F3347A-E27B-4AEC-9966-6552A65E3026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5F3347A-E27B-4AEC-9966-6552A65E3026}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5F3347A-E27B-4AEC-9966-6552A65E3026}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5F3347A-E27B-4AEC-9966-6552A65E3026}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {07051D66-34B4-4A0E-B11C-50ABA132BE0F}
+	EndGlobalSection
+EndGlobal

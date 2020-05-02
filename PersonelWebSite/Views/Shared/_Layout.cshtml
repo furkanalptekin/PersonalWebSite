@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keyword" content="" />
+
+    <title>Managemenet Panel</title>
+
+    <!-- Theme icon -->
+    @*<link rel="shortcut icon" href="~/Content/images/Logo1.png" />*@
+
+    <link href="~/ManagementLayout/Content/zmdi/css/material-design-iconic-font.css" rel="stylesheet" />
+    <link href="~/ManagementLayout/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Theme Css -->
+    <link href="~/ManagementLayout/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/ManagementLayout/Content/css/slidebars.min.css" rel="stylesheet" />
+    <link href="~/ManagementLayout/Content/css/icons.css" rel="stylesheet" />
+    <link href="~/ManagementLayout/Content/css/menu.css" rel="stylesheet" />
+    <link href="~/ManagementLayout/Content/css/style.css" rel="stylesheet" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body class="sticky-header">
+    <section>
+        <!-- sidebar left start-->
+        <div class="sidebar-left">
+            <div class="sidebar-left-info">
+                <div class="user-box">
+                    <div class="d-flex justify-content-center">
+                        <img src="~/ManagementLayout/Content/images/avatar.png" alt="" class="img-fluid rounded-circle" />
+                    </div>
+                    <div class="text-center text-white mt-2">
+                        <h6>Furkan ALPTEKİN</h6>
+                        <p class="text-muted m-0">ADMIN</p>
+                    </div>
+                </div>
+
+                <!--sidebar nav start-->
+                <ul class="side-navigation">
+                    <li>
+                        <a href="~/CV/Add"><i class="zmdi zmdi-developer-board"></i> <span>CV</span></a>
+                    </li>
+                </ul><!--sidebar nav end-->
+            </div>
+        </div><!-- sidebar left end-->
+        <!-- body content start-->
+        @*<div class="body-content" style="background-image: url('/Content/images/arka.jpg');">*@
+        <div class="body-content">
+            <!-- header section start-->
+            <div class="header-section">
+                <!--logo and logo icon start-->
+                <div style="height:70px;" class="logo">
+                    <a href="~/Home/Index">
+                        <span class="logo-img">
+                            <img src="~/ManagementLayout/Content/images/logo_sm.png" alt="" height="50" />
+                        </span>
+                        <!--<i class="fa fa-maxcdn"></i>-->
+                        <span class="brand-name" style="font-size:11px;"><br />Management Panel</span>
+                    </a>
+                </div>
+
+                <!--toggle button start-->
+                <a class="toggle-btn"><i class="ti ti-menu"></i></a>
+                <!--toggle button end-->
+
+                <div class="notification-wrap">
+                    <!--right notification start-->
+                    <div class="right-notification mt-2">
+                        <a style="position: relative; top: 25%;" class="notification-menu mr-5" href="~/Account/Logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış</a>
+                    </div><!--right notification end-->
+                </div>
+            </div>
+            <!-- header section end-->
+
+            <div class="container-fluid">
+                <div class="page-head m-3 p-2" style="min-width: 80vw; min-height: 85vh; margin: 15px; border: 0px solid #000000; -webkit-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); -moz-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45);">
+                    @RenderBody()
+                </div>
+
+            </div><!--end container-->
+            <!--footer section start-->
+            <footer class="footer" style="position: fixed; bottom: 0px; text-align: center;">
+                @DateTime.Now.Year ©
+            </footer>
+            <!--footer section end-->
+        </div>
+        <!--end body content-->
+    </section>
+
+    <!-- jQuery -->
+    <script src="~/ManagementLayout/Content/js/jquery-3.5.0.min.js"></script>
+    <script src="~/ManagementLayout/Content/js/popper.min.js"></script>
+    <script src="~/ManagementLayout/Content/js/bootstrap.min.js"></script>
+    <script src="~/ManagementLayout/Content/js/jquery-migrate.js"></script>
+    <script src="~/ManagementLayout/Content/js/modernizr.min.js"></script>
+    <script src="~/ManagementLayout/Content/js/jquery.slimscroll.min.js"></script>
+    <script src="~/ManagementLayout/Content/js/slidebars.min.js"></script>
+    <!--app js-->
+    <script src="~/ManagementLayout/Content/js/jquery.app.js"></script>
+
+</body>
+</html>
