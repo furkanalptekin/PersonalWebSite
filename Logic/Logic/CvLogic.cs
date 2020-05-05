@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DB.DataModels;
 using DB.Models;
 using DB.ViewModels;
 using Logic.Interfaces;
@@ -66,6 +67,24 @@ namespace Logic
         public bool Update(CvFileModel model)
         {
             throw new NotImplementedException();
+        }
+
+        public List<CvDataModel> ConvertToDataModel(List<Cv> list)
+        {
+            List<CvDataModel> cvs = new List<CvDataModel>();
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    cvs.Add(new CvDataModel() 
+                    {
+                        Id = item.Id,
+                        CvAdi = item.CvAdi,
+                        EklemeTarihi = item.EklemeTarihi
+                    });
+                }
+            }
+            return cvs;
         }
     }
 }

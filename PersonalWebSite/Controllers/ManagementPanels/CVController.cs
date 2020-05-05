@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DB.Models;
 using DB.ViewModels;
+using DB.DataModels;
 using Logic;
 using Logic.Interfaces;
+using Logic.Logic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
@@ -67,7 +70,17 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public JsonResult GetPDF(int? id)
         {
             var cv = new CvLogic().GetFromId(id);
-            return Json(new { B64 = cv.B64, CvName = cv.CvAdi });
+            if (cv != null)
+                return Json(new { success = true, B64 = cv.B64, CvName = cv.CvAdi });
+
+            return Json(new { success = false });
+        }
+
+        [HttpGet]
+        public JsonResult GetCVs()
+        {
+            CvLogic logic = new CvLogic();
+            return Json(new { success = true, data = JsonLogic<CvDataModel>.ListToJson(logic.ConvertToDataModel(logic.GetList())) });
         }
     }
 }
