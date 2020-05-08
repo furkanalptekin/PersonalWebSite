@@ -1,6 +1,11 @@
 ﻿$(document).ready(function () {
     kendo.culture("tr-TR");
 
+    $("#colorPicker").kendoColorPicker({
+        value: "#ffffff",
+        buttons: false
+    });
+
     $("#tabstrip").kendoTabStrip({
         animation: {
             open: {
@@ -9,20 +14,9 @@
         }
     });
 
-    $("#File").kendoUpload({
-        validation: {
-            allowedExtensions: [".pdf"]
-        },
-        multiple: false,
-        localization: {
-            select: "Dosya Seçiniz",
-            invalidFileExtension: "Geçersiz Dosya Uzantısı!"
-        }
-    });
-
-    $("#CV").kendoGrid({
+    $("#Skills").kendoGrid({
         dataSource: {
-            data: GetCVs(),
+            data: GetList(),
             type: "odata",
             serverPaging: true,
             serverSorting: true,
@@ -35,21 +29,25 @@
             virtual: false
         },
         cancel: function (e) {
-            GetCVs()
+            GetList()
         },
         columns: [
             { field: "Id", title: "Id" },
-            { field: "CvAdi", title: "Cv Adı" },
+            { field: "Adi", title: "Kategori Adı" },
+            { field: "BasariOrani", title: "Başarı Oranı" },
+            { field: "Kategori", title: "Kategori" },
+            { field: "RenkKodu", title: "Renk" },
             { field: "EklemeTarihi", title: "Ekleme Tarihi" },
+            { field: "DegisimTarihi", title: "Değişim Tarihi" },
             {
                 title: "İşlemler",
                 command: [{
-                    name: "GÖSTER",
-                    title: "GÖSTER",
+                    name: "GÜNCELLE",
+                    title: "GÜNCELLE",
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
-                        OpenPDF(data.Id);
+                        Update(data.Id);
                     },
                     title: " ",
                     width: 110
@@ -61,7 +59,7 @@
                         e.preventDefault();
                         var tr = $(e.target).closest("tr");
                         var data = this.dataItem(tr);
-                        DeletePDF(data.Id, tr);
+                        Delete(data.Id, tr);
                     },
                     title: " ",
                     width: 110
@@ -71,63 +69,58 @@
     });
 });
 
-function GetCVs() {
-    var cv = $('#CV').data("kendoGrid");
-    if (cv !== undefined) {
-        cv.dataSource.data([]);
+function GetList() {
+    var grid = $('#Skills').data("kendoGrid");
+    if (grid !== undefined) {
+        grid.dataSource.data([]);
     }
     $.ajax({
-        url: '/CV/List/',
+        url: '/Skills/List/',
         type: "GET",
         success: function (response) {
             response.data.forEach(element => AddData(JSON.parse(element)));
+            ColorTest();
         }
     });
 }
 
 function AddData(data) {
-    var grid = $('#CV').data("kendoGrid");
+    var grid = $('#Skills').data("kendoGrid");
     var temp = {
         Id: data.Id,
-        CvAdi: data.CvAdi,
-        EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString()
+        Adi: data.Adi,
+        BasariOrani: data.BasariOrani,
+        Kategori: data.KategoriAdi,
+        RenkKodu: data.RenkKodu,
+        EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
+        DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'
     };
     grid.dataSource.add(temp);
 }
 
-function OpenPDF(id) {
-    $.ajax({
-        url: '/CV/GetPDF/',
-        type: "POST",
-        dataType: "JSON",
-        data: { id: id },
-        success: function (response) {
-            if (response.success) {
-                var objbuilder = '';
-                objbuilder += ('<object width="100%" height="100%"      data="data:application/pdf;base64,');
-                objbuilder += (response.b64);
-                objbuilder += ('" type="application/pdf" class="internal">');
-                objbuilder += ('<embed src="data:application/pdf;base64,');
-                objbuilder += (response.b64);
-                objbuilder += ('" type="application/pdf" />');
-                objbuilder += ('</object>');
-
-                var win = window.open("", "_blank", "titlebar=yes, left=50, top=50");
-                win.document.title = response.cvName;
-                win.document.write('<html><body>');
-                win.document.write(objbuilder);
-                win.document.write('</body></html>');
-                layer = jQuery(win.document);
-            }
-        }
-    });
+function ColorTest() {
+    var grid = $("#Skills").data("kendoGrid");
+    var data = grid.dataSource.data();
+    $.each(data, function (i, row) {
+        $('tr[data-uid="' + row.uid + '"] ').css("background-color", row.RenkKodu);
+    })
 }
 
-function DeletePDF(id, tr) {
+function GetRandomColor() {
+    var colorPicker = $('#colorPicker').data("kendoColorPicker");
+    var randomColor = "#000000".replace(/0/g, function () { return (~~(Math.random() * 16)).toString(16); });
+    colorPicker.value(randomColor);
+}
+
+function Update(id) {
+    window.location.href = window.location.origin + '/Skills/Update/' + id;
+}
+
+function Delete(id, tr) {
     var result = confirm("Silmek istediğinize emin misiniz?");
     if (result) {
         $.ajax({
-            url: '/CV/Delete/',
+            url: '/Skills/Delete/',
             type: "POST",
             dataType: "JSON",
             data: { id: id },

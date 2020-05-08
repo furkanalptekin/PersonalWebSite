@@ -1,0 +1,59 @@
+﻿@model DB.Models.Yetenekler
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/js/ManagementPanel/Skills.js"></script>
+
+<div class="k-content">
+    <div id="tabstrip">
+        <ul>
+            <li class="k-state-active">
+                YETENEK EKLE
+            </li>
+            <li>
+                YETENEKLERİM
+            </li>
+        </ul>
+
+        <div>
+            <form asp-controller="Skills"
+                  asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Add")"
+                  method="post">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-12 m-2">
+                        <label>Adı:</label>
+                        <input asp-for="Adi" class="k-textbox" />
+                    </div>
+                    <div class="col-12 m-2">
+                        <label>Başarı Oranı:</label>
+                        <input asp-for="BasariOrani" type="number" min="0" max="100" class="k-textbox" />
+                    </div>
+                    <div class="col-12 m-2">
+                        <label>Renk Kodu:</label>
+                        <input asp-for="RenkKodu" id="colorPicker" class="" />
+                        <a href="javascript:;" onclick="GetRandomColor()" class="k-button">RASGELE</a>
+                    </div>
+                    <div class="col-12 m-2">
+                        <label>Kategori:</label>
+                        <select asp-for="KategoriId" asp-items="ViewBag.SkillCategories" class="k-dropdown">
+                            <option value="0">Kategori Seçiniz</option>
+                        </select>
+                    </div>
+                    <div class="col-12 m-2">
+                        <button class="k-button">KAYDET</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div>
+            <div id="Skills"></div>
+        </div>
+    </div>
+</div>

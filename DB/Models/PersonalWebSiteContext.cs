@@ -337,8 +337,6 @@ namespace DB.Models
 
             modelBuilder.Entity<YetenekKategori>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");
@@ -348,17 +346,13 @@ namespace DB.Models
 
             modelBuilder.Entity<Yetenekler>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(100);
 
                 entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");
 
-                entity.Property(e => e.DegistirmeTarihi).HasColumnType("datetime");
-
                 entity.Property(e => e.EklemeTarihi).HasColumnType("datetime");
 
-                entity.Property(e => e.RenkKodu).HasMaxLength(6);
+                entity.Property(e => e.RenkKodu).HasMaxLength(7);
 
                 entity.HasOne(d => d.Kategori)
                     .WithMany(p => p.Yetenekler)

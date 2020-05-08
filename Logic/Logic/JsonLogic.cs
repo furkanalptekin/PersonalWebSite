@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Logic.Logic
+namespace Logic
 {
     public static class JsonLogic<T> where T: class
     {

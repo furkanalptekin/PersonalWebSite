@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DB.Models;
-using DB.ViewModels;
+﻿using DB.ViewModels;
 using DB.DataModels;
 using Logic;
 using Logic.Interfaces;
-using Logic.Logic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
@@ -38,7 +32,8 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            throw new System.NotImplementedException();
+            CvLogic logic = new CvLogic();
+            return Json(new { success = true, data = JsonLogic<CvDataModel>.ListToJson(logic.ConvertToDataModel(logic.GetList())) });
         }
 
         [HttpGet]
@@ -48,7 +43,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpGet]
-        public IActionResult Update()
+        public IActionResult Update(int? id)
         {
             throw new System.NotImplementedException();
         }
@@ -56,12 +51,6 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(CvFileModel model)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        [HttpGet]
-        public IActionResult UpdatePage(int? id)
         {
             throw new System.NotImplementedException();
         }
@@ -74,13 +63,6 @@ namespace PersonalWebSite.Controllers.ManagementPanels
                 return Json(new { success = true, B64 = cv.B64, CvName = cv.CvAdi });
 
             return Json(new { success = false });
-        }
-
-        [HttpGet]
-        public JsonResult GetCVs()
-        {
-            CvLogic logic = new CvLogic();
-            return Json(new { success = true, data = JsonLogic<CvDataModel>.ListToJson(logic.ConvertToDataModel(logic.GetList())) });
         }
     }
 }

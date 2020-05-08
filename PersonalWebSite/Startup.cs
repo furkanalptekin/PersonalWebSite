@@ -24,6 +24,10 @@ namespace PersonelWebSite
         public void ConfigureServices(IServiceCollection services)
         {
             var mvcviews = services.AddControllersWithViews();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromDays(1);
+                options.Cookie.IsEssential = true;
+            });
             #if (DEBUG)
                 mvcviews.AddRazorRuntimeCompilation();
             #endif
@@ -44,7 +48,7 @@ namespace PersonelWebSite
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();
