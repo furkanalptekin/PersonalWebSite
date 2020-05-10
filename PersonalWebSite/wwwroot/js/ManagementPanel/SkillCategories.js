@@ -39,10 +39,8 @@
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
-                        Update(data.Id);
-                    },
-                    title: " ",
-                    width: 110
+                        Update('/SkillCategories/Update/', data.Id);
+                    }
                 },
                 {
                     name: "SİL",
@@ -51,10 +49,8 @@
                         e.preventDefault();
                         var tr = $(e.target).closest("tr");
                         var data = this.dataItem(tr);
-                        Delete(data.Id, tr);
-                    },
-                    title: " ",
-                    width: 110
+                        Delete('/SkillCategories/Delete/', data.Id, tr);
+                    }
                 }]
             }
         ]
@@ -85,27 +81,4 @@ function AddData(data) {
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'
     };
     grid.dataSource.add(temp);
-}
-
-function Update(id) {
-    window.location.href = window.location.origin + '/SkillCategories/Update/' + id;
-}
-
-function Delete(id, tr) {
-    var result = confirm("Silmek istediğinize emin misiniz?");
-    if (result) {
-        $.ajax({
-            url: '/SkillCategories/Delete/',
-            type: "POST",
-            dataType: "JSON",
-            data: { id: id },
-            success: function (response) {
-                if (response.success) {
-                    tr.find('td').fadeOut(1000, function () {
-                        tr.remove();
-                    });
-                }
-            }
-        });
-    }
 }

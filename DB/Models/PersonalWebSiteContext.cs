@@ -44,8 +44,6 @@ namespace DB.Models
         {
             modelBuilder.Entity<Basarilar>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");
@@ -133,8 +131,6 @@ namespace DB.Models
 
             modelBuilder.Entity<Hobiler>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");

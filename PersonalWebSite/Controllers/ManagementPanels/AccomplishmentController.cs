@@ -1,5 +1,4 @@
 ﻿using System;
-using DB.DataModels;
 using DB.Models;
 using Logic;
 using Logic.Interfaces;
@@ -8,23 +7,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
-    public class SkillsController : Controller, IControllerFunctions<Yetenekler>
+    public class AccomplishmentController : Controller, IControllerFunctions<Basarilar>
     {
-        readonly SkillsLogic logic = new SkillsLogic();
+        readonly IDatabaseFunctions<Basarilar, Basarilar> logic = new AccomplishmentLogic();
+
+        [HttpPost]
+        public IActionResult Delete(int? id)
+        {
+            return Json(new { success = logic.Delete(id) });
+        }
+
+        [HttpGet]
+        public IActionResult List()
+        {
+            return Json(new { success = true, data = JsonLogic<Basarilar>.ListToJson(logic.GetList()) });
+        }
 
         [HttpGet]
         public IActionResult Operations()
         {
             ViewBag.Update = false;
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
             return View();
         }
 
         [HttpPost]
-        public IActionResult Operations(Yetenekler model)
+        public IActionResult Operations(Basarilar model)
         {
             ViewBag.Update = false;
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
             if (ModelState.IsValid)
             {
                 bool success = logic.Add(model);
@@ -36,29 +45,23 @@ namespace PersonalWebSite.Controllers.ManagementPanels
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Delete(int? id)
-        {
-            return Json(new { success = logic.Delete(id) });
-        }
-
-        [HttpGet]
-        public IActionResult List()
-        {
-            return Json(new { success = true, data = JsonLogic<SkillsDataModel>.ListToJson(logic.GetDataModelList()) });
-        }
-
         [HttpGet]
         public IActionResult Show(int? id)
         {
-            throw new NotImplementedException();
+            ViewBag.Show = true;
+            ViewBag.Update = false;
+            var cat = logic.GetFromId(id);
+            if (cat != null)
+            {
+                return View("Operations", cat);
+            }
+            return NotFound();
         }
 
         [HttpGet]
         public IActionResult Update(int? id)
         {
             ViewBag.Update = true;
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
             var cat = logic.GetFromId(id);
             if (cat != null)
             {
@@ -69,10 +72,9 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
-        public IActionResult UpdateDb(Yetenekler model)
+        public IActionResult UpdateDb(Basarilar model)
         {
             ViewBag.Update = true;
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
             var id = HttpContext.Session.GetInt32("UPDATEID");
             if (id != null && id != -1)
             {

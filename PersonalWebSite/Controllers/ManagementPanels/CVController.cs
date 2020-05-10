@@ -9,7 +9,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
     public class CVController : Controller, IControllerFunctions<CvFileModel>
     {
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Operations()
         {
             ViewBag.List = new CvLogic().GetList();
             return View();
@@ -17,10 +17,10 @@ namespace PersonalWebSite.Controllers.ManagementPanels
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Add(CvFileModel model)
+        public IActionResult Operations(CvFileModel model)
         {
             new CvLogic().Add(model);
-            return RedirectToAction("Add");
+            return RedirectToAction("Operations");
         }
 
         [HttpPost]
@@ -36,10 +36,14 @@ namespace PersonalWebSite.Controllers.ManagementPanels
             return Json(new { success = true, data = JsonLogic<CvDataModel>.ListToJson(logic.ConvertToDataModel(logic.GetList())) });
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Show(int? id)
         {
-            throw new System.NotImplementedException();
+            var cv = new CvLogic().GetFromId(id);
+            if (cv != null)
+                return Json(new { success = true, B64 = cv.B64, CvName = cv.CvAdi });
+
+            return Json(new { success = false });
         }
 
         [HttpGet]
@@ -53,16 +57,6 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult UpdateDb(CvFileModel model)
         {
             throw new System.NotImplementedException();
-        }
-
-        [HttpPost]
-        public JsonResult GetPDF(int? id)
-        {
-            var cv = new CvLogic().GetFromId(id);
-            if (cv != null)
-                return Json(new { success = true, B64 = cv.B64, CvName = cv.CvAdi });
-
-            return Json(new { success = false });
         }
     }
 }

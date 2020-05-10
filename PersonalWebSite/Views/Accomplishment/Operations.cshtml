@@ -1,0 +1,70 @@
+﻿@model DB.Models.Basarilar
+@{
+    ViewData["Title"] = "Operations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
+<script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/Accomplishments.js"></script>
+
+<div id="tabstrip">
+    <ul>
+        <li class="k-state-active">
+            BAŞARI EKLE
+        </li>
+        <li>
+            BAŞARILARIM
+        </li>
+    </ul>
+
+    <div>
+        <form asp-controller="Accomplishment"
+              asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
+              method="post">
+            @Html.AntiForgeryToken()
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Adı:</label>
+                        <input asp-for="Adi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Firma:</label>
+                        <input asp-for="Firma" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Tarih:</label>
+                        <input id="datepicker" asp-for="Tarih" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Açıklama:</label>
+                        <textarea asp-for="Aciklama" class="k-textbox form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            @if (ViewBag.Show == null)
+            {
+                <div class="col-12 m-2 clearfix">
+                    <button class="k-button pull-right">KAYDET</button>
+                </div>
+            }
+        </form>
+    </div>
+
+    <div>
+        <div id="Accomplishments"></div>
+    </div>
+</div>

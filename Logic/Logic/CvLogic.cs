@@ -42,6 +42,7 @@ namespace Logic
             {
                 var cv = db.Cv.Where(x => x.Id == id).FirstOrDefault();
                 cv.Aktif = false;
+                cv.DegisimTarihi = DateTime.Now;
                 if (db.SaveChanges() > 0)
                     success = true;
             }

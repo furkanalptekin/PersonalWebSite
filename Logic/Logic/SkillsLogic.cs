@@ -37,6 +37,7 @@ namespace Logic
                 if (skill != null)
                 {
                     skill.Aktif = false;
+                    skill.DegisimTarihi = DateTime.Now;
                     if (db.SaveChanges() > 0)
                         success = true;
                 }

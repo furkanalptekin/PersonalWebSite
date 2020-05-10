@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net;
 using DB.Models;
 using Logic;
 using Logic.Interfaces;
@@ -13,14 +12,14 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         readonly IDatabaseFunctions<YetenekKategori, YetenekKategori> logic = new SkillCategoriesLogic();
 
         [HttpGet]
-        public IActionResult Add()
+        public IActionResult Operations()
         {
             ViewBag.Update = false;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Add(YetenekKategori model)
+        public IActionResult Operations(YetenekKategori model)
         {
             ViewBag.Update = false;
             if (ModelState.IsValid)
@@ -57,7 +56,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
             if (cat != null)
             {
                 HttpContext.Session.SetInt32("UPDATEID", cat.Id);
-                return View("Add", cat);
+                return View("Operations", cat);
             }
             return NotFound();
         }
@@ -75,10 +74,9 @@ namespace PersonalWebSite.Controllers.ManagementPanels
                 {
                     HttpContext.Session.SetInt32("UPDATEID", -1);
                     ModelState.Clear();
-                    return View("Add");
                 }
             }
-            return View("Add");
+            return RedirectToAction("Operations");
         }
     }
 }

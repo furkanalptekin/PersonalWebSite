@@ -1,0 +1,52 @@
+﻿@model DB.ViewModels.CvFileModel
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
+<script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/CV.js"></script>
+
+<div id="tabstrip">
+    <ul>
+        <li class="k-state-active">
+            CV EKLE
+        </li>
+        <li>
+            EKLENEN CVLER
+        </li>
+    </ul>
+
+    <div>
+        <form asp-controller="CV" asp-action="Operations" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>CV'nin Adı:</label>
+                        <input asp-for="Cv.CvAdi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>CV:</label>
+                        <input asp-for="File" name="File" id="File" type="file" />
+                        <div class="demo-hint">Sadece <strong>PDF</strong> Dosyası Yüklenebilir.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 m-2 clearfix">
+                <button class="k-button pull-right">KAYDET</button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <div id="CV"></div>
+    </div>
+</div>

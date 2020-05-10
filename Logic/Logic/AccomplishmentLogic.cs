@@ -6,18 +6,18 @@ using System.Linq;
 
 namespace Logic
 {
-    public class SkillCategoriesLogic : IDatabaseFunctions<YetenekKategori, YetenekKategori>
+    public class AccomplishmentLogic : IDatabaseFunctions<Basarilar, Basarilar>
     {
-        public bool Add(YetenekKategori model, params object[] parameters)
+        public bool Add(Basarilar model, params object[] parameters)
         {
             bool success = false;
             if (model != null)
             {
                 using (PersonalWebSiteContext db = new PersonalWebSiteContext())
                 {
-                    model.EklemeTarihi = DateTime.Now;
                     model.Aktif = true;
-                    db.YetenekKategori.Add(model);
+                    model.EklemeTarihi = DateTime.Now;
+                    db.Basarilar.Add(model);
                     if (db.SaveChanges() > 0)
                         success = true;
                 }
@@ -30,11 +30,11 @@ namespace Logic
             bool success = false;
             using (PersonalWebSiteContext db = new PersonalWebSiteContext())
             {
-                var category = db.YetenekKategori.Find(id);
-                if (category != null)
+                var accomplishment = db.Basarilar.Find(id);
+                if (accomplishment != null)
                 {
-                    category.Aktif = false;
-                    category.DegisimTarihi = DateTime.Now;
+                    accomplishment.Aktif = false;
+                    accomplishment.DegisimTarihi = DateTime.Now;
                     if (db.SaveChanges() > 0)
                         success = true;
                 }
@@ -42,31 +42,34 @@ namespace Logic
             return success;
         }
 
-        public YetenekKategori GetFromId(int? id)
+        public Basarilar GetFromId(int? id)
         {
             using PersonalWebSiteContext db = new PersonalWebSiteContext();
-            return db.YetenekKategori.Find(id);
+            return db.Basarilar.Find(id);
         }
 
-        public List<YetenekKategori> GetList()
+        public List<Basarilar> GetList()
         {
             using PersonalWebSiteContext db = new PersonalWebSiteContext();
-            return db.YetenekKategori.Where(x => x.Aktif).ToList();
+            return db.Basarilar.Where(x => x.Aktif).ToList();
         }
 
-        public bool Update(YetenekKategori model)
+        public bool Update(Basarilar model)
         {
             bool success = false;
             if (model != null)
             {
                 using (PersonalWebSiteContext db = new PersonalWebSiteContext())
                 {
-                    var category = db.YetenekKategori.Find(model.Id);
-                    if (category != null)
+                    var accomplishment = db.Basarilar.Find(model.Id);
+                    if (accomplishment != null)
                     {
-                        category.DegisimTarihi = DateTime.Now;
-                        category.Aktif = true;
-                        category.Adi = model.Adi;
+                        accomplishment.DegisimTarihi = DateTime.Now;
+                        accomplishment.Aktif = true;
+                        accomplishment.Adi = model.Adi;
+                        accomplishment.Aciklama = model.Aciklama;
+                        accomplishment.Firma = model.Firma;
+                        accomplishment.Tarih = model.Tarih;
                         if (db.SaveChanges() > 0)
                             success = true;
                     }

@@ -1,0 +1,54 @@
+﻿@model DB.ViewModels.HobbyViewModel
+@{
+    ViewData["Title"] = "Operations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
+<script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/Hobby.js"></script>
+
+<div id="tabstrip">
+    <ul>
+        <li class="k-state-active">
+            HOBİ EKLE
+        </li>
+        <li>
+            HOBİLERİM
+        </li>
+    </ul>
+
+    <div>
+        <form asp-controller="Hobby"
+              asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
+              method="post"
+              enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Adı:</label>
+                        <input asp-for="Hobiler.Adi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Ikon:</label>
+                        <input asp-for="Icon" name="Icon" id="File" type="file" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 m-2 clearfix">
+                <button class="k-button pull-right">KAYDET</button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <div id="Hobbies"></div>
+    </div>
+</div>

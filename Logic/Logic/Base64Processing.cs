@@ -9,13 +9,33 @@ namespace Logic
         public static string PDFToBase64(IFormFile file)
         {
             string b64 = null;
-            using (var memoryStream = new MemoryStream())
+            if (file != null)
             {
-                file.OpenReadStream().CopyTo(memoryStream);
-                byte[] Value = memoryStream.ToArray();
-                b64 = Convert.ToBase64String(Value);
+                using (var memoryStream = new MemoryStream())
+                {
+                    file.OpenReadStream().CopyTo(memoryStream);
+                    byte[] Value = memoryStream.ToArray();
+                    b64 = Convert.ToBase64String(Value);
+                }
             }
             return b64;
+        }
+
+        public static string[] ImageToBase64(IFormFile file)
+        {
+            string[] array = null;
+            if (file != null)
+            {
+                array = new string[2];
+                array[0] = file.FileName.Split('.')[^1];
+                using (var memoryStream = new MemoryStream())
+                {
+                    file.OpenReadStream().CopyTo(memoryStream);
+                    byte[] Value = memoryStream.ToArray();
+                    array[1] = Convert.ToBase64String(Value);
+                }
+            }
+            return array;
         }
     }
 }

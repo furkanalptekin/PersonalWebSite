@@ -50,9 +50,7 @@
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
                         OpenPDF(data.Id);
-                    },
-                    title: " ",
-                    width: 110
+                    }
                 },
                 {
                     name: "SİL",
@@ -61,10 +59,8 @@
                         e.preventDefault();
                         var tr = $(e.target).closest("tr");
                         var data = this.dataItem(tr);
-                        DeletePDF(data.Id, tr);
-                    },
-                    title: " ",
-                    width: 110
+                        Delete('/CV/Delete/', data.Id, tr);
+                    }
                 }]
             }
         ]
@@ -97,7 +93,7 @@ function AddData(data) {
 
 function OpenPDF(id) {
     $.ajax({
-        url: '/CV/GetPDF/',
+        url: '/CV/Show/',
         type: "POST",
         dataType: "JSON",
         data: { id: id },
@@ -121,23 +117,4 @@ function OpenPDF(id) {
             }
         }
     });
-}
-
-function DeletePDF(id, tr) {
-    var result = confirm("Silmek istediğinize emin misiniz?");
-    if (result) {
-        $.ajax({
-            url: '/CV/Delete/',
-            type: "POST",
-            dataType: "JSON",
-            data: { id: id },
-            success: function (response) {
-                if (response.success) {
-                    tr.find('td').fadeOut(1000, function () {
-                        tr.remove();
-                    });
-                }
-            }
-        });
-    }
 }
