@@ -24,9 +24,7 @@
         autoSync: true,
         batch: true,
         height: "75vh",
-        scrollable: {
-            virtual: false
-        },
+        scrollable: false,
         cancel: function (e) {
             GetData()
         },
@@ -48,7 +46,7 @@
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
-                        Update('/Hobby/Update/', data.Id);
+                        ChangeURL('/Hobby/Update/', data.Id);
                     }
                 },
                 {

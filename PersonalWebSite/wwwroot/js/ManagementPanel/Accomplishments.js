@@ -22,9 +22,7 @@
         autoSync: true,
         batch: true,
         height: "75vh",
-        scrollable: {
-            virtual: false
-        },
+        scrollable: false,
         cancel: function (e) {
             GetData()
         },
@@ -44,7 +42,7 @@
                         click: function (e) {
                             e.preventDefault();
                             var data = this.dataItem($(e.target).closest("tr"));
-                            Show('/Accomplishment/Show/', data.Id);
+                            ChangeURL('/Accomplishment/Show/', data.Id);
                         }
                     },
                     {
@@ -53,7 +51,7 @@
                         click: function (e) {
                             e.preventDefault();
                             var data = this.dataItem($(e.target).closest("tr"));
-                            Update('/Accomplishment/Update/', data.Id);
+                            ChangeURL('/Accomplishment/Update/', data.Id);
                         }
                     },
                     {
@@ -88,7 +86,6 @@ function GetData() {
 
 function AddData(data) {
     var grid = $('#Accomplishments').data("kendoGrid");
-    console.log(data);
     var array = data.Tarih.split(".");
     var tempDate = new Date(array[2], array[1] - 1, array[0]);
     var temp = {

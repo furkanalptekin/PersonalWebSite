@@ -1,6 +1,7 @@
 ﻿using DB.DataModels;
 using DB.Models;
 using DB.ViewModels;
+using Logic.Enums;
 using Logic.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Logic
                         var hobby = model.Hobiler;
                         hobby.Aktif = true;
                         hobby.EklemeTarihi = DateTime.Now;
-                        hobby.Ikon = $"{file?[0]}|{file?[1]}";
+                        hobby.Ikon = file;
                         db.Hobiler.Add(hobby);
                         if (db.SaveChanges() > 0)
                             success = true;
@@ -74,8 +75,8 @@ namespace Logic
                     Adi = item.Adi,
                     EklemeTarihi = item.EklemeTarihi,
                     DegisimTarihi = item.DegisimTarihi,
-                    IconExt = file?[0],
-                    Icon = file?[1]
+                    IconExt = file?[(int)FileHelper.FileExt],
+                    Icon = file?[(int)FileHelper.B64String]
                 });
             }
             return list;
@@ -95,10 +96,8 @@ namespace Logic
                         hobby.DegisimTarihi = DateTime.Now;
                         hobby.Adi = model.Hobiler.Adi;
                         if (model.Icon != null)
-                        {
-                            var file = Base64Processing.ImageToBase64(model.Icon);
-                            hobby.Ikon = $"{file?[0]}|{file?[1]}";
-                        }
+                            hobby.Ikon = Base64Processing.ImageToBase64(model.Icon);
+
                         if (db.SaveChanges() > 0)
                             success = true;
                     }

@@ -1,8 +1,4 @@
-﻿function Update(url, id) {
-    window.location.href = window.location.origin + url + id;
-}
-
-function Show(url, id) {
+﻿function ChangeURL(url, id) {
     window.location.href = window.location.origin + url + id;
 }
 

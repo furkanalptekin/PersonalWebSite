@@ -1,10 +1,8 @@
 ﻿$(document).ready(function () {
     kendo.culture("tr-TR");
 
-    $("#colorPicker").kendoColorPicker({
-        value: "#ffffff",
-        buttons: false
-    });
+    $("#baslangicTarihi").kendoDatePicker();
+    $("#bitisTarihi").kendoDatePicker();
 
     $("#tabstrip").kendoTabStrip({
         animation: {
@@ -14,9 +12,13 @@
         }
     });
 
-    $("#Skills").kendoGrid({
+    $("#File").kendoUpload({
+        multiple: false
+    });
+
+    $("#Exp").kendoGrid({
         dataSource: {
-            data: GetList(),
+            data: GetData(),
             type: "odata",
             serverPaging: true,
             serverSorting: true,
@@ -27,25 +29,30 @@
         height: "75vh",
         scrollable: false,
         cancel: function (e) {
-            GetList()
+            GetData()
         },
         columns: [
             { field: "Id", title: "Id" },
-            { field: "Adi", title: "Kategori Adı" },
-            { field: "BasariOrani", title: "Başarı Oranı" },
-            { field: "Kategori", title: "Kategori" },
-            { field: "RenkKodu", title: "Renk" },
+            { field: "Firma", title: "Firma" },
+            {
+                template: '<img width="64" height="64" src="data:image/#:IconExt#; base64, #:Icon#"/>',
+                field: "Icon",
+                title: "Icon"
+            },
+            { field: "Pozisyon", title: "Pozisyon" },
+            { field: "BaslangicTarihi", title: "Başlangıç Tarihi" },
+            { field: "BitisTarihi", title: "Bitiş Tarihi" },
             { field: "EklemeTarihi", title: "Ekleme Tarihi" },
             { field: "DegisimTarihi", title: "Değişim Tarihi" },
             {
                 title: "İşlemler",
                 command: [{
-                    name: "GÜNCELLE",
+                    name: 'GÜNCELLE',
                     title: "GÜNCELLE",
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
-                        ChangeURL('/Skills/Update/', data.Id);
+                        ChangeURL('/Career/Update/', data.Id);
                     }
                 },
                 {
@@ -55,7 +62,7 @@
                         e.preventDefault();
                         var tr = $(e.target).closest("tr");
                         var data = this.dataItem(tr);
-                        Delete('/Skills/Delete/', data.Id, tr);
+                        Delete('/Career/Delete/', data.Id, tr);
                     }
                 }]
             }
@@ -63,50 +70,33 @@
     });
 });
 
-function GetList() {
-    var grid = $('#Skills').data("kendoGrid");
+function GetData() {
+    var grid = $('#Exp').data("kendoGrid");
     if (grid !== undefined) {
         grid.dataSource.data([]);
     }
+
     $.ajax({
-        url: '/Skills/List/',
+        url: '/Career/List/',
         type: "GET",
         success: function (response) {
             response.data.forEach(element => AddData(JSON.parse(element)));
-            BackgroundColors();
         }
     });
 }
 
 function AddData(data) {
-    var grid = $('#Skills').data("kendoGrid");
+    var grid = $('#Exp').data("kendoGrid");
     var temp = {
         Id: data.Id,
-        Adi: data.Adi,
-        BasariOrani: data.BasariOrani,
-        Kategori: data.KategoriAdi,
-        RenkKodu: data.RenkKodu,
+        Firma: data.Firma,
+        Icon: data.Icon,
+        IconExt: data.IconExt,
+        Pozisyon: data.Pozisyon,
+        BaslangicTarihi: new Date(data.BaslangicTarihi).toLocaleDateString(),
+        BitisTarihi: data.BitisTarihi !== null ? new Date(data.BitisTarihi).toLocaleDateString() : '-',
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'
     };
     grid.dataSource.add(temp);
-}
-
-function BackgroundColors() {
-    //var grid = $("#Skills").data("kendoGrid");
-    //var data = grid.dataSource.data();
-    //$.each(data, function (i, row) {
-    //    $('tr[data-uid="' + row.uid + '"] ').css("background-color", row.RenkKodu);
-    //});
-    var trs = document.getElementById("Skills").getElementsByTagName("tr");
-    for (var i = 1; i < trs.length; i++) {
-        var temp = trs[i].getElementsByTagName("td");
-        temp[4].style.backgroundColor = temp[4].innerHTML;
-    }
-}
-
-function GetRandomColor() {
-    var colorPicker = $('#colorPicker').data("kendoColorPicker");
-    var randomColor = "#000000".replace(/0/g, function () { return (~~(Math.random() * 16)).toString(16); });
-    colorPicker.value(randomColor);
 }

@@ -3,14 +3,14 @@ using DB.ViewModels;
 using Logic.Interfaces;
 using Logic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
 using DB.DataModels;
+using Microsoft.AspNetCore.Http;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
-    public class HobbyController : Controller, IControllerFunctions<HobbyViewModel>
+    public class CareerController : Controller, IControllerFunctions<CareerViewModel>
     {
-        private readonly HobbyLogic logic = new HobbyLogic();
+        private readonly CareerLogic logic = new CareerLogic();
 
         [HttpPost]
         public IActionResult Delete(int? id)
@@ -21,7 +21,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<HobbyDataModel>.ListToJson(logic.GetDataModelList()) });
+            return Json(new { success = true, data = JsonLogic<CareerDataModel>.ListToJson(logic.GetDataModelList()) });
         }
 
         [HttpGet]
@@ -32,7 +32,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
-        public IActionResult Operations(HobbyViewModel model)
+        public IActionResult Operations(CareerViewModel model)
         {
             ViewBag.Update = false;
             if (ModelState.IsValid)
@@ -56,23 +56,23 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Update(int? id)
         {
             ViewBag.Update = true;
-            var hobby = logic.GetFromId(id);
-            if (hobby != null)
+            var carrer = logic.GetFromId(id);
+            if (carrer != null)
             {
-                HttpContext.Session.SetInt32("UPDATEID", hobby.Id);
-                return View("Operations", new HobbyViewModel() { Hobiler = hobby });
+                HttpContext.Session.SetInt32("UPDATEID", carrer.Id);
+                return View("Operations", new CareerViewModel() { MeslekiDeneyim = carrer });
             }
             return NotFound();
         }
 
         [HttpPost]
-        public IActionResult UpdateDb(HobbyViewModel model)
+        public IActionResult UpdateDb(CareerViewModel model)
         {
             ViewBag.Update = true;
             var id = HttpContext.Session.GetInt32("UPDATEID");
             if (id != null && id != -1)
             {
-                model.Hobiler.Id = (int)id;
+                model.MeslekiDeneyim.Id = (int)id;
                 bool success = logic.Update(model);
                 if (success)
                 {

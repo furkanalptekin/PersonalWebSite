@@ -1,0 +1,73 @@
+﻿@model DB.Models.YabanciDil
+@{
+    ViewData["Title"] = "Operations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
+<script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/Languages.js"></script>
+
+<div id="tabstrip">
+    <ul>
+        <li class="k-state-active">
+            YABANCI DİL EKLE
+        </li>
+        <li>
+            YABANCI DİLLERİM
+        </li>
+    </ul>
+
+    <div>
+        <form asp-controller="Languages"
+              asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
+              method="post">
+            @Html.AntiForgeryToken()
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Adı:</label>
+                        <input asp-for="Adi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Seviyesi:</label>
+                        <input asp-for="Seviyesi" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Okuma Seviyesi:</label>
+                        <input asp-for="OkumaSeviyesi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Yazma Seviyesi:</label>
+                        <input asp-for="YazmaSeviyesi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Konuşma Seviyesi:</label>
+                        <input asp-for="KonusmaSeviyesi" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 m-2 clearfix">
+                <button class="k-button pull-right">KAYDET</button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+        <div id="Lang"></div>
+    </div>
+</div>

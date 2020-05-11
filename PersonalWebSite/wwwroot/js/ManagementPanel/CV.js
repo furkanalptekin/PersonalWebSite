@@ -31,9 +31,7 @@
         autoSync: true,
         batch: true,
         height: "75vh",
-        scrollable: {
-            virtual: false
-        },
+        scrollable: false,
         cancel: function (e) {
             GetCVs()
         },

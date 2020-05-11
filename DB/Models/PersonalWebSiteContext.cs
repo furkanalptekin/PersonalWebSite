@@ -214,8 +214,6 @@ namespace DB.Models
 
             modelBuilder.Entity<MeslekiDeneyim>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.BaslangicTarih).HasColumnType("datetime");
 
                 entity.Property(e => e.BitisTarih).HasColumnType("datetime");
@@ -314,8 +312,6 @@ namespace DB.Models
 
             modelBuilder.Entity<YabanciDil>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");

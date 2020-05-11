@@ -1,16 +1,15 @@
 ﻿using System;
-using DB.ViewModels;
-using Logic.Interfaces;
+using DB.Models;
 using Logic;
-using Microsoft.AspNetCore.Mvc;
+using Logic.Interfaces;
 using Microsoft.AspNetCore.Http;
-using DB.DataModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
-    public class HobbyController : Controller, IControllerFunctions<HobbyViewModel>
+    public class LanguagesController : Controller, IControllerFunctions<YabanciDil>
     {
-        private readonly HobbyLogic logic = new HobbyLogic();
+        private readonly IDatabaseFunctions<YabanciDil, YabanciDil> logic = new ForeignLanguagesLogic();
 
         [HttpPost]
         public IActionResult Delete(int? id)
@@ -21,7 +20,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<HobbyDataModel>.ListToJson(logic.GetDataModelList()) });
+            return Json(new { success = true, data = JsonLogic<YabanciDil>.ListToJson(logic.GetList()) });
         }
 
         [HttpGet]
@@ -32,7 +31,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
-        public IActionResult Operations(HobbyViewModel model)
+        public IActionResult Operations(YabanciDil model)
         {
             ViewBag.Update = false;
             if (ModelState.IsValid)
@@ -56,23 +55,23 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Update(int? id)
         {
             ViewBag.Update = true;
-            var hobby = logic.GetFromId(id);
-            if (hobby != null)
+            var lang = logic.GetFromId(id);
+            if (lang != null)
             {
-                HttpContext.Session.SetInt32("UPDATEID", hobby.Id);
-                return View("Operations", new HobbyViewModel() { Hobiler = hobby });
+                HttpContext.Session.SetInt32("UPDATEID", lang.Id);
+                return View("Operations", lang);
             }
             return NotFound();
         }
 
         [HttpPost]
-        public IActionResult UpdateDb(HobbyViewModel model)
+        public IActionResult UpdateDb(YabanciDil model)
         {
             ViewBag.Update = true;
             var id = HttpContext.Session.GetInt32("UPDATEID");
             if (id != null && id != -1)
             {
-                model.Hobiler.Id = (int)id;
+                model.Id = (int)id;
                 bool success = logic.Update(model);
                 if (success)
                 {

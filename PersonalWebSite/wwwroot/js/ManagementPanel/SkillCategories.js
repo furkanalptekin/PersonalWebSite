@@ -20,9 +20,7 @@
         autoSync: true,
         batch: true,
         height: "75vh",
-        scrollable: {
-            virtual: false
-        },
+        scrollable: false,
         cancel: function (e) {
             GetSkillCategories()
         },
@@ -39,7 +37,7 @@
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
-                        Update('/SkillCategories/Update/', data.Id);
+                        ChangeURL('/SkillCategories/Update/', data.Id);
                     }
                 },
                 {
