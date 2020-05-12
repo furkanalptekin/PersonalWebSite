@@ -32,8 +32,9 @@
             {
                 title: "İşlemler",
                 command: [{
-                    name: "GÜNCELLE",
-                    title: "GÜNCELLE",
+                    name: "guncelle",
+                    text: "",
+                    iconClass: "k-icon k-i-edit m-0",
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
@@ -41,8 +42,9 @@
                     }
                 },
                 {
-                    name: "SİL",
-                    title: "SİL",
+                    name: "sil",
+                    text: "",
+                    iconClass: "k-icon k-i-delete m-0",
                     click: function (e) {
                         e.preventDefault();
                         var tr = $(e.target).closest("tr");

@@ -1,0 +1,98 @@
+﻿@model DB.Models.Projeler
+@{
+    ViewData["Title"] = "Operations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
+<script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/Projects.js"></script>
+
+<div id="tabstrip">
+    <ul>
+        <li class="k-state-active">
+            PROJE EKLE
+        </li>
+        <li>
+            PROJELERİM
+        </li>
+    </ul>
+
+    <div>
+        <form asp-controller="Projects"
+              asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
+              method="post">
+            @Html.AntiForgeryToken()
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Adı:</label>
+                        <input asp-for="Adi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Link:</label>
+                        <input asp-for="Link" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Baslangıç Tarihi:</label>
+                        <input id="baslangicTarihi" asp-for="BaslangicTarihi" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Bitiş Tarihi:</label>
+                        <input id="bitisTarihi" asp-for="BitisTarihi" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Yapılış Nedeni:</label>
+                        <input asp-for="YapilisNedeni" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Kategori:</label>
+                        <input asp-for="Kategori" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Kullanılan Diller:</label>
+                        <input asp-for="KullanilanDiller" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Açıklama:</label>
+                        <textarea asp-for="Aciklama" class="k-textbox form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            @if (ViewBag.Show == null)
+            {
+                <div class="col-12 m-2 clearfix">
+                    <button class="k-button pull-right">KAYDET</button>
+                </div>
+            }
+        </form>
+    </div>
+
+    <div>
+        <div id="projects"></div>
+    </div>
+</div>

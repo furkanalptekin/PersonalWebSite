@@ -229,8 +229,6 @@ namespace DB.Models
 
             modelBuilder.Entity<Projeler>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.BaslangicTarihi).HasColumnType("datetime");

@@ -1,7 +1,8 @@
 ﻿$(document).ready(function () {
     kendo.culture("tr-TR");
 
-    $("#datepicker").kendoDatePicker();
+    $("#baslangicTarihi").kendoDatePicker();
+    $("#bitisTarihi").kendoDatePicker();
 
     $("#tabstrip").kendoTabStrip({
         animation: {
@@ -11,7 +12,7 @@
         }
     });
 
-    $("#Accomplishments").kendoGrid({
+    $("#projects").kendoGrid({
         dataSource: {
             data: GetData(),
             type: "odata",
@@ -29,10 +30,17 @@
         columns: [
             { field: "Id", title: "Id" },
             { field: "Adi", title: "Adı" },
-            { field: "Firma", title: "Firma" },
-            { field: "Tarih", title: "Tarih" },
+            { field: "BaslangicTarihi", title: "Başlangıç Tarihi" },
+            { field: "BitisTarihi", title: "Bitiş Tarihi" },
+            { field: "KullanilanDiller", title: "Kullanılan Diller" },
+            { field: "Kategori", title: "Kategori" },
             { field: "EklemeTarihi", title: "Ekleme Tarihi" },
             { field: "DegisimTarihi", title: "Değişim Tarihi" },
+            {
+                template: '<a href="#:Link#" class="k-button"><i class="k-icon k-i-hyperlink-open"></i></a>',
+                field: "Link",
+                title: ""
+            },
             {
                 title: "İşlemler",
                 command: [
@@ -43,7 +51,7 @@
                         click: function (e) {
                             e.preventDefault();
                             var data = this.dataItem($(e.target).closest("tr"));
-                            ChangeURL('/Accomplishment/Show/', data.Id);
+                            ChangeURL('/Projects/Show/', data.Id);
                         }
                     },
                     {
@@ -53,7 +61,7 @@
                         click: function (e) {
                             e.preventDefault();
                             var data = this.dataItem($(e.target).closest("tr"));
-                            ChangeURL('/Accomplishment/Update/', data.Id);
+                            ChangeURL('/Projects/Update/', data.Id);
                         }
                     },
                     {
@@ -64,7 +72,7 @@
                             e.preventDefault();
                             var tr = $(e.target).closest("tr");
                             var data = this.dataItem(tr);
-                            Delete('/Accomplishment/Delete/', data.Id, tr);
+                            Delete('/Projects/Delete/', data.Id, tr);
                         }
                     }]
             }
@@ -73,13 +81,13 @@
 });
 
 function GetData() {
-    var grid = $('#Accomplishments').data("kendoGrid");
+    var grid = $('#projects').data("kendoGrid");
     if (grid !== undefined) {
         grid.dataSource.data([]);
     }
 
     $.ajax({
-        url: '/Accomplishment/List/',
+        url: '/Projects/List/',
         type: "GET",
         success: function (response) {
             response.data.forEach(element => AddData(JSON.parse(element)));
@@ -88,14 +96,15 @@ function GetData() {
 }
 
 function AddData(data) {
-    var grid = $('#Accomplishments').data("kendoGrid");
-    var array = data.Tarih.split(".");
-    var tempDate = new Date(array[2], array[1] - 1, array[0]);
+    var grid = $('#projects').data("kendoGrid");
     var temp = {
         Id: data.Id,
         Adi: data.Adi,
-        Firma: data.Firma,
-        Tarih: tempDate.toLocaleDateString(),
+        Link: data.Link,
+        BaslangicTarihi: new Date(data.BaslangicTarihi).toLocaleDateString(),
+        BitisTarihi: data.BitisTarihi !== null ? new Date(data.BitisTarihi).toLocaleDateString() : '-',
+        KullanilanDiller: data.KullanilanDiller,
+        Kategori: data.Kategori,
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'
     };
