@@ -1,0 +1,15 @@
+﻿@if (ViewBag.Alert != null)
+{
+    if ((bool)ViewBag.Alert == true)
+    {
+        <div id="Alert" class="alert alert-success" role="alert">
+            İŞLEM BAŞARI İLE TAMAMLANDI
+        </div>
+    }
+    else
+    {
+        <div id="Alert" class="alert alert-danger" role="alert">
+            İŞLEM SIRASINDA BİR HATA OLUŞTU. LÜTFEN DAHA SONRA TEKRAR DENEYİNİZ
+        </div>
+    }
+}

@@ -12,6 +12,8 @@
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
 <script src="~/js/ManagementPanel/Languages.js"></script>
 
+<partial name="_Alert" />
+
 <div id="tabstrip">
     <ul>
         <li class="k-state-active">
@@ -37,7 +39,7 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label>Seviyesi:</label>
-                        <input asp-for="Seviyesi" class="k-textbox form-control" />
+                        <select asp-for="Seviyesi" asp-items="ViewBag.RatingA1" class="k-textbox form-control"></select>
                     </div>
                 </div>
             </div>
@@ -45,19 +47,19 @@
                 <div class="col-4">
                     <div class="form-group">
                         <label>Okuma Seviyesi:</label>
-                        <input asp-for="OkumaSeviyesi" class="k-textbox form-control" />
+                        <select asp-for="OkumaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label>Yazma Seviyesi:</label>
-                        <input asp-for="YazmaSeviyesi" class="k-textbox form-control" />
+                        <select asp-for="YazmaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
                         <label>Konuşma Seviyesi:</label>
-                        <input asp-for="KonusmaSeviyesi" class="k-textbox form-control" />
+                        <select asp-for="KonusmaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
                     </div>
                 </div>
             </div>

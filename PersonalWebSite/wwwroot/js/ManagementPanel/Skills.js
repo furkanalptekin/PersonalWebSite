@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    window.setTimeout(RemoveAlert, 5000);
     kendo.culture("tr-TR");
 
     $("#colorPicker").kendoColorPicker({

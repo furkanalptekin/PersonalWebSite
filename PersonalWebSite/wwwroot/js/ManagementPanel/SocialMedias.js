@@ -10,9 +10,13 @@
         }
     });
 
-    $("#Categories").kendoGrid({
+    $("#File").kendoUpload({
+        multiple: false
+    });
+
+    $("#SocialMedias").kendoGrid({
         dataSource: {
-            data: GetSkillCategories(),
+            data: GetData(),
             type: "odata",
             serverPaging: true,
             serverSorting: true,
@@ -23,11 +27,17 @@
         height: "75vh",
         scrollable: false,
         cancel: function (e) {
-            GetSkillCategories()
+            GetData()
         },
         columns: [
             { field: "Id", title: "Id" },
-            { field: "Adi", title: "Kategori Adı" },
+            { field: "SosyalMedyaAdi", title: "Adı" },
+            {
+                template: ' <img width="64" height="64" src="data:image/#:IconExt#; base64, #:Icon#"/>',
+                field: "Icon",
+                title: "Icon"
+            },
+            { field: "Adres", title: "Adresi" },
             { field: "EklemeTarihi", title: "Ekleme Tarihi" },
             { field: "DegisimTarihi", title: "Değişim Tarihi" },
             {
@@ -39,7 +49,7 @@
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
-                        ChangeURL('/SkillCategories/Update/', data.Id);
+                        ChangeURL('/SocialMedia/Update/', data.Id);
                     }
                 },
                 {
@@ -50,7 +60,7 @@
                         e.preventDefault();
                         var tr = $(e.target).closest("tr");
                         var data = this.dataItem(tr);
-                        Delete('/SkillCategories/Delete/', data.Id, tr);
+                        Delete('/SocialMedia/Delete/', data.Id, tr);
                     }
                 }]
             }
@@ -58,14 +68,14 @@
     });
 });
 
-function GetSkillCategories() {
-    var grid = $('#Categories').data("kendoGrid");
+function GetData() {
+    var grid = $('#SocialMedias').data("kendoGrid");
     if (grid !== undefined) {
         grid.dataSource.data([]);
     }
 
     $.ajax({
-        url: '/SkillCategories/List/',
+        url: '/SocialMedia/List/',
         type: "GET",
         success: function (response) {
             response.data.forEach(element => AddData(JSON.parse(element)));
@@ -74,10 +84,13 @@ function GetSkillCategories() {
 }
 
 function AddData(data) {
-    var grid = $('#Categories').data("kendoGrid");
+    var grid = $('#SocialMedias').data("kendoGrid");
     var temp = {
         Id: data.Id,
-        Adi: data.Adi,
+        SosyalMedyaAdi: data.SosyalMedyaAdi,
+        Icon: data.Icon,
+        IconExt: data.IconExt,
+        Adres: data.Adres,
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'
     };

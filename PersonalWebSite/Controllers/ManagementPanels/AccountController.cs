@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DB.ViewModels;
 using Logic;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
@@ -24,7 +25,12 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             if (ModelState.IsValid)
             {
-
+                var login = new LoginLogic().Login(model);
+                if (login)
+                {
+                    HttpContext.Session.SetString("ADMIN", "asd");
+                    return RedirectToAction("Index", "Home");
+                }
             }
             return View();
         }

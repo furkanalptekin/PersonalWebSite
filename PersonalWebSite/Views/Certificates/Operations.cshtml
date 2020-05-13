@@ -1,6 +1,6 @@
-﻿@model DB.Models.Yetenekler
+﻿@model DB.Models.Sertifikalar
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Operations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,22 +10,22 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
-<script src="~/js/ManagementPanel/Skills.js"></script>
+<script src="~/js/ManagementPanel/Certificates.js"></script>
 
 <partial name="_Alert" />
 
 <div id="tabstrip">
     <ul>
         <li class="k-state-active">
-            YETENEK EKLE
+            SERTİFİKA EKLE
         </li>
         <li>
-            YETENEKLERİM
+            SERTİFİKALARIM
         </li>
     </ul>
 
     <div>
-        <form asp-controller="Skills"
+        <form asp-controller="Certificates"
               asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
               method="post">
             @Html.AntiForgeryToken()
@@ -38,36 +38,43 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Başarı Oranı:</label>
-                        <input asp-for="BasariOrani" type="number" min="0" max="100" class="k-textbox form-control" />
+                        <label>Branş:</label>
+                        <input asp-for="Brans" class="k-textbox form-control" />
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Kategori:</label>
-                        <select asp-for="KategoriId" asp-items="ViewBag.SkillCategories" class="k-textbox form-control">
-                            <option value="0">Kategori Seçiniz</option>
-                        </select>
+                        <label>Tarih:</label>
+                        <input id="tarih" asp-for="Tarih" class="form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Renk:</label>
-                        <br />
-                        <input asp-for="RenkKodu" id="colorPicker" class="form-control" />
-                        <a href="javascript:;" onclick="GetRandomColor()" class="k-button ml-3">RASGELE</a>
+                        <label>Geçerlilik Süresi:</label>
+                        <input id="gecerlilikSuresi" asp-for="GecerlilikSuresi" class="form-control" />
                     </div>
                 </div>
             </div>
-            <div class="col-12 m-2 clearfix">
-                <button class="k-button pull-right">KAYDET</button>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Firma:</label>
+                        <input asp-for="Firma" class="k-textbox form-control" />
+                    </div>
+                </div>
             </div>
+            @if (ViewBag.Show == null)
+            {
+                <div class="col-12 m-2 clearfix">
+                    <button class="k-button pull-right">KAYDET</button>
+                </div>
+            }
         </form>
     </div>
 
     <div>
-        <div id="Skills"></div>
+        <div id="certificates"></div>
     </div>
 </div>

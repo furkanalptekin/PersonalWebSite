@@ -1,6 +1,6 @@
-﻿@model DB.ViewModels.CvFileModel
+﻿@model DB.ViewModels.SocialMediaViewModel
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Operations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,35 +10,45 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
-<script src="~/js/ManagementPanel/CV.js"></script>
+<script src="~/js/ManagementPanel/SocialMedias.js"></script>
 
 <partial name="_Alert" />
 
 <div id="tabstrip">
     <ul>
         <li class="k-state-active">
-            CV EKLE
+            SOSYAL MEDYA EKLE
         </li>
         <li>
-            EKLENEN CVLER
+            SOSYAL MEDYALARIM
         </li>
     </ul>
 
     <div>
-        <form asp-controller="CV" asp-action="Operations" method="post" enctype="multipart/form-data">
+        <form asp-controller="SocialMedia"
+              asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
+              method="post"
+              enctype="multipart/form-data">
             @Html.AntiForgeryToken()
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>CV'nin Adı:</label>
-                        <input asp-for="Cv.CvAdi" class="k-textbox form-control" />
+                        <label>Adı:</label>
+                        <input asp-for="SosyalMedya.SosyalMedyaAdi" class="k-textbox form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>CV:</label>
-                        <input asp-for="File" name="File" id="File" type="file" />
-                        <div class="demo-hint">Sadece <strong>PDF</strong> Dosyası Yüklenebilir.</div>
+                        <label>Adresi:</label>
+                        <input asp-for="SosyalMedya.Adres" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Ikon:</label>
+                        <input asp-for="Icon" name="Icon" id="File" type="file" />
                     </div>
                 </div>
             </div>
@@ -49,6 +59,6 @@
     </div>
 
     <div>
-        <div id="CV"></div>
+        <div id="SocialMedias"></div>
     </div>
 </div>

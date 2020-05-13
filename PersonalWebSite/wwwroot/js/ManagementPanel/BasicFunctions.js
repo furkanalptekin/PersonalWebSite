@@ -20,3 +20,24 @@ function Delete(url, id, tr) {
         });
     }
 }
+
+function RemoveAlert() {
+    var div = document.getElementById("Alert");
+    if (div !== null) {
+        fadeOutEffect(div);
+    }
+}
+
+function fadeOutEffect(div) {
+    var fadeEffect = setInterval(function () {
+        if (!div.style.opacity) {
+            div.style.opacity = 1;
+        }
+        if (div.style.opacity > 0) {
+            div.style.opacity -= 0.1;
+        } else {
+            clearInterval(fadeEffect);
+            div.remove();
+        }
+    }, 50);
+}

@@ -27,6 +27,8 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Operations()
         {
             ViewBag.Update = false;
+            if (TempData["Alert"] != null)
+                ViewBag.Alert = (bool)TempData["Alert"];
             return View();
         }
 
@@ -36,11 +38,8 @@ namespace PersonalWebSite.Controllers.ManagementPanels
             ViewBag.Update = false;
             if (ModelState.IsValid)
             {
-                bool success = logic.Add(model);
-                if (success)
-                {
-                    ModelState.Clear();
-                }
+                ViewBag.Alert = logic.Add(model);
+                ModelState.Clear();
             }
             return View();
         }
@@ -79,12 +78,9 @@ namespace PersonalWebSite.Controllers.ManagementPanels
             if (id != null && id != -1)
             {
                 model.Id = (int)id;
-                bool success = logic.Update(model);
-                if (success)
-                {
-                    HttpContext.Session.SetInt32("UPDATEID", -1);
-                    ModelState.Clear();
-                }
+                TempData["Alert"] = logic.Update(model);
+                HttpContext.Session.SetInt32("UPDATEID", -1);
+                ModelState.Clear();
             }
             return RedirectToAction("Operations");
         }

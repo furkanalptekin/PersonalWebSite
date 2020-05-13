@@ -19,8 +19,12 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [ValidateAntiForgeryToken]
         public IActionResult Operations(CvFileModel model)
         {
-            new CvLogic().Add(model);
-            return RedirectToAction("Operations");
+            if (ModelState.IsValid)
+            {
+                ViewBag.Alert = new CvLogic().Add(model);
+                ModelState.Clear();
+            }
+            return View();
         }
 
         [HttpPost]

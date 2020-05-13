@@ -246,8 +246,6 @@ namespace DB.Models
 
             modelBuilder.Entity<Referanslar>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");
@@ -278,8 +276,6 @@ namespace DB.Models
 
             modelBuilder.Entity<Sertifikalar>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.Brans).HasMaxLength(255);
@@ -297,8 +293,6 @@ namespace DB.Models
 
             modelBuilder.Entity<SosyalMedya>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adres).HasMaxLength(255);
 
                 entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");
