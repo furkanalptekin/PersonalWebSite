@@ -6,8 +6,8 @@ namespace DB.Models
     {
         public int Id { get; set; }
         public string OkulAdi { get; set; }
-        public int? EgitimSeviyesi { get; set; }
-        public decimal? MezuniyetDerecesi { get; set; }
+        public string EgitimSeviyesi { get; set; }
+        public string MezuniyetDerecesi { get; set; }
         public int? NotSistemi { get; set; }
         public DateTime? BaslangicTarihi { get; set; }
         public DateTime? BitisTarihi { get; set; }

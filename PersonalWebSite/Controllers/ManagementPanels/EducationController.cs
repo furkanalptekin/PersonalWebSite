@@ -1,5 +1,8 @@
-﻿using DB.Models;
-using DB.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using DB.Models;
 using Logic;
 using Logic.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -7,31 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
-    public class AccountController : Controller, IControllerFunctions<Hesap>
+    public class EducationController : Controller, IControllerFunctions<Egitim>
     {
-        private readonly IDatabaseFunctions<Hesap, Hesap> logic = new AccountLogic();
-
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var login = new LoginLogic().Login(model);
-                if (login)
-                {
-                    HttpContext.Session.SetString("ADMIN", "asd");
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            return View();
-        }
+        private readonly IDatabaseFunctions<Egitim, Egitim> logic = new EducationLogic();
+        private readonly DropDownLists lists = new DropDownLists();
 
         [HttpPost]
         public IActionResult Delete(int? id)
@@ -42,13 +24,15 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<Hesap>.ListToJson(logic.GetList()) });
+            return Json(new { success = true, data = JsonLogic<Egitim>.ListToJson(logic.GetList()) });
         }
 
         [HttpGet]
         public IActionResult Operations()
         {
             ViewBag.Update = false;
+            ViewBag.EducationTypes = lists.GetEducationTypes();
+            ViewBag.Cities = lists.GetCities();
             if (TempData["Alert"] != null)
                 ViewBag.Alert = (bool)TempData["Alert"];
             return View();
@@ -56,9 +40,11 @@ namespace PersonalWebSite.Controllers.ManagementPanels
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(Hesap model)
+        public IActionResult Operations(Egitim model)
         {
             ViewBag.Update = false;
+            ViewBag.EducationTypes = lists.GetEducationTypes();
+            ViewBag.Cities = lists.GetCities();
             if (ModelState.IsValid)
             {
                 ViewBag.Alert = logic.Add(model);
@@ -72,10 +58,13 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.Show = true;
             ViewBag.Update = false;
-            var project = logic.GetFromId(id);
-            if (project != null)
+            ViewBag.EducationTypes = lists.GetEducationTypes();
+            ViewBag.Cities = lists.GetCities();
+            var edu = logic.GetFromId(id);
+            if (edu != null)
             {
-                return View("Operations", project);
+                ViewBag.Districts = lists.GetDistricts((int)edu.SehirId, false);
+                return View("Operations", edu);
             }
             return NotFound();
         }
@@ -84,18 +73,21 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Update(int? id)
         {
             ViewBag.Update = true;
-            var acc = logic.GetFromId(id);
-            if (acc != null)
+            ViewBag.EducationTypes = lists.GetEducationTypes();
+            ViewBag.Cities = lists.GetCities();
+            var edu = logic.GetFromId(id);
+            if (edu != null)
             {
-                HttpContext.Session.SetInt32("UPDATEID", acc.Id);
-                return View("Operations", acc);
+                ViewBag.Districts = lists.GetDistricts((int)edu.SehirId, false);
+                HttpContext.Session.SetInt32("UPDATEID", edu.Id);
+                return View("Operations", edu);
             }
             return NotFound();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateDb(Hesap model)
+        public IActionResult UpdateDb(Egitim model)
         {
             ViewBag.Update = true;
             var id = HttpContext.Session.GetInt32("UPDATEID");
@@ -107,6 +99,12 @@ namespace PersonalWebSite.Controllers.ManagementPanels
                 ModelState.Clear();
             }
             return RedirectToAction("Operations");
+        }
+
+        [HttpPost]
+        public JsonResult GetDistricts(int CityId)
+        {
+            return Json(lists.GetDistricts(CityId, false));
         }
     }
 }

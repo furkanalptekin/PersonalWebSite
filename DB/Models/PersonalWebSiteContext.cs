@@ -91,7 +91,7 @@ namespace DB.Models
 
             modelBuilder.Entity<Egitim>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
+                entity.Property(e => e.EgitimSeviyesi).HasMaxLength(50);
 
                 entity.Property(e => e.BaslangicTarihi).HasColumnType("datetime");
 
@@ -107,7 +107,7 @@ namespace DB.Models
 
                 entity.Property(e => e.Fakulte).HasMaxLength(255);
 
-                entity.Property(e => e.MezuniyetDerecesi).HasColumnType("decimal(18, 0)");
+                entity.Property(e => e.MezuniyetDerecesi).HasMaxLength(50);
 
                 entity.Property(e => e.OkulAdi).HasMaxLength(255);
 
@@ -124,9 +124,13 @@ namespace DB.Models
 
             modelBuilder.Entity<Hesap>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.KullaniciAdi).HasMaxLength(50);
+
+                entity.Property(e => e.AdSoyad).HasMaxLength(50);
+
+                entity.Property(e => e.DegisimTarihi).HasColumnType("datetime");
+
+                entity.Property(e => e.EklemeTarihi).HasColumnType("datetime");
             });
 
             modelBuilder.Entity<Hobiler>(entity =>
