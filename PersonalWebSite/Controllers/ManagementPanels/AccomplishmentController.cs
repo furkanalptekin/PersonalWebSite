@@ -33,6 +33,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(Basarilar model)
         {
             ViewBag.Update = false;
@@ -71,6 +72,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(Basarilar model)
         {
             ViewBag.Update = true;

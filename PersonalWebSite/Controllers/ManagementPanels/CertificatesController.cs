@@ -32,6 +32,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(Sertifikalar model)
         {
             ViewBag.Update = false;
@@ -70,6 +71,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(Sertifikalar model)
         {
             ViewBag.Update = true;

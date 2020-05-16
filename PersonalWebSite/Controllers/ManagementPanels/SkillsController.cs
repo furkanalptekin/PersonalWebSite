@@ -23,6 +23,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(Yetenekler model)
         {
             ViewBag.Update = false;
@@ -68,6 +69,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(Yetenekler model)
         {
             ViewBag.Update = true;

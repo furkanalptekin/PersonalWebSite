@@ -21,6 +21,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(YetenekKategori model)
         {
             ViewBag.Update = false;
@@ -64,6 +65,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(YetenekKategori model)
         {
             ViewBag.Update = true;

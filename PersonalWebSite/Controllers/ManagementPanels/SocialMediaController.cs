@@ -34,6 +34,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(SocialMediaViewModel model)
         {
             ViewBag.Update = false;
@@ -68,6 +69,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(SocialMediaViewModel model)
         {
             ViewBag.Update = true;

@@ -37,6 +37,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(YabanciDil model)
         {
             ViewBag.Update = false;
@@ -74,6 +75,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(YabanciDil model)
         {
             ViewBag.Update = true;

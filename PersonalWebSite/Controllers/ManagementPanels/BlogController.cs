@@ -1,16 +1,15 @@
-﻿using System;
+﻿using DB.DataModels;
 using DB.ViewModels;
-using Logic.Interfaces;
 using Logic;
-using Microsoft.AspNetCore.Mvc;
+using Logic.Interfaces;
 using Microsoft.AspNetCore.Http;
-using DB.DataModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
-    public class HobbyController : Controller, IControllerFunctions<HobbyViewModel>
+    public class BlogController : Controller, IControllerFunctions<BlogViewModel>
     {
-        private readonly HobbyLogic logic = new HobbyLogic();
+        private readonly BlogLogic logic = new BlogLogic();
 
         [HttpPost]
         public IActionResult Delete(int? id)
@@ -21,7 +20,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<HobbyDataModel>.ListToJson(logic.GetDataModelList()) });
+            return Json(new { success = true, data = JsonLogic<BlogDataModel>.ListToJson(logic.GetDataModelList()) });
         }
 
         [HttpGet]
@@ -35,16 +34,13 @@ namespace PersonalWebSite.Controllers.ManagementPanels
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(HobbyViewModel model)
+        public IActionResult Operations(BlogViewModel model)
         {
             ViewBag.Update = false;
             if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    ViewBag.Alert = logic.Add(model);
-                    ModelState.Clear();
-                }
+                ViewBag.Alert = logic.Add(model);
+                ModelState.Clear();
             }
             return View();
         }
@@ -52,31 +48,38 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult Show(int? id)
         {
-            throw new NotImplementedException();
+            ViewBag.Show = true;
+            ViewBag.Update = false;
+            var project = logic.GetFromIdDecode(id);
+            if (project != null)
+            {
+                return View("Operations", project);
+            }
+            return NotFound();
         }
 
         [HttpGet]
         public IActionResult Update(int? id)
         {
             ViewBag.Update = true;
-            var hobby = logic.GetFromId(id);
-            if (hobby != null)
+            var blog = logic.GetFromIdDecode(id);
+            if (blog != null)
             {
-                HttpContext.Session.SetInt32("UPDATEID", hobby.Id);
-                return View("Operations", new HobbyViewModel() { Hobiler = hobby });
+                HttpContext.Session.SetInt32("UPDATEID", blog.Blog.Id);
+                return View("Operations", blog);
             }
             return NotFound();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateDb(HobbyViewModel model)
+        public IActionResult UpdateDb(BlogViewModel model)
         {
             ViewBag.Update = true;
             var id = HttpContext.Session.GetInt32("UPDATEID");
             if (id != null && id != -1)
             {
-                model.Hobiler.Id = (int)id;
+                model.Blog.Id = (int)id;
                 TempData["Alert"] = logic.Update(model);
                 HttpContext.Session.SetInt32("UPDATEID", -1);
                 ModelState.Clear();

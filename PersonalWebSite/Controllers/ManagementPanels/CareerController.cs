@@ -34,6 +34,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(CareerViewModel model)
         {
             ViewBag.Update = false;
@@ -68,6 +69,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(CareerViewModel model)
         {
             ViewBag.Update = true;

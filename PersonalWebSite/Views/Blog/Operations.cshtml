@@ -1,0 +1,95 @@
+﻿@model DB.ViewModels.BlogViewModel
+@{
+    ViewData["Title"] = "Operations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
+<script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/Blog.js"></script>
+
+<partial name="_Alert" />
+
+<div id="tabstrip">
+    <ul>
+        <li class="k-state-active">
+            BLOG EKLE
+        </li>
+        <li>
+            BLOGLARIM
+        </li>
+    </ul>
+
+    <div>
+        <form asp-controller="Blog"
+              asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
+              method="post"
+              enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div id="tabstrip2">
+                <ul>
+                    <li class="k-state-active">Blog Bilgileri</li>
+                    <li>Blog Detayı</li>
+                </ul>
+                <div>
+                    <div class="col-12 row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Başlık:</label>
+                                <input asp-for="Blog.Baslik" class="k-textbox form-control" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Blog Fotoğrafı:</label>
+                                <input asp-for="File" name="File" id="File" type="file" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Gösterim Başlangıç Tarihi:</label>
+                                <input id="Baslangic" asp-for="Blog.GosterimBaslangicTarihi" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label>Gösterim Bitiş Tarihi:</label>
+                                <input id="Bitis" asp-for="Blog.GosterimBitisTarihi" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Özet:</label>
+                            <textarea rows="20" style="width: 100%;" asp-for="Blog.Ozet" class="k-textarea form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            <label>Detay:</label>
+                            <textarea asp-for="Blog.Detay" id="editor" style="height: 550px;" aria-label="editor"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (ViewBag.Show == null)
+            {
+                <div class="col-12 m-2 clearfix">
+                    <button class="k-button pull-right">KAYDET</button>
+                </div>
+            }
+        </form>
+    </div>
+
+    <div>
+        <div id="Blogs"></div>
+    </div>
+</div>

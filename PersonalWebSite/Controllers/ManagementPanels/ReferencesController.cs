@@ -32,6 +32,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Operations(Referanslar model)
         {
             ViewBag.Update = false;
@@ -70,6 +71,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateDb(Referanslar model)
         {
             ViewBag.Update = true;
