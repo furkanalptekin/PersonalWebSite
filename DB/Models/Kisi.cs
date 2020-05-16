@@ -22,7 +22,7 @@ namespace DB.Models
         public string Cinsiyet { get; set; }
         public string Fotograf { get; set; }
         public DateTime? DogumTarihi { get; set; }
-        public bool? AskerlikDurumu { get; set; }
+        public string AskerlikDurumu { get; set; }
         public DateTime? TecilTarihi { get; set; }
         public string Meslek { get; set; }
         public int? DogumSehirId { get; set; }

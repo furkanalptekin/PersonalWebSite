@@ -151,8 +151,6 @@ namespace DB.Models
 
             modelBuilder.Entity<Kisi>(entity =>
             {
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
                 entity.Property(e => e.Adi).HasMaxLength(255);
 
                 entity.Property(e => e.CalismakIstenilenSehir).HasMaxLength(255);
@@ -186,6 +184,8 @@ namespace DB.Models
                 entity.Property(e => e.SabitTelefonu).HasMaxLength(255);
 
                 entity.Property(e => e.Soyadi).HasMaxLength(255);
+
+                entity.Property(e => e.AskerlikDurumu).HasMaxLength(50);
 
                 entity.Property(e => e.TecilTarihi).HasColumnType("datetime");
 

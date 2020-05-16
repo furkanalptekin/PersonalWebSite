@@ -1,0 +1,319 @@
+﻿@model DB.ViewModels.PersonViewModel
+@{
+    ViewData["Title"] = "Operations";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/ManagementLayout/Content/Kendo/kendo.material-v2.min.css" rel="stylesheet" />
+<script src="~/ManagementLayout/Content/Kendo/jquery.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/kendo.all.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
+<script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
+<script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/Person.js"></script>
+
+<partial name="_Alert" />
+
+<form asp-controller="Person"
+      asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
+      method="post"
+      enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <div id="tabstrip">
+        <ul>
+            <li class="k-state-active">
+                KİŞİSEL BİLGİLER
+            </li>
+            <li>
+                İLETİŞİM BİLGİLERİ
+            </li>
+            <li>
+                CV BİLGİLERİ
+            </li>
+        </ul>
+
+        <div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Uyruk:</label>
+                        <input asp-for="Kisi.Uyruk" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Adı:</label>
+                        <input asp-for="Kisi.Adi" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Soyadı:</label>
+                        <input asp-for="Kisi.Soyadi" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Doğum Şehir:</label>
+                        <select id="DogumCityId" asp-for="Kisi.DogumSehirId" asp-items="ViewBag.Cities" class="k-textbox form-control" onchange="GetDistricts('#DogumCityId', '#DogumDistricts')"></select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Doğum İlçe:</label>
+                        <select id="DogumDistricts" asp-for="Kisi.DogumIlceId" asp-items="ViewBag.DogumDistricts" class="k-textbox form-control">
+                            <option value="0">İlçe Seçiniz.</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Konum Şehir:</label>
+                        <select id="KonumCityId" asp-for="Kisi.KonumSehirId" asp-items="ViewBag.Cities" class="k-textbox form-control" onchange="GetDistricts('#KonumCityId', '#KonumDistricts')"></select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Konum İlçe:</label>
+                        <select id="KonumDistricts" asp-for="Kisi.KonumIlceId" asp-items="ViewBag.KonumDistricts" class="k-textbox form-control">
+                            <option value="0">İlçe Seçiniz.</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Kan Grubu:</label>
+                        <select asp-for="Kisi.KanGrubu" class="k-textbox form-control">
+                            <option hidden>Kan Grubunuzu Seçiniz.</option>
+                            <option value="A RH (+)">A RH (+)</option>
+                            <option value="A RH (-)">A RH (-)</option>
+                            <option value="B RH (+)">B RH (+)</option>
+                            <option value="B RH (-)">B RH (-)</option>
+                            <option value="0 RH (+)">0 RH (+)</option>
+                            <option value="0 RH (-)">0 RH (-)</option>
+                            <option value="AB RH (+)">AB RH (+)</option>
+                            <option value="AB RH (-)">AB RH (-)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Ehliyet:</label>
+                        <select id="Ehliyet" style="background-color: transparent;" multiple="multiple" asp-for="Ehliyetler" data-placeholder="Ehliyetlerinizi Seçiniz.">
+                            <option value="M">M</option>
+                            <option value="A1">A1</option>
+                            <option value="A2">A2</option>
+                            <option value="A">A</option>
+                            <option value="B1">B1</option>
+                            <option value="B">B</option>
+                            <option value="BE">BE</option>
+                            <option value="C1">C1</option>
+                            <option value="C1E">C1E</option>
+                            <option value="C">C</option>
+                            <option value="CE">CE</option>
+                            <option value="D1">D1</option>
+                            <option value="D1E">D1E</option>
+                            <option value="D">D</option>
+                            <option value="DE">DE</option>
+                            <option value="F">F</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Medeni Durum:</label>
+                        <select asp-for="Kisi.MedeniDurum" class="k-textbox form-control">
+                            <option hidden>Medeni Durumu Seçiniz.</option>
+                            <option value="Bekar">Bekar</option>
+                            <option value="Evli">Evli</option>
+                            <option value="Dul">Dul</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Cinsiyet:</label>
+                        <select asp-for="Kisi.Cinsiyet" class="k-textbox form-control">
+                            <option hidden>Cinsiyet Seçiniz.</option>
+                            <option value="Kadın">Kadın</option>
+                            <option value="Erkek">Erkek</option>
+                            <option value="Belirsiz">Belirsiz</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Doğum Tarihi:</label>
+                        <input id="DogumTarihi" asp-for="Kisi.DogumTarihi" class="form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Fotoğraf:</label>
+                        <input asp-for="File" name="File" id="File" type="file" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Eposta:</label>
+                        <input asp-for="Kisi.Eposta" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Telefon:</label>
+                        <input asp-for="Kisi.Telefon" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Cep Telefonu:</label>
+                        <input asp-for="Kisi.CepTelefonu" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Sabit Telefonu:</label>
+                        <input asp-for="Kisi.SabitTelefonu" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Faks:</label>
+                        <input asp-for="Kisi.Faks" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Sigara Kullanım Durumu:</label>
+                        <select asp-for="Kisi.SigaraKullanımDurumu" class="k-textbox form-control">
+                            <option hidden>Sigara Kullanım Durumu Seçiniz.</option>
+                            <option value=false>Kullanmıyor</option>
+                            <option value=true>Kullanıyor</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Seyahat Engeli Durumu:</label>
+                        <select asp-for="Kisi.SeyahatEngeliDurumu" class="k-textbox form-control">
+                            <option hidden>Seyahat Engel Durumu Seçiniz.</option>
+                            <option value=false>Yok</option>
+                            <option value=true>Var</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Alkol Kullanım Durumu:</label>
+                        <select asp-for="Kisi.AlkolKullanımDurumu" class="k-textbox form-control">
+                            <option hidden>Alkol Kullanım Durumu Seçiniz.</option>
+                            <option value=false>Kullanmıyor</option>
+                            <option value=true>Kullanıyor</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Engel Durumu:</label>
+                        <select asp-for="Kisi.EngelDurumu" class="k-textbox form-control">
+                            <option hidden>Engel Durumu Seçiniz.</option>
+                            <option value=false>Yok</option>
+                            <option value=true>Var</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Askerlik Durumu:</label>
+                        <select asp-for="Kisi.AskerlikDurumu" class="k-textbox form-control">
+                            <option hidden>Askerlik Durumu Seçiniz.</option>
+                            <option value="Tecilli">Tecilli</option>
+                            <option value="Muaf">Muaf</option>
+                            <option value="Yapıldı">Yapıldı</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Tecil Tarihi:</label>
+                        <input id="TecilTarihi" asp-for="Kisi.TecilTarihi" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Meslek:</label>
+                        <input asp-for="Kisi.Meslek" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Çalışmak İstenilen Şehir:</label>
+                        <select asp-for="Kisi.CalismakIstenilenSehir" asp-items="ViewBag.Cities" class="k-textbox form-control"></select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>İş Arama Durumu:</label>
+                        <input asp-for="Kisi.IsAramaDurumu" class="k-textbox form-control" />
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Ucret Beklentisi:</label>
+                        <input asp-for="Kisi.UcretBeklentisi" class="k-textbox form-control" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Kariyer Hedefi:</label>
+                        <textarea asp-for="Kisi.KariyerHedefi" class="k-textbox form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Ön Yazı:</label>
+                        <textarea asp-for="Kisi.OnYazi" class="k-textbox form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="bottom:80px; position: fixed; z-index:999; right:50px;" class="col-12 m-2 clearfix">
+        <button class="k-button pull-right">KAYDET</button>
+    </div>
+</form>
