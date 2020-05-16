@@ -93,6 +93,7 @@
                         <label>Kan Grubu:</label>
                         <select asp-for="Kisi.KanGrubu" class="k-textbox form-control">
                             <option hidden>Kan Grubunuzu Seçiniz.</option>
+                            <option value="Kan Grubumu Bilmiyorum">Kan Grubumu Bilmiyorum</option>
                             <option value="A RH (+)">A RH (+)</option>
                             <option value="A RH (-)">A RH (-)</option>
                             <option value="B RH (+)">B RH (+)</option>
@@ -108,6 +109,7 @@
                     <div class="form-group">
                         <label>Ehliyet:</label>
                         <select id="Ehliyet" style="background-color: transparent;" multiple="multiple" asp-for="Ehliyetler" data-placeholder="Ehliyetlerinizi Seçiniz.">
+                            <option value="Yok">Yok</option>
                             <option value="M">M</option>
                             <option value="A1">A1</option>
                             <option value="A2">A2</option>

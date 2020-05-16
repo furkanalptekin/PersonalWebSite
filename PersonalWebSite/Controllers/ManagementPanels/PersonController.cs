@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 using DB.ViewModels;
 using Logic;
 using Logic.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
@@ -17,11 +15,6 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Delete(int? id)
         {
             return Json(new { success = logic.Delete(id) });
-        }
-
-        public IActionResult Index()
-        {
-            return View();
         }
 
         public IActionResult List()
