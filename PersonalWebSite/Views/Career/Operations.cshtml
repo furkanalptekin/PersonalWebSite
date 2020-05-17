@@ -33,27 +33,29 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Firma:</label>
+                        <label>Firma <span class="text-danger">*</span></label>
                         <input asp-for="MeslekiDeneyim.Firma" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="MeslekiDeneyim.Firma"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Pozisyon:</label>
+                        <label>Pozisyon <span class="text-danger">*</span></label>
                         <input asp-for="MeslekiDeneyim.Pozisyon" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="MeslekiDeneyim.Pozisyon"></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Başlangıç Tarihi:</label>
+                        <label>Başlangıç Tarihi</label>
                         <input id="baslangicTarihi" asp-for="MeslekiDeneyim.BaslangicTarih" class="form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Bitiş Tarihi:</label>
+                        <label>Bitiş Tarihi</label>
                         <input id="bitisTarihi" asp-for="MeslekiDeneyim.BitisTarih" class="form-control" />
                     </div>
                 </div>
@@ -61,13 +63,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Adres:</label>
+                        <label>Adres</label>
                         <textarea asp-for="MeslekiDeneyim.Adres" class="k-textbox form-control"></textarea>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Ikon:</label>
+                        <label>Ikon</label>
                         <input asp-for="Icon" name="Icon" id="File" type="file" />
                     </div>
                 </div>

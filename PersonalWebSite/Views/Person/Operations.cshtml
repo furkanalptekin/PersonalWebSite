@@ -36,7 +36,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Uyruk:</label>
+                        <label>Uyruk</label>
                         <input asp-for="Kisi.Uyruk" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -44,27 +44,29 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Adı:</label>
+                        <label>Adı <span class="text-danger">*</span></label>
                         <input asp-for="Kisi.Adi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Kisi.Adi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Soyadı:</label>
+                        <label>Soyadı <span class="text-danger">*</span></label>
                         <input asp-for="Kisi.Soyadi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Kisi.Soyadi"></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Doğum Şehir:</label>
+                        <label>Doğum Şehir</label>
                         <select id="DogumCityId" asp-for="Kisi.DogumSehirId" asp-items="ViewBag.Cities" class="k-textbox form-control" onchange="GetDistricts('#DogumCityId', '#DogumDistricts')"></select>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Doğum İlçe:</label>
+                        <label>Doğum İlçe</label>
                         <select id="DogumDistricts" asp-for="Kisi.DogumIlceId" asp-items="ViewBag.DogumDistricts" class="k-textbox form-control">
                             <option value="0">İlçe Seçiniz.</option>
                         </select>
@@ -74,13 +76,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Konum Şehir:</label>
+                        <label>Konum Şehir</label>
                         <select id="KonumCityId" asp-for="Kisi.KonumSehirId" asp-items="ViewBag.Cities" class="k-textbox form-control" onchange="GetDistricts('#KonumCityId', '#KonumDistricts')"></select>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Konum İlçe:</label>
+                        <label>Konum İlçe</label>
                         <select id="KonumDistricts" asp-for="Kisi.KonumIlceId" asp-items="ViewBag.KonumDistricts" class="k-textbox form-control">
                             <option value="0">İlçe Seçiniz.</option>
                         </select>
@@ -90,7 +92,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Kan Grubu:</label>
+                        <label>Kan Grubu</label>
                         <select asp-for="Kisi.KanGrubu" class="k-textbox form-control">
                             <option hidden>Kan Grubunuzu Seçiniz.</option>
                             <option value="Kan Grubumu Bilmiyorum">Kan Grubumu Bilmiyorum</option>
@@ -107,7 +109,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Ehliyet:</label>
+                        <label>Ehliyet</label>
                         <select id="Ehliyet" style="background-color: transparent;" multiple="multiple" asp-for="Ehliyetler" data-placeholder="Ehliyetlerinizi Seçiniz.">
                             <option value="Yok">Yok</option>
                             <option value="M">M</option>
@@ -133,7 +135,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Medeni Durum:</label>
+                        <label>Medeni Durum</label>
                         <select asp-for="Kisi.MedeniDurum" class="k-textbox form-control">
                             <option hidden>Medeni Durumu Seçiniz.</option>
                             <option value="Bekar">Bekar</option>
@@ -144,7 +146,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Cinsiyet:</label>
+                        <label>Cinsiyet</label>
                         <select asp-for="Kisi.Cinsiyet" class="k-textbox form-control">
                             <option hidden>Cinsiyet Seçiniz.</option>
                             <option value="Kadın">Kadın</option>
@@ -157,7 +159,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Doğum Tarihi:</label>
+                        <label>Doğum Tarihi</label>
                         <input id="DogumTarihi" asp-for="Kisi.DogumTarihi" class="form-control" />
                     </div>
                 </div>
@@ -173,13 +175,14 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Eposta:</label>
+                        <label>Eposta <span class="text-danger">*</span></label>
                         <input asp-for="Kisi.Eposta" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Kisi.Eposta"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Telefon:</label>
+                        <label>Telefon</label>
                         <input asp-for="Kisi.Telefon" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -187,13 +190,14 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Cep Telefonu:</label>
+                        <label>Cep Telefonu <span class="text-danger">*</span></label>
                         <input asp-for="Kisi.CepTelefonu" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Kisi.CepTelefonu"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Sabit Telefonu:</label>
+                        <label>Sabit Telefonu </label>
                         <input asp-for="Kisi.SabitTelefonu" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -201,7 +205,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Faks:</label>
+                        <label>Faks <span class="text-danger">*</span></label>
                         <input asp-for="Kisi.Faks" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -211,7 +215,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Sigara Kullanım Durumu:</label>
+                        <label>Sigara Kullanım Durumu </label>
                         <select asp-for="Kisi.SigaraKullanımDurumu" class="k-textbox form-control">
                             <option hidden>Sigara Kullanım Durumu Seçiniz.</option>
                             <option value=false>Kullanmıyor</option>
@@ -221,7 +225,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Seyahat Engeli Durumu:</label>
+                        <label>Seyahat Engeli Durumu </label>
                         <select asp-for="Kisi.SeyahatEngeliDurumu" class="k-textbox form-control">
                             <option hidden>Seyahat Engel Durumu Seçiniz.</option>
                             <option value=false>Yok</option>
@@ -233,7 +237,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Alkol Kullanım Durumu:</label>
+                        <label>Alkol Kullanım Durumu </label>
                         <select asp-for="Kisi.AlkolKullanımDurumu" class="k-textbox form-control">
                             <option hidden>Alkol Kullanım Durumu Seçiniz.</option>
                             <option value=false>Kullanmıyor</option>
@@ -243,7 +247,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Engel Durumu:</label>
+                        <label>Engel Durumu </label>
                         <select asp-for="Kisi.EngelDurumu" class="k-textbox form-control">
                             <option hidden>Engel Durumu Seçiniz.</option>
                             <option value=false>Yok</option>
@@ -255,7 +259,7 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Askerlik Durumu:</label>
+                        <label>Askerlik Durumu </label>
                         <select asp-for="Kisi.AskerlikDurumu" class="k-textbox form-control">
                             <option hidden>Askerlik Durumu Seçiniz.</option>
                             <option value="Tecilli">Tecilli</option>
@@ -266,7 +270,7 @@
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Tecil Tarihi:</label>
+                        <label>Tecil Tarihi </label>
                         <input id="TecilTarihi" asp-for="Kisi.TecilTarihi" class="form-control" />
                     </div>
                 </div>
@@ -274,13 +278,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Meslek:</label>
+                        <label>Meslek </label>
                         <input asp-for="Kisi.Meslek" class="k-textbox form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Çalışmak İstenilen Şehir:</label>
+                        <label>Çalışmak İstenilen Şehir </label>
                         <select asp-for="Kisi.CalismakIstenilenSehir" asp-items="ViewBag.Cities" class="k-textbox form-control"></select>
                     </div>
                 </div>
@@ -288,13 +292,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>İş Arama Durumu:</label>
+                        <label>İş Arama Durumu </label>
                         <input asp-for="Kisi.IsAramaDurumu" class="k-textbox form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Ucret Beklentisi:</label>
+                        <label>Ucret Beklentisi </label>
                         <input asp-for="Kisi.UcretBeklentisi" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -302,13 +306,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Kariyer Hedefi:</label>
+                        <label>Kariyer Hedefi </label>
                         <textarea asp-for="Kisi.KariyerHedefi" class="k-textbox form-control"></textarea>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Ön Yazı:</label>
+                        <label>Ön Yazı </label>
                         <textarea asp-for="Kisi.OnYazi" class="k-textbox form-control"></textarea>
                     </div>
                 </div>

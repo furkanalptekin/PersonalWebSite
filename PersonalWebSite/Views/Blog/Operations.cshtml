@@ -39,13 +39,14 @@
                     <div class="col-12 row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Başlık:</label>
+                                <label>Başlık <span class="text-danger">*</span></label>
                                 <input asp-for="Blog.Baslik" class="k-textbox form-control" />
+                                <span class="text-danger" asp-validation-for="Blog.Baslik"></span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Blog Fotoğrafı:</label>
+                                <label>Blog Fotoğrafı</label>
                                 <input asp-for="File" name="File" id="File" type="file" />
                             </div>
                         </div>
@@ -53,29 +54,31 @@
                     <div class="col-12 row">
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Gösterim Başlangıç Tarihi:</label>
+                                <label>Gösterim Başlangıç Tarihi</label>
                                 <input id="Baslangic" asp-for="Blog.GosterimBaslangicTarihi" class="form-control" />
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label>Gösterim Bitiş Tarihi:</label>
+                                <label>Gösterim Bitiş Tarihi</label>
                                 <input id="Bitis" asp-for="Blog.GosterimBitisTarihi" class="form-control" />
                             </div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label>Özet:</label>
+                            <label>Özet <span class="text-danger">*</span></label>
                             <textarea rows="20" style="width: 100%;" asp-for="Blog.Ozet" class="k-textarea form-control"></textarea>
+                            <span class="text-danger" asp-validation-for="Blog.Ozet"></span>
                         </div>
                     </div>
                 </div>
                 <div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label>Detay:</label>
+                            <label>Detay <span class="text-danger">*</span></label>
                             <textarea asp-for="Blog.Detay" id="editor" style="height: 550px;" aria-label="editor"></textarea>
+                            <span class="text-danger" asp-validation-for="Blog.Detay"></span>
                         </div>
                     </div>
                 </div>

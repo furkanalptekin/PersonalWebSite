@@ -32,27 +32,29 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Okul Adı:</label>
+                        <label>Okul Adı <span class="text-danger">*</span></label>
                         <input asp-for="OkulAdi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="OkulAdi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Eğitim Seviyesi:</label>
+                        <label>Eğitim Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="EgitimSeviyesi" asp-items="ViewBag.EducationTypes" class="k-textbox form-control"></select>
+                        <span class="text-danger" asp-validation-for="EgitimSeviyesi"></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Mezuniyet Derecesi:</label>
+                        <label>Mezuniyet Derecesi</label>
                         <input asp-for="MezuniyetDerecesi" class="k-textbox form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Not Sistemi:</label>
+                        <label>Not Sistemi</label>
                         <select asp-for="NotSistemi" class="k-textbox form-control">
                             <option value="4">4lük Sistem</option>
                             <option value="100">100lük Sistem</option>
@@ -63,13 +65,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Baslangıç Tarihi:</label>
+                        <label>Baslangıç Tarihi</label>
                         <input id="baslangicTarihi" asp-for="BaslangicTarihi" class="form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Bitiş Tarihi:</label>
+                        <label>Bitiş Tarihi</label>
                         <input id="bitisTarihi" asp-for="BitisTarihi" class="form-control" />
                     </div>
                 </div>
@@ -77,13 +79,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Fakülte:</label>
+                        <label>Fakülte</label>
                         <input asp-for="Fakulte" class="k-textbox form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Bolum:</label>
+                        <label>Bolum</label>
                         <input asp-for="Bolum" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -91,13 +93,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Şehir:</label>
+                        <label>Şehir</label>
                         <select id="CityId" asp-for="SehirId" asp-items="ViewBag.Cities" class="k-textbox form-control" onchange="GetDistricts()"></select>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>İlçe:</label>
+                        <label>İlçe</label>
                         <select id="districts" asp-for="IlceId" asp-items="ViewBag.Districts" class="k-textbox form-control">
                             <option value="0">İlçe Seçiniz.</option>
                         </select>
@@ -107,13 +109,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Eğitim Dili:</label>
+                        <label>Eğitim Dili</label>
                         <input asp-for="EgitimDili" class="k-textbox form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Ek Açıklama:</label>
+                        <label>Ek Açıklama</label>
                         <textarea asp-for="EkAciklama" class="k-textbox form-control"></textarea>
                     </div>
                 </div>

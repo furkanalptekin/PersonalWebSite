@@ -30,13 +30,14 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>CV'nin Adı:</label>
+                        <label>CV'nin Adı <span class="text-danger">*</span></label>
                         <input asp-for="Cv.CvAdi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Cv.CvAdi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>CV:</label>
+                        <label>CV</label>
                         <input asp-for="File" name="File" id="File" type="file" />
                         <div class="demo-hint">Sadece <strong>PDF</strong> Dosyası Yüklenebilir.</div>
                     </div>

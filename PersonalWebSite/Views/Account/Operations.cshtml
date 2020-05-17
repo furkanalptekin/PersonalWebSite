@@ -32,22 +32,25 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Kullanıcı Adı:</label>
+                        <label>Kullanıcı Adı <span class="text-danger">*</span></label>
                         <input asp-for="KullaniciAdi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="KullaniciAdi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Şifre:</label>
+                        <label>Şifre <span class="text-danger">*</span></label>
                         <input type="password" asp-for="Sifre" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Sifre"></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Ad Soyad:</label>
+                        <label>Ad Soyad <span class="text-danger">*</span></label>
                         <input asp-for="AdSoyad" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="AdSoyad"></span>
                     </div>
                 </div>
             </div>

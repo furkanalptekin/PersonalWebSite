@@ -33,21 +33,23 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Adı:</label>
+                        <label>Adı <span class="text-danger">*</span></label>
                         <input asp-for="SosyalMedya.SosyalMedyaAdi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="SosyalMedya.SosyalMedyaAdi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Adresi:</label>
+                        <label>Adresi <span class="text-danger">*</span></label>
                         <input asp-for="SosyalMedya.Adres" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="SosyalMedya.Adres"></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Ikon:</label>
+                        <label>Ikon</label>
                         <input asp-for="Icon" name="Icon" id="File" type="file" />
                     </div>
                 </div>

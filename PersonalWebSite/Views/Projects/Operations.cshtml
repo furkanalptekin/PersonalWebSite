@@ -32,13 +32,14 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Adı:</label>
+                        <label>Adı <span class="text-danger">*</span></label>
                         <input asp-for="Adi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Adi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Link:</label>
+                        <label>Link</label>
                         <input asp-for="Link" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -46,13 +47,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Baslangıç Tarihi:</label>
+                        <label>Baslangıç Tarihi</label>
                         <input id="baslangicTarihi" asp-for="BaslangicTarihi" class="form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Bitiş Tarihi:</label>
+                        <label>Bitiş Tarihi</label>
                         <input id="bitisTarihi" asp-for="BitisTarihi" class="form-control" />
                     </div>
                 </div>
@@ -60,13 +61,13 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Yapılış Nedeni:</label>
+                        <label>Yapılış Nedeni</label>
                         <input asp-for="YapilisNedeni" class="k-textbox form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Kategori:</label>
+                        <label>Kategori</label>
                         <input asp-for="Kategori" class="k-textbox form-control" />
                     </div>
                 </div>
@@ -74,14 +75,16 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Kullanılan Diller:</label>
+                        <label>Kullanılan Diller <span class="text-danger">*</span></label>
                         <input asp-for="KullanilanDiller" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="KullanilanDiller"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Açıklama:</label>
+                        <label>Açıklama <span class="text-danger">*</span></label>
                         <textarea asp-for="Aciklama" class="k-textbox form-control"></textarea>
+                        <span class="text-danger" asp-validation-for="Aciklama"></span>
                     </div>
                 </div>
             </div>

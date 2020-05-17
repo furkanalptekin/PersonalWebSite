@@ -1,14 +1,19 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DB.Models
 {
     public partial class Kisi
     {
         public int Id { get; set; }
+        [Required(ErrorMessage = "Adı Boş Geçilemez."), MaxLength(255)]
         public string Adi { get; set; }
+        [Required(ErrorMessage = "Soyadı Boş Geçilemez."), MaxLength(255)]
         public string Soyadi { get; set; }
+        [Required(ErrorMessage = "E-Posta Boş Geçilemez."), MaxLength(255)]
         public string Eposta { get; set; }
         public string Telefon { get; set; }
+        [Required(ErrorMessage = "Cep Telefonu Boş Geçilemez."), MaxLength(255)]
         public string CepTelefonu { get; set; }
         public string SabitTelefonu { get; set; }
         public string Faks { get; set; }

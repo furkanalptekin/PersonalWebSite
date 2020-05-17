@@ -32,29 +32,31 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Adı: <span class="text-danger">*</span></label>
+                        <label>Adı <span class="text-danger">*</span></label>
                         <input asp-for="Adi" class="k-textbox form-control" />
                         <span class="text-danger" asp-validation-for="Adi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Firma:</label>
+                        <label>Firma <span class="text-danger">*</span></label>
                         <input asp-for="Firma" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Firma"></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Tarih:</label>
+                        <label>Tarih</label>
                         <input id="datepicker" asp-for="Tarih" class="form-control" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Açıklama:</label>
+                        <label>Açıklama <span class="text-danger">*</span></label>
                         <textarea asp-for="Aciklama" class="k-textbox form-control"></textarea>
+                        <span class="text-danger" asp-validation-for="Aciklama"></span>
                     </div>
                 </div>
             </div>

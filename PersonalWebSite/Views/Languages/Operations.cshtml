@@ -32,34 +32,39 @@
             <div class="col-12 row">
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Adı:</label>
+                        <label>Adı <span class="text-danger">*</span></label>
                         <input asp-for="Adi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Adi"></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="form-group">
-                        <label>Seviyesi:</label>
+                        <label>Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="Seviyesi" asp-items="ViewBag.RatingA1" class="k-textbox form-control"></select>
+                        <span class="text-danger" asp-validation-for="Seviyesi"></span>
                     </div>
                 </div>
             </div>
             <div class="col-12 row">
                 <div class="col-4">
                     <div class="form-group">
-                        <label>Okuma Seviyesi:</label>
+                        <label>Okuma Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="OkumaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
+                        <span class="text-danger" asp-validation-for="OkumaSeviyesi"></span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label>Yazma Seviyesi:</label>
+                        <label>Yazma Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="YazmaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
+                        <span class="text-danger" asp-validation-for="YazmaSeviyesi"></span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <label>Konuşma Seviyesi:</label>
+                        <label>Konuşma Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="KonusmaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
+                        <span class="text-danger" asp-validation-for="KonusmaSeviyesi"></span>
                     </div>
                 </div>
             </div>
