@@ -6,7 +6,6 @@ using Logic.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Logic
 {
@@ -17,19 +16,17 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var file = model.Icon.ImageToBase64();
+                if (file != null)
                 {
-                    var file = Base64Processing.ImageToBase64(model.Icon);
-                    if (file != null)
-                    {
-                        var career = model.MeslekiDeneyim;
-                        career.Aktif = true;
-                        career.EklemeTarihi = DateTime.Now;
-                        career.FirmaIcon = file;
-                        db.MeslekiDeneyim.Add(career);
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    var career = model.MeslekiDeneyim;
+                    career.Aktif = true;
+                    career.EklemeTarihi = DateTime.Now;
+                    career.FirmaIcon = file;
+                    db.MeslekiDeneyim.Add(career);
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;
@@ -70,7 +67,7 @@ namespace Logic
             foreach (var item in GetList())
             {
                 var file = item.FirmaIcon.Split('|');
-                list.Add(new CareerDataModel() 
+                list.Add(new CareerDataModel()
                 {
                     Id = item.Id,
                     Pozisyon = item.Pozisyon,
@@ -92,24 +89,22 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var career = db.MeslekiDeneyim.Find(model.MeslekiDeneyim.Id);
+                if (career != null)
                 {
-                    var career = db.MeslekiDeneyim.Find(model.MeslekiDeneyim.Id);
-                    if (career != null)
-                    {
-                        career.Aktif = true;
-                        career.DegisimTarihi = DateTime.Now;
-                        career.Firma = model.MeslekiDeneyim.Firma;
-                        career.BaslangicTarih = model.MeslekiDeneyim.BaslangicTarih;
-                        career.BitisTarih = model.MeslekiDeneyim.BitisTarih;
-                        career.Pozisyon = model.MeslekiDeneyim.Pozisyon;
-                        career.Adres = model.MeslekiDeneyim.Adres;
-                        if (model.Icon != null)
-                            career.FirmaIcon = Base64Processing.ImageToBase64(model.Icon);
+                    career.Aktif = true;
+                    career.DegisimTarihi = DateTime.Now;
+                    career.Firma = model.MeslekiDeneyim.Firma;
+                    career.BaslangicTarih = model.MeslekiDeneyim.BaslangicTarih;
+                    career.BitisTarih = model.MeslekiDeneyim.BitisTarih;
+                    career.Pozisyon = model.MeslekiDeneyim.Pozisyon;
+                    career.Adres = model.MeslekiDeneyim.Adres;
+                    if (model.Icon != null)
+                        career.FirmaIcon = model.Icon.ImageToBase64();
 
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

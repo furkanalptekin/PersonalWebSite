@@ -1,12 +1,13 @@
-﻿using System;
-using DB.Models;
+﻿using DB.Models;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class ProjectsController : Controller, IControllerFunctions<Projeler>
     {
         private readonly IDatabaseFunctions<Projeler, Projeler> logic = new ProjectLogic();
@@ -20,7 +21,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<Projeler>.ListToJson(logic.GetList()) });
+            return Json(new { success = true, data = logic.GetList().ToJsonList() });
         }
 
         [HttpGet]

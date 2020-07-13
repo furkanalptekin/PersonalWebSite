@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DB.Models;
+﻿using DB.Models;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class EducationController : Controller, IControllerFunctions<Egitim>
     {
         private readonly IDatabaseFunctions<Egitim, Egitim> logic = new EducationLogic();
@@ -24,7 +22,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<Egitim>.ListToJson(logic.GetList()) });
+            return Json(new { success = true, data = logic.GetList().ToJsonList() });
         }
 
         [HttpGet]

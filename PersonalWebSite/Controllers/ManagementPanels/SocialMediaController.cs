@@ -1,13 +1,14 @@
-﻿using System;
-using DB.DataModels;
-using DB.ViewModels;
+﻿using DB.ViewModels;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class SocialMediaController : Controller, IControllerFunctions<SocialMediaViewModel>
     {
         private readonly SocialMediaLogic logic = new SocialMediaLogic();
@@ -21,7 +22,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<SocialMediaDataModel>.ListToJson(logic.GetDataModelList()) });
+            return Json(new { success = true, data = logic.GetDataModelList().ToJsonList() });
         }
 
         [HttpGet]

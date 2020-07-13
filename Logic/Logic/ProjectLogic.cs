@@ -1,7 +1,7 @@
 ﻿using DB.Models;
+using Logic.Interfaces;
 using System;
 using System.Collections.Generic;
-using Logic.Interfaces;
 using System.Linq;
 
 namespace Logic
@@ -13,14 +13,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.Aktif = true;
-                    model.EklemeTarihi = DateTime.Now;
-                    db.Projeler.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.Aktif = true;
+                model.EklemeTarihi = DateTime.Now;
+                db.Projeler.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }
@@ -59,24 +57,22 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var projects = db.Projeler.Find(model.Id);
+                if (projects != null)
                 {
-                    var projects = db.Projeler.Find(model.Id);
-                    if (projects != null)
-                    {
-                        projects.DegisimTarihi = DateTime.Now;
-                        projects.Aktif = true;
-                        projects.Adi = model.Adi;
-                        projects.Link = model.Link;
-                        projects.BaslangicTarihi = model.BaslangicTarihi;
-                        projects.BitisTarihi = model.BitisTarihi;
-                        projects.KullanilanDiller = model.KullanilanDiller;
-                        projects.Aciklama = model.Aciklama;
-                        projects.YapilisNedeni = model.YapilisNedeni;
-                        projects.Kategori = model.Kategori;
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    projects.DegisimTarihi = DateTime.Now;
+                    projects.Aktif = true;
+                    projects.Adi = model.Adi;
+                    projects.Link = model.Link;
+                    projects.BaslangicTarihi = model.BaslangicTarihi;
+                    projects.BitisTarihi = model.BitisTarihi;
+                    projects.KullanilanDiller = model.KullanilanDiller;
+                    projects.Aciklama = model.Aciklama;
+                    projects.YapilisNedeni = model.YapilisNedeni;
+                    projects.Kategori = model.Kategori;
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

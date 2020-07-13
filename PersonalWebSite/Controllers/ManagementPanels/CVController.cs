@@ -1,11 +1,12 @@
 ﻿using DB.ViewModels;
-using DB.DataModels;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class CVController : Controller, IControllerFunctions<CvFileModel>
     {
         [HttpGet]
@@ -37,7 +38,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult List()
         {
             CvLogic logic = new CvLogic();
-            return Json(new { success = true, data = JsonLogic<CvDataModel>.ListToJson(logic.ConvertToDataModel(logic.GetList())) });
+            return Json(new { success = true, data = logic.ConvertToDataModel(logic.GetList()).ToJsonList() });
         }
 
         [HttpPost]
@@ -45,7 +46,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             var cv = new CvLogic().GetFromId(id);
             if (cv != null)
-                return Json(new { success = true, B64 = cv.B64, CvName = cv.CvAdi });
+                return Json(new { success = true, cv.B64, CvName = cv.CvAdi });
 
             return Json(new { success = false });
         }

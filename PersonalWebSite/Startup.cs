@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using DB.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace PersonelWebSite
 {
@@ -23,14 +21,22 @@ namespace PersonelWebSite
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<PersonalWebSiteContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("PersonalWebSite"))
+            );
+
             var mvcviews = services.AddControllersWithViews();
-            services.AddSession(options => {
+            services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
+
+            services.AddSession(options =>
+            {
                 options.IdleTimeout = TimeSpan.FromDays(1);
                 options.Cookie.IsEssential = true;
             });
-            #if (DEBUG)
-                mvcviews.AddRazorRuntimeCompilation();
-            #endif
+
+#if DEBUG
+            mvcviews.AddRazorRuntimeCompilation();
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,9 +54,11 @@ namespace PersonelWebSite
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseSession();
             app.UseRouting();
 
+            app.UseSession();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

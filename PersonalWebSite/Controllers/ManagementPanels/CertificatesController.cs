@@ -1,11 +1,13 @@
 ﻿using DB.Models;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class CertificatesController : Controller, IControllerFunctions<Sertifikalar>
     {
         readonly IDatabaseFunctions<Sertifikalar, Sertifikalar> logic = new CertificateLogic();
@@ -19,7 +21,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<Sertifikalar>.ListToJson(logic.GetList()) });
+            return Json(new { success = true, data = logic.GetList().ToJsonList() });
         }
 
         [HttpGet]

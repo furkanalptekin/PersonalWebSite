@@ -6,9 +6,9 @@ namespace DB.Models
     public partial class Basarilar
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Ad Boş Geçilemez."), MaxLength(255)]
+        [Required(ErrorMessage = "Ad Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string Adi { get; set; }
-        [Required(ErrorMessage = "Firma Bilgisi Boş Geçilemez."), MaxLength(255)]
+        [Required(ErrorMessage = "Firma Bilgisi Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string Firma { get; set; }
         public string Tarih { get; set; }
         [Required(ErrorMessage = "Açıklama Alanı Boş Geçilemez.")]

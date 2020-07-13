@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+ 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -33,7 +35,7 @@
                         <img src="~/ManagementLayout/Content/images/avatar.png" alt="" class="img-fluid rounded-circle" />
                     </div>
                     <div class="text-center text-white mt-2">
-                        <h6>Furkan ALPTEKİN</h6>
+                        <h6>@Context.Session.GetString("NAME")</h6>
                         <p class="text-muted m-0">ADMIN</p>
                     </div>
                 </div>
@@ -106,13 +108,12 @@
                 <!--toggle button start-->
                 <a class="toggle-btn"><i class="ti ti-menu"></i></a>
                 <!--toggle button end-->
-
-                <div class="notification-wrap">
-                    <!--right notification start-->
-                    <div class="right-notification mt-2">
-                        <a style="position: relative; top: 25%;" class="notification-menu mr-5" href="~/Account/Logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış</a>
-                    </div><!--right notification end-->
-                </div>
+                    <div class="notification-wrap">
+                        <!--right notification start-->
+                        <div class="right-notification mt-2">
+                            <a style="position: relative; top: 25%;" class="notification-menu mr-5" href="~/Account/Logout" ><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış</a>
+                        </div><!--right notification end-->
+                    </div>
             </div>
             <!-- header section end-->
 

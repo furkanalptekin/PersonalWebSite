@@ -13,14 +13,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.Aktif = true;
-                    model.EklemeTarihi = DateTime.Now;
-                    db.Egitim.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.Aktif = true;
+                model.EklemeTarihi = DateTime.Now;
+                db.Egitim.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }
@@ -59,28 +57,26 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var education = db.Egitim.Find(model.Id);
+                if (education != null)
                 {
-                    var education = db.Egitim.Find(model.Id);
-                    if (education != null)
-                    {
-                        education.DegisimTarihi = DateTime.Now;
-                        education.Aktif = true;
-                        education.OkulAdi = model.OkulAdi;
-                        education.BaslangicTarihi = model.BaslangicTarihi;
-                        education.BitisTarihi = model.BitisTarihi;
-                        education.EgitimSeviyesi = model.EgitimSeviyesi;
-                        education.MezuniyetDerecesi = model.MezuniyetDerecesi;
-                        education.NotSistemi = model.NotSistemi;
-                        education.Fakulte = model.Fakulte;
-                        education.Bolum = model.Bolum;
-                        education.EgitimDili = model.EgitimDili;
-                        education.EkAciklama = model.EkAciklama;
-                        education.SehirId = model.SehirId;
-                        education.IlceId = model.IlceId;
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    education.DegisimTarihi = DateTime.Now;
+                    education.Aktif = true;
+                    education.OkulAdi = model.OkulAdi;
+                    education.BaslangicTarihi = model.BaslangicTarihi;
+                    education.BitisTarihi = model.BitisTarihi;
+                    education.EgitimSeviyesi = model.EgitimSeviyesi;
+                    education.MezuniyetDerecesi = model.MezuniyetDerecesi;
+                    education.NotSistemi = model.NotSistemi;
+                    education.Fakulte = model.Fakulte;
+                    education.Bolum = model.Bolum;
+                    education.EgitimDili = model.EgitimDili;
+                    education.EkAciklama = model.EkAciklama;
+                    education.SehirId = model.SehirId;
+                    education.IlceId = model.IlceId;
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

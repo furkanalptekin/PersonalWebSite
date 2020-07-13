@@ -1,12 +1,13 @@
-﻿using DB.DataModels;
-using DB.ViewModels;
+﻿using DB.ViewModels;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class BlogController : Controller, IControllerFunctions<BlogViewModel>
     {
         private readonly BlogLogic logic = new BlogLogic();
@@ -20,7 +21,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<BlogDataModel>.ListToJson(logic.GetDataModelList()) });
+            return Json(new { success = true, data = logic.GetDataModelList().ToJsonList() });
         }
 
         [HttpGet]

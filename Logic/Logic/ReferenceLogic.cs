@@ -13,14 +13,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.Aktif = true;
-                    model.EklemeTarihi = DateTime.Now;
-                    db.Referanslar.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.Aktif = true;
+                model.EklemeTarihi = DateTime.Now;
+                db.Referanslar.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }
@@ -59,22 +57,20 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var references = db.Referanslar.Find(model.Id);
+                if (references != null)
                 {
-                    var references = db.Referanslar.Find(model.Id);
-                    if (references != null)
-                    {
-                        references.DegisimTarihi = DateTime.Now;
-                        references.Aktif = true;
-                        references.Adi = model.Adi;
-                        references.Firma = model.Firma;
-                        references.Telefon = model.Telefon;
-                        references.Eposta = model.Eposta;
-                        references.Meslek = model.Meslek;
-                        references.Pozisyon = model.Pozisyon;
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    references.DegisimTarihi = DateTime.Now;
+                    references.Aktif = true;
+                    references.Adi = model.Adi;
+                    references.Firma = model.Firma;
+                    references.Telefon = model.Telefon;
+                    references.Eposta = model.Eposta;
+                    references.Meslek = model.Meslek;
+                    references.Pozisyon = model.Pozisyon;
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

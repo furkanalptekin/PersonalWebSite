@@ -6,7 +6,7 @@ namespace DB.Models
     public partial class Yetenekler
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Yetenek Adı Boş Geçilemez."), MaxLength(10)]
+        [Required(ErrorMessage = "Yetenek Adı Boş Geçilemez."), MaxLength(10, ErrorMessage = "Maksimum 10 Karakter Olabilir.")]
         public string Adi { get; set; }
         [Required(ErrorMessage = "Başarı Oranı Boş Geçilemez.")]
         public int? BasariOrani { get; set; }

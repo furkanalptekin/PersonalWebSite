@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using DB.DataModels;
+﻿using DB.DataModels;
 using DB.Models;
 using DB.ViewModels;
 using Logic.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Logic
 {
@@ -15,20 +15,18 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                if (model.File != null)
                 {
-                    if (model.File != null)
+                    string b64 = model.File.PDFToBase64();
+                    if (b64 != null)
                     {
-                        string b64 = Base64Processing.PDFToBase64(model.File);
-                        if (b64 != null)
-                        {
-                            model.Cv.B64 = b64;
-                            model.Cv.EklemeTarihi = DateTime.Now;
-                            model.Cv.Aktif = true;
-                            db.Cv.Add(model.Cv);
-                            if (db.SaveChanges() > 0)
-                                success = true;
-                        }
+                        model.Cv.B64 = b64;
+                        model.Cv.EklemeTarihi = DateTime.Now;
+                        model.Cv.Aktif = true;
+                        db.Cv.Add(model.Cv);
+                        if (db.SaveChanges() > 0)
+                            success = true;
                     }
                 }
             }
@@ -77,7 +75,7 @@ namespace Logic
             {
                 foreach (var item in list)
                 {
-                    cvs.Add(new CvDataModel() 
+                    cvs.Add(new CvDataModel()
                     {
                         Id = item.Id,
                         CvAdi = item.CvAdi,

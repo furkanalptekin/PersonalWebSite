@@ -16,19 +16,17 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var file = model.Icon.ImageToBase64();
+                if (file != null)
                 {
-                    var file = Base64Processing.ImageToBase64(model.Icon);
-                    if (file != null)
-                    {
-                        var hobby = model.Hobiler;
-                        hobby.Aktif = true;
-                        hobby.EklemeTarihi = DateTime.Now;
-                        hobby.Ikon = file;
-                        db.Hobiler.Add(hobby);
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    var hobby = model.Hobiler;
+                    hobby.Aktif = true;
+                    hobby.EklemeTarihi = DateTime.Now;
+                    hobby.Ikon = file;
+                    db.Hobiler.Add(hobby);
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;
@@ -69,7 +67,7 @@ namespace Logic
             foreach (var item in GetList())
             {
                 var file = item.Ikon.Split('|');
-                list.Add(new HobbyDataModel() 
+                list.Add(new HobbyDataModel()
                 {
                     Id = item.Id,
                     Adi = item.Adi,
@@ -87,20 +85,18 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var hobby = db.Hobiler.Find(model.Hobiler.Id);
+                if (hobby != null)
                 {
-                    var hobby = db.Hobiler.Find(model.Hobiler.Id);
-                    if (hobby != null)
-                    {
-                        hobby.Aktif = true;
-                        hobby.DegisimTarihi = DateTime.Now;
-                        hobby.Adi = model.Hobiler.Adi;
-                        if (model.Icon != null)
-                            hobby.Ikon = Base64Processing.ImageToBase64(model.Icon);
+                    hobby.Aktif = true;
+                    hobby.DegisimTarihi = DateTime.Now;
+                    hobby.Adi = model.Hobiler.Adi;
+                    if (model.Icon != null)
+                        hobby.Ikon = model.Icon.ImageToBase64();
 
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

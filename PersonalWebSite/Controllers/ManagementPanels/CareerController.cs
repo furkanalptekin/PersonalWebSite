@@ -1,13 +1,14 @@
-﻿using System;
-using DB.ViewModels;
-using Logic.Interfaces;
+﻿using DB.ViewModels;
 using Logic;
-using Microsoft.AspNetCore.Mvc;
-using DB.DataModels;
+using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class CareerController : Controller, IControllerFunctions<CareerViewModel>
     {
         private readonly CareerLogic logic = new CareerLogic();
@@ -21,7 +22,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<CareerDataModel>.ListToJson(logic.GetDataModelList()) });
+            return Json(new { success = true, data = logic.GetDataModelList().ToJsonList() });
         }
 
         [HttpGet]

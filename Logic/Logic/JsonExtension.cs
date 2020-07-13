@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Logic
 {
-    public static class JsonLogic<T> where T: class
+    public static class JsonExtension
     {
-        public static List<string> ListToJson(List<T> list)
+        public static List<string> ToJsonList<T>(this List<T> list) where T : class
         {
             List<string> json = new List<string>();
             if (list != null)
@@ -15,6 +15,14 @@ namespace Logic
                     json.Add(JsonConvert.SerializeObject(item));
                 }
             }
+            return json;
+        }
+
+        public static string ToJson<T>(this List<T> list) where T : class
+        {
+            string json = null;
+            if (list != null)
+                json = JsonConvert.SerializeObject(list);
             return json;
         }
     }

@@ -1,112 +1,164 @@
 ﻿using DB.Models;
 using DB.ViewModels;
 using Logic;
-using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
-    public class AccountController : Controller, IControllerFunctions<Hesap>
+    public class AccountController : Controller
     {
-        private readonly IDatabaseFunctions<Hesap, Hesap> logic = new AccountLogic();
+        private readonly AccountLogic logic = new AccountLogic();
+
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger<LoginViewModel> _logger;
+
+        public AccountController(SignInManager<ApplicationUser> signInManager,
+            ILogger<LoginViewModel> logger,
+            UserManager<ApplicationUser> userManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = logger;
+        }
 
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public IActionResult Login(LoginViewModel model)
+        public async Task<IActionResult> Login(LoginViewModel model, string ReturnUrl = "/")
         {
             if (ModelState.IsValid)
             {
-                var login = new LoginLogic().Login(model);
-                if (login)
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
                 {
-                    HttpContext.Session.SetString("ADMIN", "asd");
-                    return RedirectToAction("Index", "Home");
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: true);
+                    if (result.Succeeded)
+                    {
+                        HttpContext.Session.SetString("NAME", user.NameSurname);
+                        return Redirect(ReturnUrl);
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning("User account locked out.");
+                        //TODO LOCKOUT SAYFASI
+                        return RedirectToPage("./Lockout");
+                    }
                 }
+                ModelState.AddModelError(string.Empty, "Kullanıcı Adı/Şifre yanlış!");
             }
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Delete(int? id)
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Logout()
         {
-            return Json(new { success = logic.Delete(id) });
+            if (User.FindFirstValue(ClaimTypes.Name) != null)
+            {
+                HttpContext.Session.Clear();
+                await _signInManager.SignOutAsync();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Delete(string id)
+        {
+            return Json(new { success = await logic.Delete(_userManager, id) });
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<Hesap>.ListToJson(logic.GetList()) });
+            return Json(new { success = true, data = logic.GetList(_userManager).ToJsonList() });
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Operations()
         {
             ViewBag.Update = false;
-            if (TempData["Alert"] != null)
-                ViewBag.Alert = (bool)TempData["Alert"];
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(Hesap model)
+        public async Task<IActionResult> Operations(AccountViewModel model)
         {
             ViewBag.Update = false;
             if (ModelState.IsValid)
             {
-                ViewBag.Alert = logic.Add(model);
+                await logic.Add(model, _userManager);
                 ModelState.Clear();
             }
             return View();
         }
 
         [HttpGet]
-        public IActionResult Show(int? id)
+        [Authorize]
+        public IActionResult Show(string id)
         {
             ViewBag.Show = true;
             ViewBag.Update = false;
-            var project = logic.GetFromId(id);
-            if (project != null)
+            var account = logic.GetFromId(_userManager, id).Result;
+            if (account != null)
             {
-                return View("Operations", project);
+                return View("Operations", account);
             }
             return NotFound();
         }
 
         [HttpGet]
-        public IActionResult Update(int? id)
+        [Authorize]
+        public async Task<IActionResult> Update(string Id)
         {
             ViewBag.Update = true;
-            var acc = logic.GetFromId(id);
+            AccountViewModel acc = await logic.GetFromId(_userManager, Id);
             if (acc != null)
             {
-                HttpContext.Session.SetInt32("UPDATEID", acc.Id);
+                HttpContext.Session.SetString("UPDATESTR", acc.Id);
                 return View("Operations", acc);
             }
             return NotFound();
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateDb(Hesap model)
+        public async Task<IActionResult> UpdateDb(AccountViewModel model)
         {
             ViewBag.Update = true;
-            var id = HttpContext.Session.GetInt32("UPDATEID");
-            if (id != null && id != -1)
+            if (ModelState.IsValid)
             {
-                model.Id = (int)id;
-                TempData["Alert"] = logic.Update(model);
-                HttpContext.Session.SetInt32("UPDATEID", -1);
-                ModelState.Clear();
+                var id = HttpContext.Session.GetString("UPDATESTR");
+                if (!string.IsNullOrEmpty(id))
+                {
+                    model.Id = id;
+                    TempData["Alert"] = await logic.Update(model, _userManager);
+                    HttpContext.Session.SetString("UPDATESTR", string.Empty);
+                    ModelState.Clear();
+                }
+                return RedirectToAction("Operations");
             }
-            return RedirectToAction("Operations");
+            return View("Operations");
         }
     }
 }

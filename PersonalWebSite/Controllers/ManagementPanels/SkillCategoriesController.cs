@@ -1,12 +1,14 @@
-﻿using System;
-using DB.Models;
+﻿using DB.Models;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class SkillCategoriesController : Controller, IControllerFunctions<YetenekKategori>
     {
         readonly IDatabaseFunctions<YetenekKategori, YetenekKategori> logic = new SkillCategoriesLogic();
@@ -42,7 +44,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpGet]
         public IActionResult List()
         {
-            return Json(new { success = true, data = JsonLogic<YetenekKategori>.ListToJson(logic.GetList()) });
+            return Json(new { success = true, data = logic.GetList().ToJsonList() });
         }
 
         [HttpGet]

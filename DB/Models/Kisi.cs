@@ -6,14 +6,14 @@ namespace DB.Models
     public partial class Kisi
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Adı Boş Geçilemez."), MaxLength(255)]
+        [Required(ErrorMessage = "Adı Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string Adi { get; set; }
-        [Required(ErrorMessage = "Soyadı Boş Geçilemez."), MaxLength(255)]
+        [Required(ErrorMessage = "Soyadı Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string Soyadi { get; set; }
-        [Required(ErrorMessage = "E-Posta Boş Geçilemez."), MaxLength(255)]
+        [Required(ErrorMessage = "E-Posta Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string Eposta { get; set; }
         public string Telefon { get; set; }
-        [Required(ErrorMessage = "Cep Telefonu Boş Geçilemez."), MaxLength(255)]
+        [Required(ErrorMessage = "Cep Telefonu Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string CepTelefonu { get; set; }
         public string SabitTelefonu { get; set; }
         public string Faks { get; set; }

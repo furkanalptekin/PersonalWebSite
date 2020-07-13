@@ -16,19 +16,17 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var file = model.Icon.ImageToBase64();
+                if (file != null)
                 {
-                    var file = Base64Processing.ImageToBase64(model.Icon);
-                    if (file != null)
-                    {
-                        var socialMedia = model.SosyalMedya;
-                        socialMedia.Aktif = true;
-                        socialMedia.EklemeTarihi = DateTime.Now;
-                        socialMedia.Ikon = file;
-                        db.SosyalMedya.Add(socialMedia);
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    var socialMedia = model.SosyalMedya;
+                    socialMedia.Aktif = true;
+                    socialMedia.EklemeTarihi = DateTime.Now;
+                    socialMedia.Ikon = file;
+                    db.SosyalMedya.Add(socialMedia);
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;
@@ -88,21 +86,19 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var socialMedia = db.SosyalMedya.Find(model.SosyalMedya.Id);
+                if (socialMedia != null)
                 {
-                    var socialMedia = db.SosyalMedya.Find(model.SosyalMedya.Id);
-                    if (socialMedia != null)
-                    {
-                        socialMedia.Aktif = true;
-                        socialMedia.DegisimTarihi = DateTime.Now;
-                        socialMedia.SosyalMedyaAdi = model.SosyalMedya.SosyalMedyaAdi;
-                        socialMedia.Adres = model.SosyalMedya.Adres;
-                        if (model.Icon != null)
-                            socialMedia.Ikon = Base64Processing.ImageToBase64(model.Icon);
+                    socialMedia.Aktif = true;
+                    socialMedia.DegisimTarihi = DateTime.Now;
+                    socialMedia.SosyalMedyaAdi = model.SosyalMedya.SosyalMedyaAdi;
+                    socialMedia.Adres = model.SosyalMedya.Adres;
+                    if (model.Icon != null)
+                        socialMedia.Ikon = model.Icon.ImageToBase64();
 
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

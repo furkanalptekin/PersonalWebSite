@@ -1,5 +1,4 @@
 ﻿using System;
-using DB.Models;
 
 namespace DB.DataModels
 {

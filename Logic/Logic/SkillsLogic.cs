@@ -14,14 +14,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.EklemeTarihi = DateTime.Now;
-                    model.Aktif = true;
-                    db.Yetenekler.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.EklemeTarihi = DateTime.Now;
+                model.Aktif = true;
+                db.Yetenekler.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }
@@ -64,7 +62,8 @@ namespace Logic
                 var skills = db.Yetenekler.Where(x => x.Aktif).ToList();
                 foreach (var item in skills)
                 {
-                    list.Add(new SkillsDataModel() { 
+                    list.Add(new SkillsDataModel()
+                    {
                         Id = item.Id,
                         Adi = item.Adi,
                         Aktif = item.Aktif,
@@ -72,7 +71,7 @@ namespace Logic
                         RenkKodu = item.RenkKodu,
                         DegisimTarihi = item.DegisimTarihi,
                         EklemeTarihi = item.EklemeTarihi,
-                        KategoriAdi = categories.Where(x => x.Id == item.KategoriId).FirstOrDefault().Adi 
+                        KategoriAdi = categories.Where(x => x.Id == item.KategoriId).FirstOrDefault().Adi
                     });
                 }
             }

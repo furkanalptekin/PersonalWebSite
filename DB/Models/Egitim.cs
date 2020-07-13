@@ -6,9 +6,9 @@ namespace DB.Models
     public partial class Egitim
     {
         public int Id { get; set; }
-        [Required(ErrorMessage = "Okul Adı Boş Geçilemez."), MaxLength(255)]
+        [Required(ErrorMessage = "Okul Adı Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string OkulAdi { get; set; }
-        [Required(ErrorMessage = "Eğitim Seviyesi Boş Geçilemez."), MaxLength(50)]
+        [Required(ErrorMessage = "Eğitim Seviyesi Boş Geçilemez."), MaxLength(50, ErrorMessage = "Maksimum 50 Karakter Olabilir.")]
         public string EgitimSeviyesi { get; set; }
         public string MezuniyetDerecesi { get; set; }
         public int? NotSistemi { get; set; }

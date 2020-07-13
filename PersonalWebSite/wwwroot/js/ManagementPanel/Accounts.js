@@ -27,7 +27,7 @@
         },
         columns: [
             { field: "Id", title: "Id" },
-            { field: "KullaniciAdi", title: "Kullanıcı Adı" },
+            { field: "Email", title: "Email" },
             { field: "AdSoyad", title: "Ad Soyad" },
             { field: "EklemeTarihi", title: "Ekleme Tarihi" },
             { field: "DegisimTarihi", title: "Değişim Tarihi" },
@@ -89,7 +89,7 @@ function AddData(data) {
     var grid = $('#accounts').data("kendoGrid");
     var temp = {
         Id: data.Id,
-        KullaniciAdi: data.KullaniciAdi,
+        Email: data.Email,
         AdSoyad: data.AdSoyad,
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'

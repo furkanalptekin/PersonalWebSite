@@ -1,11 +1,13 @@
-﻿using System;
-using DB.ViewModels;
+﻿using DB.ViewModels;
 using Logic;
 using Logic.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
+    [Authorize]
     public class PersonController : Controller, IControllerFunctions<PersonViewModel>
     {
         private readonly DropDownLists lists = new DropDownLists();

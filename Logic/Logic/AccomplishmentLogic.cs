@@ -13,14 +13,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.Aktif = true;
-                    model.EklemeTarihi = DateTime.Now;
-                    db.Basarilar.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.Aktif = true;
+                model.EklemeTarihi = DateTime.Now;
+                db.Basarilar.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }
@@ -59,20 +57,18 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var accomplishment = db.Basarilar.Find(model.Id);
+                if (accomplishment != null)
                 {
-                    var accomplishment = db.Basarilar.Find(model.Id);
-                    if (accomplishment != null)
-                    {
-                        accomplishment.DegisimTarihi = DateTime.Now;
-                        accomplishment.Aktif = true;
-                        accomplishment.Adi = model.Adi;
-                        accomplishment.Aciklama = model.Aciklama;
-                        accomplishment.Firma = model.Firma;
-                        accomplishment.Tarih = model.Tarih;
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    accomplishment.DegisimTarihi = DateTime.Now;
+                    accomplishment.Aktif = true;
+                    accomplishment.Adi = model.Adi;
+                    accomplishment.Aciklama = model.Aciklama;
+                    accomplishment.Firma = model.Firma;
+                    accomplishment.Tarih = model.Tarih;
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

@@ -13,14 +13,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.EklemeTarihi = DateTime.Now;
-                    model.Aktif = true;
-                    db.YabanciDil.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.EklemeTarihi = DateTime.Now;
+                model.Aktif = true;
+                db.YabanciDil.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }

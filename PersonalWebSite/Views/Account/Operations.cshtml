@@ -1,4 +1,4 @@
-﻿@model DB.Models.Hesap
+﻿@model DB.ViewModels.AccountViewModel
 @{
     ViewData["Title"] = "Operations";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -33,19 +33,46 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label>Kullanıcı Adı <span class="text-danger">*</span></label>
-                        <input asp-for="KullaniciAdi" class="k-textbox form-control" />
-                        <span class="text-danger" asp-validation-for="KullaniciAdi"></span>
+                        <input asp-for="Email" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="Email"></span>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <label>Şifre <span class="text-danger">*</span></label>
-                        <input type="password" asp-for="Sifre" class="k-textbox form-control" />
-                        <span class="text-danger" asp-validation-for="Sifre"></span>
+                @if ((bool)ViewBag.Update)
+                {
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>Eski Şifre <span class="text-danger">*</span></label>
+                            <input type="password" asp-for="EskiSifre" class="k-textbox form-control" />
+                            <span class="text-danger" asp-validation-for="EskiSifre"></span>
+                        </div>
                     </div>
-                </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>Şifre <span class="text-danger">*</span></label>
+                            <input type="password" asp-for="Sifre" class="k-textbox form-control" />
+                            <span class="text-danger" asp-validation-for="Sifre"></span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-6">
+                        <div class="form-group">
+                            <label>Şifre <span class="text-danger">*</span></label>
+                            <input type="password" asp-for="Sifre" class="k-textbox form-control" />
+                            <span class="text-danger" asp-validation-for="Sifre"></span>
+                        </div>
+                    </div>
+                }
             </div>
             <div class="col-12 row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label>Kullanıcı Adı <span class="text-danger">* (Türkçe karakter kullanmayın!)</span></label>
+                        <input asp-for="UserName" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="UserName"></span>
+                    </div>
+                </div>
                 <div class="col-6">
                     <div class="form-group">
                         <label>Ad Soyad <span class="text-danger">*</span></label>

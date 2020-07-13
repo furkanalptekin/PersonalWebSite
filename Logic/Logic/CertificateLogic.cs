@@ -13,14 +13,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.Aktif = true;
-                    model.EklemeTarihi = DateTime.Now;
-                    db.Sertifikalar.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.Aktif = true;
+                model.EklemeTarihi = DateTime.Now;
+                db.Sertifikalar.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }
@@ -59,21 +57,19 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var cert = db.Sertifikalar.Find(model.Id);
+                if (cert != null)
                 {
-                    var cert = db.Sertifikalar.Find(model.Id);
-                    if (cert != null)
-                    {
-                        cert.DegisimTarihi = DateTime.Now;
-                        cert.Aktif = true;
-                        cert.Adi = model.Adi;
-                        cert.Brans = model.Brans;
-                        cert.Firma = model.Firma;
-                        cert.Tarih = model.Tarih;
-                        cert.GecerlilikSuresi = model.GecerlilikSuresi;
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    cert.DegisimTarihi = DateTime.Now;
+                    cert.Aktif = true;
+                    cert.Adi = model.Adi;
+                    cert.Brans = model.Brans;
+                    cert.Firma = model.Firma;
+                    cert.Tarih = model.Tarih;
+                    cert.GecerlilikSuresi = model.GecerlilikSuresi;
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

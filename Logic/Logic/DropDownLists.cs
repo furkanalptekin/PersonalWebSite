@@ -69,12 +69,10 @@ namespace Logic
             };
             if (!GetEmpty)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                foreach (var item in db.Ilce.Where(x => x.SehirId == SehirId).ToList())
                 {
-                    foreach (var item in db.Ilce.Where(x => x.SehirId == SehirId).ToList())
-                    {
-                        list.Add(new SelectListItem() { Text = item.IlceAdi, Value = item.Id.ToString() });
-                    }
+                    list.Add(new SelectListItem() { Text = item.IlceAdi, Value = item.Id.ToString() });
                 }
             }
             return list;

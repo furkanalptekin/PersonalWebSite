@@ -18,19 +18,17 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var file = model.File.ImageToBase64();
+                if (file != null)
                 {
-                    var file = Base64Processing.ImageToBase64(model.File);
-                    if (file != null)
-                    {
-                        var blog = model.Blog;
-                        blog.Aktif = true;
-                        blog.EklemeTarihi = DateTime.Now;
-                        blog.Fotograf = file;
-                        db.Blog.Add(blog);
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    var blog = model.Blog;
+                    blog.Aktif = true;
+                    blog.EklemeTarihi = DateTime.Now;
+                    blog.Fotograf = file;
+                    db.Blog.Add(blog);
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;
@@ -105,24 +103,22 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var blog = db.Blog.Find(model.Blog.Id);
+                if (blog != null)
                 {
-                    var blog = db.Blog.Find(model.Blog.Id);
-                    if (blog != null)
-                    {
-                        blog.Aktif = true;
-                        blog.DegisimTarihi = DateTime.Now;
-                        blog.Baslik = model.Blog.Baslik;
-                        blog.Detay = model.Blog.Detay;
-                        blog.Ozet = model.Blog.Ozet;
-                        blog.GosterimBaslangicTarihi = model.Blog.GosterimBaslangicTarihi;
-                        blog.GosterimBitisTarihi = model.Blog.GosterimBitisTarihi;
-                        if (model.File != null)
-                            blog.Fotograf = Base64Processing.ImageToBase64(model.File);
+                    blog.Aktif = true;
+                    blog.DegisimTarihi = DateTime.Now;
+                    blog.Baslik = model.Blog.Baslik;
+                    blog.Detay = model.Blog.Detay;
+                    blog.Ozet = model.Blog.Ozet;
+                    blog.GosterimBaslangicTarihi = model.Blog.GosterimBaslangicTarihi;
+                    blog.GosterimBitisTarihi = model.Blog.GosterimBitisTarihi;
+                    if (model.File != null)
+                        blog.Fotograf = model.File.ImageToBase64();
 
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;

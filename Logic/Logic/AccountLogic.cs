@@ -1,79 +1,94 @@
 ﻿using DB.Models;
-using Logic.Interfaces;
+using DB.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace Logic
 {
-    public class AccountLogic : IDatabaseFunctions<Hesap, Hesap>
+    public class AccountLogic
     {
-        public bool Add(Hesap model, params object[] parameters)
+        public async Task<bool> Add(AccountViewModel model, params object[] parameters)
         {
             bool success = false;
-            if (model != null)
+            if (model != null && parameters.Length != 0)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                UserManager<ApplicationUser> userManager = parameters[0] as UserManager<ApplicationUser>;
+                var created = await userManager.CreateAsync(new ApplicationUser()
                 {
-                    model.Aktif = true;
-                    model.EklemeTarihi = DateTime.Now;
-                    model.Sifre = Sha256Helper.Hash(model.Sifre);
-                    db.Hesap.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                    Email = model.Email,
+                    EmailConfirmed = true,
+                    UserName = model.AdSoyad.Split(' ').Length == 0 ? model.AdSoyad : model.AdSoyad.Split(' ')[0],
+                    NameSurname = model.AdSoyad,
+                    EklemeTarihi = DateTime.Now
+                }, model.Sifre);
+                success = created.Succeeded;
             }
             return success;
         }
 
-        public bool Delete(int? id)
+        public async Task<bool> Delete(UserManager<ApplicationUser> userManager, string Id)
         {
             bool success = false;
-            using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+            var user = await userManager.FindByIdAsync(Id);
+            if (user != null)
             {
-                var acc = db.Hesap.Find(id);
-                if (acc != null)
-                {
-                    acc.Aktif = false;
-                    acc.DegisimTarihi = DateTime.Now;
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                var taskResult = await userManager.DeleteAsync(user);
+                success = taskResult.Succeeded;
             }
             return success;
         }
 
-        public Hesap GetFromId(int? id)
+        public async Task<AccountViewModel> GetFromId(UserManager<ApplicationUser> userManager, string Id)
         {
-            using PersonalWebSiteContext db = new PersonalWebSiteContext();
-            return db.Hesap.Find(id);
+            var user = await userManager.FindByIdAsync(Id);
+            if (user != null)
+                return new AccountViewModel()
+                {
+                    Id = user.Id,
+                    AdSoyad = user.NameSurname,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    EklemeTarihi = user.EklemeTarihi,
+                    DegisimTarihi = user.DegisimTarihi
+                };
+
+            return null;
         }
 
-        public List<Hesap> GetList()
+        public List<AccountViewModel> GetList(UserManager<ApplicationUser> userManager)
         {
-            using PersonalWebSiteContext db = new PersonalWebSiteContext();
-            return db.Hesap.Where(x => x.Aktif).ToList();
+            List<AccountViewModel> accounts = new List<AccountViewModel>();
+            foreach (var user in userManager.Users)
+                accounts.Add(new AccountViewModel()
+                {
+                    Id = user.Id,
+                    AdSoyad = user.NameSurname,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    EklemeTarihi = user.EklemeTarihi,
+                    DegisimTarihi = user.DegisimTarihi
+                });
+
+            return accounts;
         }
 
-        public bool Update(Hesap model)
+        public async Task<bool> Update(AccountViewModel model, UserManager<ApplicationUser> userManager)
         {
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                var user = await userManager.FindByIdAsync(model.Id);
+                if (user != null)
                 {
-                    var acc = db.Hesap.Find(model.Id);
-                    if (acc != null)
-                    {
-                        acc.DegisimTarihi = DateTime.Now;
-                        acc.Aktif = true;
-                        if (model.Sifre != null)
-                            acc.Sifre = Sha256Helper.Hash(model.Sifre);
-                        acc.AdSoyad = model.AdSoyad;
-                        acc.KullaniciAdi = model.KullaniciAdi;
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    user.Email = model.Email;
+                    user.NameSurname = model.AdSoyad;
+                    user.UserName = model.UserName;
+                    user.DegisimTarihi = DateTime.Now;
+                    var result = await userManager.UpdateAsync(user);
+                    var result2 = await userManager.ChangePasswordAsync(user, model.EskiSifre, model.Sifre);
+                    success = result.Succeeded & result2.Succeeded;
                 }
             }
             return success;

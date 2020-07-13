@@ -13,14 +13,12 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
-                {
-                    model.EklemeTarihi = DateTime.Now;
-                    model.Aktif = true;
-                    db.YetenekKategori.Add(model);
-                    if (db.SaveChanges() > 0)
-                        success = true;
-                }
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                model.EklemeTarihi = DateTime.Now;
+                model.Aktif = true;
+                db.YetenekKategori.Add(model);
+                if (db.SaveChanges() > 0)
+                    success = true;
             }
             return success;
         }
@@ -59,17 +57,15 @@ namespace Logic
             bool success = false;
             if (model != null)
             {
-                using (PersonalWebSiteContext db = new PersonalWebSiteContext())
+                using PersonalWebSiteContext db = new PersonalWebSiteContext();
+                var category = db.YetenekKategori.Find(model.Id);
+                if (category != null)
                 {
-                    var category = db.YetenekKategori.Find(model.Id);
-                    if (category != null)
-                    {
-                        category.DegisimTarihi = DateTime.Now;
-                        category.Aktif = true;
-                        category.Adi = model.Adi;
-                        if (db.SaveChanges() > 0)
-                            success = true;
-                    }
+                    category.DegisimTarihi = DateTime.Now;
+                    category.Aktif = true;
+                    category.Adi = model.Adi;
+                    if (db.SaveChanges() > 0)
+                        success = true;
                 }
             }
             return success;
