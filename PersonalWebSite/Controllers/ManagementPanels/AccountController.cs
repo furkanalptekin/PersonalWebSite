@@ -1,6 +1,7 @@
 ﻿using DB.Models;
 using DB.ViewModels;
 using Logic;
+using Logic.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;

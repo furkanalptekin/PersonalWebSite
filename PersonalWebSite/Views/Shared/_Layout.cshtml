@@ -26,6 +26,8 @@
 </head>
 
 <body class="sticky-header">
+    <partial name="_Loading" />
+
     <section>
         <!-- sidebar left start-->
         <div class="sidebar-left">
@@ -108,12 +110,12 @@
                 <!--toggle button start-->
                 <a class="toggle-btn"><i class="ti ti-menu"></i></a>
                 <!--toggle button end-->
-                    <div class="notification-wrap">
-                        <!--right notification start-->
-                        <div class="right-notification mt-2">
-                            <a style="position: relative; top: 25%;" class="notification-menu mr-5" href="~/Account/Logout" ><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış</a>
-                        </div><!--right notification end-->
-                    </div>
+                <div class="notification-wrap">
+                    <!--right notification start-->
+                    <div class="right-notification mt-2">
+                        <a style="position: relative; top: 25%;" class="notification-menu mr-5" href="~/Account/Logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış</a>
+                    </div><!--right notification end-->
+                </div>
             </div>
             <!-- header section end-->
 
@@ -141,5 +143,20 @@
 
     <!--app js-->
     <script src="~/ManagementLayout/Content/js/jquery.app.js"></script>
+
+    <script>
+
+        function displayLoadingIndicator() {
+            $('.loading').show();
+        }
+
+        $(window).on('beforeunload', function () {
+            displayLoadingIndicator();
+        });
+
+        $(document).on('submit', 'form', function () {
+            displayLoadingIndicator();
+        });
+    </script>
 </body>
 </html>

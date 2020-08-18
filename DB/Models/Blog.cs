@@ -15,8 +15,8 @@ namespace DB.Models
         public DateTime GosterimBaslangicTarihi { get; set; }
         public DateTime? GosterimBitisTarihi { get; set; }
         public string Fotograf { get; set; }
-        public bool Aktif { get; set; }
-        public DateTime EklemeTarihi { get; set; }
+        public bool Aktif { get; set; } = true;
+        public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime? DegisimTarihi { get; set; }
     }
 }

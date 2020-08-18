@@ -17,8 +17,8 @@ namespace DB.Models
         public string Aciklama { get; set; }
         public string YapilisNedeni { get; set; }
         public string Kategori { get; set; }
-        public bool Aktif { get; set; }
-        public DateTime EklemeTarihi { get; set; }
+        public bool Aktif { get; set; } = true;
+        public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime? DegisimTarihi { get; set; }
     }
 }

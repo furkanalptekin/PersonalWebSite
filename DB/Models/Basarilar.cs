@@ -13,8 +13,8 @@ namespace DB.Models
         public string Tarih { get; set; }
         [Required(ErrorMessage = "Açıklama Alanı Boş Geçilemez.")]
         public string Aciklama { get; set; }
-        public bool Aktif { get; set; }
-        public DateTime EklemeTarihi { get; set; }
+        public bool Aktif { get; set; } = true;
+        public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime? DegisimTarihi { get; set; }
     }
 }

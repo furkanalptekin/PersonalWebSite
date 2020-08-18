@@ -4,9 +4,8 @@ using System.Collections.Generic;
 
 namespace DB.ViewModels
 {
-    public class PersonViewModel
+    public class PersonViewModel : Kisi
     {
-        public Kisi Kisi { get; set; }
         public IFormFile File { get; set; }
         public List<string> Ehliyetler { get; set; }
     }

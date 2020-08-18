@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace DB.ViewModels
 {
-    public class BlogViewModel
+    public class BlogViewModel : Blog
     {
-        public Blog Blog { get; set; }
-        public IFormFile File { get; set; }
+        public IFormFile FotoFile { get; set; }
     }
 }

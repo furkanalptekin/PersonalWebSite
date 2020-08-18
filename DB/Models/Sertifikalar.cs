@@ -13,8 +13,8 @@ namespace DB.Models
         public string Firma { get; set; }
         public DateTime? Tarih { get; set; }
         public DateTime? GecerlilikSuresi { get; set; }
-        public bool Aktif { get; set; }
-        public DateTime EklemeTarihi { get; set; }
+        public bool Aktif { get; set; } = true;
+        public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime? DegisimTarihi { get; set; }
     }
 }

@@ -40,14 +40,14 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label>Başlık <span class="text-danger">*</span></label>
-                                <input asp-for="Blog.Baslik" class="k-textbox form-control" />
-                                <span class="text-danger" asp-validation-for="Blog.Baslik"></span>
+                                <input asp-for="Baslik" class="k-textbox form-control" />
+                                <span class="text-danger" asp-validation-for="Baslik"></span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label>Blog Fotoğrafı</label>
-                                <input asp-for="File" name="File" id="File" type="file" />
+                                <input asp-for="FotoFile" name="FotoFile" id="File" type="file" />
                             </div>
                         </div>
                     </div>
@@ -55,21 +55,21 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label>Gösterim Başlangıç Tarihi</label>
-                                <input id="Baslangic" asp-for="Blog.GosterimBaslangicTarihi" class="form-control" />
+                                <input id="Baslangic" asp-for="GosterimBaslangicTarihi" class="form-control" />
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label>Gösterim Bitiş Tarihi</label>
-                                <input id="Bitis" asp-for="Blog.GosterimBitisTarihi" class="form-control" />
+                                <input id="Bitis" asp-for="GosterimBitisTarihi" class="form-control" />
                             </div>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
                             <label>Özet <span class="text-danger">*</span></label>
-                            <textarea rows="20" style="width: 100%;" asp-for="Blog.Ozet" class="k-textarea form-control"></textarea>
-                            <span class="text-danger" asp-validation-for="Blog.Ozet"></span>
+                            <textarea rows="20" style="width: 100%;" asp-for="Ozet" class="k-textarea form-control"></textarea>
+                            <span class="text-danger" asp-validation-for="Ozet"></span>
                         </div>
                     </div>
                 </div>
@@ -77,8 +77,8 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label>Detay <span class="text-danger">*</span></label>
-                            <textarea asp-for="Blog.Detay" id="editor" style="height: 550px;" aria-label="editor"></textarea>
-                            <span class="text-danger" asp-validation-for="Blog.Detay"></span>
+                            <textarea asp-for="Detay" id="editor" style="height: 550px;" aria-label="editor"></textarea>
+                            <span class="text-danger" asp-validation-for="Detay"></span>
                         </div>
                     </div>
                 </div>

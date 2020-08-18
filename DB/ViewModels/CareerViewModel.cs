@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace DB.ViewModels
 {
-    public class CareerViewModel
+    public class CareerViewModel : MeslekiDeneyim
     {
-        public MeslekiDeneyim MeslekiDeneyim { get; set; }
-        public IFormFile Icon { get; set; }
+        public IFormFile IconFile { get; set; }
     }
 }

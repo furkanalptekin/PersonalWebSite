@@ -1,89 +1,69 @@
-﻿using DB.Models;
+﻿using AutoMapper;
+using DB.Dtos;
+using DB.Models;
 using Logic;
+using Logic.Enums;
+using Logic.Extensions;
 using Logic.Interfaces;
+using Logic.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using System.Collections.Generic;
 
 namespace PersonalWebSite.Controllers.ManagementPanels
 {
     [Authorize]
     public class SkillsController : Controller, IControllerFunctions<Yetenekler>
     {
-        readonly SkillsLogic logic = new SkillsLogic();
+        private readonly ISkillsRepository _repository;
+        private readonly IMapper _mapper;
+        private readonly DropDownLists _lists;
+
+        public SkillsController(ISkillsRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+            _lists = new DropDownLists();
+        }
 
         [HttpGet]
         public IActionResult Operations()
         {
-            ViewBag.Update = false;
-            if (TempData["Alert"] != null)
-                ViewBag.Alert = (bool)TempData["Alert"];
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
-            return View();
+            ViewBag.SkillCategories = _lists.GetSkillCategories();
+            return this.AddExtension(Views.Operations);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Operations(Yetenekler model)
         {
-            ViewBag.Update = false;
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
-            if (ModelState.IsValid)
-            {
-                ViewBag.Alert = logic.Add(model);
-                ModelState.Clear();
-            }
-            return View();
+            ViewBag.SkillCategories = _lists.GetSkillCategories();
+            return this.AddDbExtension(_repository, model, Views.Operations);
         }
 
         [HttpPost]
-        public IActionResult Delete(int? id)
-        {
-            return Json(new { success = logic.Delete(id) });
-        }
+        public IActionResult Delete(int? id) => Json(new { success = _repository.Remove(id) });
 
         [HttpGet]
-        public IActionResult List()
-        {
-            return Json(new { success = true, data = logic.GetDataModelList().ToJsonList() });
-        }
+        public IActionResult List() => Json(new { success = true, data = _mapper.Map<IList<SkillsDto>>(_repository.Where(x => x.Aktif)).ToJsonList() });
 
         [HttpGet]
-        public IActionResult Show(int? id)
-        {
-            throw new NotImplementedException();
-        }
+        public IActionResult Show(int? id) => NotFound();
 
         [HttpGet]
         public IActionResult Update(int? id)
         {
-            ViewBag.Update = true;
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
-            var cat = logic.GetFromId(id);
-            if (cat != null)
-            {
-                HttpContext.Session.SetInt32("UPDATEID", cat.Id);
-                return View("Operations", cat);
-            }
-            return NotFound();
+            ViewBag.SkillCategories = _lists.GetSkillCategories();
+            return this.UpdateExtension(_repository, id, Views.Operations);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateUpdateId]
         public IActionResult UpdateDb(Yetenekler model)
         {
-            ViewBag.Update = true;
-            ViewBag.SkillCategories = new DropDownLists().GetSkillCategories();
-            var id = HttpContext.Session.GetInt32("UPDATEID");
-            if (id != null && id != -1)
-            {
-                model.Id = (int)id;
-                TempData["Alert"] = logic.Update(model);
-                HttpContext.Session.SetInt32("UPDATEID", -1);
-                ModelState.Clear();
-            }
-            return RedirectToAction("Operations");
+            ViewBag.SkillCategories = _lists.GetSkillCategories();
+            return this.UpdateDbExtension(_repository, model, Views.Operations);
         }
     }
 }

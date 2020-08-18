@@ -1,4 +1,7 @@
+using AutoMapper;
 using DB.Models;
+using Logic.Repository;
+using Logic.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +30,25 @@ namespace PersonelWebSite
 
             var mvcviews = services.AddControllersWithViews();
             services.ConfigureApplicationCookie(options => options.LoginPath = "/Account/Login");
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            #region Repositories
+            services.AddScoped(typeof(ISocialMediaRepository), typeof(SocialMediaRepository));
+            services.AddScoped(typeof(ISkillsRepository), typeof(SkillsRepository));
+            services.AddScoped(typeof(ISkillCategoriesRepository), typeof(SkillCategoriesRepository));
+            services.AddScoped(typeof(IReferenceRepository), typeof(ReferenceRepository));
+            services.AddScoped(typeof(IProjectRepository), typeof(ProjectRepository));
+            services.AddScoped(typeof(ICvRepository), typeof(CvRepository));
+            services.AddScoped(typeof(ICareerRepository), typeof(CareerRepository));
+            services.AddScoped(typeof(IHobbyRepository), typeof(HobbyRepository));
+            services.AddScoped(typeof(IBlogRepository), typeof(BlogRepository));
+            services.AddScoped(typeof(IPersonRepository), typeof(PersonRepository));
+            services.AddScoped(typeof(IAccomplishmentRepository), typeof(AccomplishmentRepository));
+            services.AddScoped(typeof(IEducationRepository), typeof(EducationRepository));
+            services.AddScoped(typeof(ILanguageRepository), typeof(LanguageRepository));
+            services.AddScoped(typeof(ICertificateRepository), typeof(CertificateRepository));
+            #endregion
 
             services.AddSession(options =>
             {

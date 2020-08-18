@@ -85,11 +85,17 @@ function GetData() {
 
 function AddData(data) {
     var grid = $('#SocialMedias').data("kendoGrid");
+    if (data.Ikon !== null) {
+        var tempArray = data.Ikon.split("|");
+    }
+    else {
+        var tempArray = ["-", "-"];
+    }
     var temp = {
         Id: data.Id,
         SosyalMedyaAdi: data.SosyalMedyaAdi,
-        Icon: data.Icon,
-        IconExt: data.IconExt,
+        IconExt: tempArray[0],
+        Icon: tempArray[1],
         Adres: data.Adres,
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'

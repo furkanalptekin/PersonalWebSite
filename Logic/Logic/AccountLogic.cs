@@ -57,9 +57,9 @@ namespace Logic
             return null;
         }
 
-        public List<AccountViewModel> GetList(UserManager<ApplicationUser> userManager)
+        public IList<AccountViewModel> GetList(UserManager<ApplicationUser> userManager)
         {
-            List<AccountViewModel> accounts = new List<AccountViewModel>();
+            IList<AccountViewModel> accounts = new List<AccountViewModel>();
             foreach (var user in userManager.Users)
                 accounts.Add(new AccountViewModel()
                 {

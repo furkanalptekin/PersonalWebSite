@@ -152,11 +152,17 @@ function GetData() {
 
 function AddData(data) {
     var grid = $('#Blogs').data("kendoGrid");
+    if (data.Fotograf !== null) {
+        var tempArray = data.Fotograf.split("|");
+    }
+    else {
+        var tempArray = ["-", "-"];
+    }
     var temp = {
         Id: data.Id,
         Baslik: data.Baslik,
-        Icon: data.Icon,
-        IconExt: data.IconExt,
+        IconExt: tempArray[0],
+        Icon: tempArray[1],
         GosterimBaslangicTarihi: new Date(data.GosterimBaslangicTarihi).toLocaleString(),
         GosterimBitisTarihi: data.GosterimBitisTarihi !== null ? new Date(data.GosterimBitisTarihi).toLocaleString() : '-',
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),

@@ -1,7 +1,12 @@
-﻿using DB.ViewModels;
+﻿using AutoMapper;
+using DB.ViewModels;
 using Logic;
+using Logic.Enums;
+using Logic.Extensions;
 using Logic.Interfaces;
+using Logic.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -10,29 +15,32 @@ namespace PersonalWebSite.Controllers.ManagementPanels
     [Authorize]
     public class PersonController : Controller, IControllerFunctions<PersonViewModel>
     {
-        private readonly DropDownLists lists = new DropDownLists();
-        private readonly PersonLogic logic = new PersonLogic();
+        private readonly DropDownLists _lists;
+        private readonly IPersonRepository _repository;
+        private readonly IMapper _mapper;
+
+        public PersonController(IPersonRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+            _lists = new DropDownLists();
+        }
 
         [HttpPost]
-        public IActionResult Delete(int? id)
-        {
-            return Json(new { success = logic.Delete(id) });
-        }
+        public IActionResult Delete(int? id) => Json(new { success = _repository.Remove(id) });
 
-        public IActionResult List()
-        {
-            throw new NotImplementedException();
-        }
+        public IActionResult List() => NotFound();
 
         [HttpGet]
         public IActionResult Operations()
         {
-            if (logic.GetPerson() == null)
+            if (TempData["Alert"] != null)
+                ViewBag.Alert = (bool)TempData["Alert"];
+
+            if (_repository.GetPerson() == null)
             {
                 ViewBag.Update = false;
-                ViewBag.Cities = lists.GetCities();
-                if (TempData["Alert"] != null)
-                    ViewBag.Alert = (bool)TempData["Alert"];
+                ViewBag.Cities = _lists.GetCities();
                 return View();
             }
             return RedirectToAction("Update", "Person", 0);
@@ -42,31 +50,26 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [ValidateAntiForgeryToken]
         public IActionResult Operations(PersonViewModel model)
         {
-            ViewBag.Update = false;
-            ViewBag.Cities = lists.GetCities();
-            if (ModelState.IsValid)
-            {
-                ViewBag.Alert = logic.Add(model);
-                ModelState.Clear();
-            }
-            return View();
+            ViewBag.Cities = _lists.GetCities();
+            return this.AddDbExtension(_repository, model, Views.Operations);
         }
 
-        public IActionResult Show(int? id)
-        {
-            throw new NotImplementedException();
-        }
+        public IActionResult Show(int? id) => throw new NotImplementedException();
 
         [HttpGet]
         public IActionResult Update(int? id)
         {
+            if (TempData["Alert"] != null)
+                ViewBag.Alert = (bool)TempData["Alert"];
+
             ViewBag.Update = true;
-            ViewBag.Cities = lists.GetCities();
-            var model = logic.GetPersonViewModel();
+            ViewBag.Cities = _lists.GetCities();
+            var model = _repository.GetPersonViewModel(_mapper);
             if (model != null)
             {
-                ViewBag.DogumDistricts = lists.GetDistricts((int)model.Kisi.DogumSehirId, false);
-                ViewBag.KonumDistricts = lists.GetDistricts((int)model.Kisi.KonumSehirId, false);
+                HttpContext.Session.SetInt32("UPDATEID", model.Id);
+                ViewBag.DogumDistricts = _lists.GetDistricts((int)model.DogumSehirId, false);
+                ViewBag.KonumDistricts = _lists.GetDistricts((int)model.KonumSehirId, false);
                 return View("Operations", model);
             }
             return NotFound();
@@ -74,18 +77,16 @@ namespace PersonalWebSite.Controllers.ManagementPanels
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateUpdateId]
         public IActionResult UpdateDb(PersonViewModel model)
         {
-            ViewBag.Update = true;
-            TempData["Alert"] = logic.Update(model);
-            ModelState.Clear();
-            return RedirectToAction("Operations");
+            ViewBag.Cities = _lists.GetCities();
+            ViewBag.DogumDistricts = _lists.GetDistricts((int)model.DogumSehirId, false);
+            ViewBag.KonumDistricts = _lists.GetDistricts((int)model.KonumSehirId, false);
+            return this.UpdateDbExtension(_repository, model, Views.Operations);
         }
 
         [HttpPost]
-        public JsonResult GetDistricts(int CityId)
-        {
-            return Json(lists.GetDistricts(CityId, false));
-        }
+        public JsonResult GetDistricts(int CityId) => Json(_lists.GetDistricts(CityId, false));
     }
 }

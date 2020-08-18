@@ -13,8 +13,8 @@ namespace DB.Models
         public string RenkKodu { get; set; }
         [Required(ErrorMessage = "Yetenek Kategorisi Boş Geçilemez.")]
         public int? KategoriId { get; set; }
-        public bool Aktif { get; set; }
-        public DateTime EklemeTarihi { get; set; }
+        public bool Aktif { get; set; } = true;
+        public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime? DegisimTarihi { get; set; }
 
         public virtual YetenekKategori Kategori { get; set; }

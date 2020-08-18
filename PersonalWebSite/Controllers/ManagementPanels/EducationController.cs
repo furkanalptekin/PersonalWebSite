@@ -1,6 +1,9 @@
 ﻿using DB.Models;
 using Logic;
+using Logic.Enums;
+using Logic.Extensions;
 using Logic.Interfaces;
+using Logic.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,45 +13,36 @@ namespace PersonalWebSite.Controllers.ManagementPanels
     [Authorize]
     public class EducationController : Controller, IControllerFunctions<Egitim>
     {
-        private readonly IDatabaseFunctions<Egitim, Egitim> logic = new EducationLogic();
-        private readonly DropDownLists lists = new DropDownLists();
+        private readonly IEducationRepository _repository;
+        private readonly DropDownLists _lists;
+
+        public EducationController(IEducationRepository repository)
+        {
+            _repository = repository;
+            _lists = new DropDownLists();
+        }
 
         [HttpPost]
-        public IActionResult Delete(int? id)
-        {
-            return Json(new { success = logic.Delete(id) });
-        }
+        public IActionResult Delete(int? id) => Json(new { success = _repository.Remove(id) });
 
         [HttpGet]
-        public IActionResult List()
-        {
-            return Json(new { success = true, data = logic.GetList().ToJsonList() });
-        }
+        public IActionResult List() => Json(new { success = true, data = _repository.Where(x => x.Aktif).ToJsonList() });
 
         [HttpGet]
         public IActionResult Operations()
         {
-            ViewBag.Update = false;
-            ViewBag.EducationTypes = lists.GetEducationTypes();
-            ViewBag.Cities = lists.GetCities();
-            if (TempData["Alert"] != null)
-                ViewBag.Alert = (bool)TempData["Alert"];
-            return View();
+            ViewBag.EducationTypes = _lists.GetEducationTypes();
+            ViewBag.Cities = _lists.GetCities();
+            return this.AddExtension(Views.Operations);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Operations(Egitim model)
         {
-            ViewBag.Update = false;
-            ViewBag.EducationTypes = lists.GetEducationTypes();
-            ViewBag.Cities = lists.GetCities();
-            if (ModelState.IsValid)
-            {
-                ViewBag.Alert = logic.Add(model);
-                ModelState.Clear();
-            }
-            return View();
+            ViewBag.EducationTypes = _lists.GetEducationTypes();
+            ViewBag.Cities = _lists.GetCities();
+            return this.AddDbExtension(_repository, model, Views.Operations);
         }
 
         [HttpGet]
@@ -56,12 +50,12 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.Show = true;
             ViewBag.Update = false;
-            ViewBag.EducationTypes = lists.GetEducationTypes();
-            ViewBag.Cities = lists.GetCities();
-            var edu = logic.GetFromId(id);
+            ViewBag.EducationTypes = _lists.GetEducationTypes();
+            ViewBag.Cities = _lists.GetCities();
+            var edu = _repository.GetFromId(id);
             if (edu != null)
             {
-                ViewBag.Districts = lists.GetDistricts((int)edu.SehirId, false);
+                ViewBag.Districts = _lists.GetDistricts((int)edu.SehirId, false);
                 return View("Operations", edu);
             }
             return NotFound();
@@ -71,12 +65,12 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Update(int? id)
         {
             ViewBag.Update = true;
-            ViewBag.EducationTypes = lists.GetEducationTypes();
-            ViewBag.Cities = lists.GetCities();
-            var edu = logic.GetFromId(id);
+            ViewBag.EducationTypes = _lists.GetEducationTypes();
+            ViewBag.Cities = _lists.GetCities();
+            var edu = _repository.GetFromId(id);
             if (edu != null)
             {
-                ViewBag.Districts = lists.GetDistricts((int)edu.SehirId, false);
+                ViewBag.Districts = _lists.GetDistricts((int)edu.SehirId, false);
                 HttpContext.Session.SetInt32("UPDATEID", edu.Id);
                 return View("Operations", edu);
             }
@@ -85,24 +79,15 @@ namespace PersonalWebSite.Controllers.ManagementPanels
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateUpdateId]
         public IActionResult UpdateDb(Egitim model)
         {
-            ViewBag.Update = true;
-            var id = HttpContext.Session.GetInt32("UPDATEID");
-            if (id != null && id != -1)
-            {
-                model.Id = (int)id;
-                TempData["Alert"] = logic.Update(model);
-                HttpContext.Session.SetInt32("UPDATEID", -1);
-                ModelState.Clear();
-            }
-            return RedirectToAction("Operations");
+            ViewBag.EducationTypes = _lists.GetEducationTypes();
+            ViewBag.Cities = _lists.GetCities();
+            return this.UpdateDbExtension(_repository, model, Views.Operations);
         }
 
         [HttpPost]
-        public JsonResult GetDistricts(int CityId)
-        {
-            return Json(lists.GetDistricts(CityId, false));
-        }
+        public JsonResult GetDistricts(int CityId) => Json(_lists.GetDistricts(CityId, false));
     }
 }

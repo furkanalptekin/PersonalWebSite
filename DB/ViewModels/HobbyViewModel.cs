@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace DB.ViewModels
 {
-    public class HobbyViewModel
+    public class HobbyViewModel : Hobiler
     {
-        public Hobiler Hobiler { get; set; }
-        public IFormFile Icon { get; set; }
+        public IFormFile IconFile { get; set; }
     }
 }

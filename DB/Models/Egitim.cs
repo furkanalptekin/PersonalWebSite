@@ -20,9 +20,9 @@ namespace DB.Models
         public int? SehirId { get; set; }
         public int? IlceId { get; set; }
         public string EkAciklama { get; set; }
-        public DateTime EklemeTarihi { get; set; }
+        public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime? DegisimTarihi { get; set; }
-        public bool Aktif { get; set; }
+        public bool Aktif { get; set; } = true;
 
         public virtual Ilce Ilce { get; set; }
         public virtual Sehir Sehir { get; set; }

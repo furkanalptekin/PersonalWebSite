@@ -10,7 +10,9 @@ namespace DB.Models
         public string Adi { get; set; }
         [Required(ErrorMessage = "Soyadı Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string Soyadi { get; set; }
-        [Required(ErrorMessage = "E-Posta Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
+        [Required(ErrorMessage = "E-Posta Boş Geçilemez.")]
+        [MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Geçerli Email Adresi Giriniz.")]
         public string Eposta { get; set; }
         public string Telefon { get; set; }
         [Required(ErrorMessage = "Cep Telefonu Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
@@ -26,9 +28,11 @@ namespace DB.Models
         public string MedeniDurum { get; set; }
         public string Cinsiyet { get; set; }
         public string Fotograf { get; set; }
+        [Required(ErrorMessage = "Doğum Tarihi Boş Geçilemez."), DataType(DataType.DateTime)]
         public DateTime? DogumTarihi { get; set; }
         public string AskerlikDurumu { get; set; }
         public DateTime? TecilTarihi { get; set; }
+        [Required(ErrorMessage = "Meslek Boş Geçilemez."), MaxLength(255, ErrorMessage = "Maksimum 255 Karakter Olabilir.")]
         public string Meslek { get; set; }
         public int? DogumSehirId { get; set; }
         public int? DogumIlceId { get; set; }
@@ -40,7 +44,7 @@ namespace DB.Models
         public string OnYazi { get; set; }
         public string UcretBeklentisi { get; set; }
         public string CalismakIstenilenSehir { get; set; }
-        public DateTime EklemeTarihi { get; set; }
+        public DateTime EklemeTarihi { get; set; } = DateTime.Now;
         public DateTime? DegisimTarihi { get; set; }
 
         public virtual Ilce DogumIlce { get; set; }

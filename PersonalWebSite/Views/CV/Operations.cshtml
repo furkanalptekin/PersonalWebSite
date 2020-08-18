@@ -1,4 +1,4 @@
-﻿@model DB.ViewModels.CvFileModel
+﻿@model DB.ViewModels.CvViewModel
 @{
     ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -31,8 +31,8 @@
                 <div class="col-6">
                     <div class="form-group">
                         <label>CV'nin Adı <span class="text-danger">*</span></label>
-                        <input asp-for="Cv.CvAdi" class="k-textbox form-control" />
-                        <span class="text-danger" asp-validation-for="Cv.CvAdi"></span>
+                        <input asp-for="CvAdi" class="k-textbox form-control" />
+                        <span class="text-danger" asp-validation-for="CvAdi"></span>
                     </div>
                 </div>
                 <div class="col-6">

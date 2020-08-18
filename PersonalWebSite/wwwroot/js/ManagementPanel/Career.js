@@ -90,14 +90,20 @@ function GetData() {
 
 function AddData(data) {
     var grid = $('#Exp').data("kendoGrid");
+    if (data.FirmaIcon !== null) {
+        var tempArray = data.FirmaIcon.split("|");
+    }
+    else {
+        var tempArray = ["-", "-"];
+    }
     var temp = {
         Id: data.Id,
         Firma: data.Firma,
-        Icon: data.Icon,
-        IconExt: data.IconExt,
+        IconExt: tempArray[0],
+        Icon: tempArray[1],
         Pozisyon: data.Pozisyon,
-        BaslangicTarihi: new Date(data.BaslangicTarihi).toLocaleDateString(),
-        BitisTarihi: data.BitisTarihi !== null ? new Date(data.BitisTarihi).toLocaleDateString() : '-',
+        BaslangicTarihi: new Date(data.BaslangicTarih).toLocaleDateString(),
+        BitisTarihi: data.BitisTarihi !== null ? new Date(data.BitisTarih).toLocaleDateString() : '-',
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'
     };

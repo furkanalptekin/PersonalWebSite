@@ -1,8 +1,12 @@
-﻿using DB.ViewModels;
+﻿using AutoMapper;
+using DB.Models;
+using DB.ViewModels;
 using Logic;
+using Logic.Enums;
+using Logic.Extensions;
 using Logic.Interfaces;
+using Logic.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -11,78 +15,36 @@ namespace PersonalWebSite.Controllers.ManagementPanels
     [Authorize]
     public class CareerController : Controller, IControllerFunctions<CareerViewModel>
     {
-        private readonly CareerLogic logic = new CareerLogic();
+        private readonly ICareerRepository _repository;
+        private readonly IMapper _mapper;
 
+        public CareerController(ICareerRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
         [HttpPost]
-        public IActionResult Delete(int? id)
-        {
-            return Json(new { success = logic.Delete(id) });
-        }
+        public IActionResult Delete(int? id) => Json(new { success = _repository.Remove(id) });
 
         [HttpGet]
-        public IActionResult List()
-        {
-            return Json(new { success = true, data = logic.GetDataModelList().ToJsonList() });
-        }
+        public IActionResult List() => Json(new { success = true, data = _repository.Where(x => x.Aktif).ToJsonList() });
 
         [HttpGet]
-        public IActionResult Operations()
-        {
-            ViewBag.Update = false;
-            if (TempData["Alert"] != null)
-                ViewBag.Alert = (bool)TempData["Alert"];
-            return View();
-        }
+        public IActionResult Operations() => this.AddExtension(Views.Operations);
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(CareerViewModel model)
-        {
-            ViewBag.Update = false;
-            if (ModelState.IsValid)
-            {
-                if (ModelState.IsValid)
-                {
-                    ViewBag.Alert = logic.Add(model);
-                    ModelState.Clear();
-                }
-            }
-            return View();
-        }
+        public IActionResult Operations(CareerViewModel model) => this.AddDbExtension(_repository, model, Views.Operations);
 
         [HttpGet]
-        public IActionResult Show(int? id)
-        {
-            throw new NotImplementedException();
-        }
+        public IActionResult Show(int? id) => throw new NotImplementedException();
 
         [HttpGet]
-        public IActionResult Update(int? id)
-        {
-            ViewBag.Update = true;
-            var carrer = logic.GetFromId(id);
-            if (carrer != null)
-            {
-                HttpContext.Session.SetInt32("UPDATEID", carrer.Id);
-                return View("Operations", new CareerViewModel() { MeslekiDeneyim = carrer });
-            }
-            return NotFound();
-        }
+        public IActionResult Update(int? id) => this.UpdateExtensionMapper<MeslekiDeneyim, CareerViewModel>(_repository, _mapper, id, Views.Operations);
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateDb(CareerViewModel model)
-        {
-            ViewBag.Update = true;
-            var id = HttpContext.Session.GetInt32("UPDATEID");
-            if (id != null && id != -1)
-            {
-                model.MeslekiDeneyim.Id = (int)id;
-                TempData["Alert"] = logic.Update(model);
-                HttpContext.Session.SetInt32("UPDATEID", -1);
-                ModelState.Clear();
-            }
-            return RedirectToAction("Operations");
-        }
+        [ValidateUpdateId]
+        public IActionResult UpdateDb(CareerViewModel model) => this.UpdateDbExtension(_repository, model, Views.Operations);
     }
 }

@@ -84,11 +84,17 @@ function GetData() {
 
 function AddData(data) {
     var grid = $('#Hobbies').data("kendoGrid");
+    if (data.Ikon !== null) {
+        var tempArray = data.Ikon.split("|");
+    }
+    else {
+        var tempArray = ["-", "-"];
+    }
     var temp = {
         Id: data.Id,
         Adi: data.Adi,
-        Icon: data.Icon,
-        IconExt: data.IconExt,
+        IconExt: tempArray[0],
+        Icon: tempArray[1],
         EklemeTarihi: new Date(data.EklemeTarihi).toLocaleString(),
         DegisimTarihi: data.DegisimTarihi !== null ? new Date(data.DegisimTarihi).toLocaleString() : '-'
     };
