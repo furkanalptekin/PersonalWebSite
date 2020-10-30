@@ -1,6 +1,5 @@
 ﻿@model DB.ViewModels.CareerViewModel
 @{
-    ViewData["Title"] = "Operations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +9,7 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/KendoHelper.js"></script>
 <script src="~/js/ManagementPanel/Career.js"></script>
 
 <partial name="_Alert" />
@@ -30,53 +30,47 @@
               method="post"
               enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            <div class="col-12 row">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Firma <span class="text-danger">*</span></label>
                         <input asp-for="Firma" class="k-textbox form-control" />
                         <span class="text-danger" asp-validation-for="Firma"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Pozisyon <span class="text-danger">*</span></label>
                         <input asp-for="Pozisyon" class="k-textbox form-control" />
                         <span class="text-danger" asp-validation-for="Pozisyon"></span>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 row">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Başlangıç Tarihi</label>
                         <input id="baslangicTarihi" asp-for="BaslangicTarih" class="form-control" />
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Bitiş Tarihi</label>
                         <input id="bitisTarihi" asp-for="BitisTarih" class="form-control" />
                     </div>
                 </div>
-            </div>
-            <div class="col-12 row">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Adres</label>
                         <textarea asp-for="Adres" class="k-textbox form-control"></textarea>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Ikon</label>
                         <input asp-for="IconFile" name="IconFile" id="File" type="file" />
                     </div>
                 </div>
             </div>
-            <div class="col-12 m-2 clearfix">
-                <button class="k-button pull-right">KAYDET</button>
-            </div>
+            <button class="k-button saveButton">KAYDET</button>
         </form>
     </div>
 

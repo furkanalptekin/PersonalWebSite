@@ -1,6 +1,5 @@
 ﻿@model DB.Models.Yetenekler
 @{
-    ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +9,7 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/KendoHelper.js"></script>
 <script src="~/js/ManagementPanel/Skills.js"></script>
 
 <partial name="_Alert" />
@@ -29,24 +29,22 @@
               asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
               method="post">
             @Html.AntiForgeryToken()
-            <div class="col-12 row">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Adı <span class="text-danger">*</span></label>
                         <input asp-for="Adi" class="k-textbox form-control" />
                         <span class="text-danger" asp-validation-for="Adi"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Başarı Oranı <span class="text-danger">*</span></label>
                         <input asp-for="BasariOrani" type="number" min="0" max="100" class="k-textbox form-control" />
                         <span class="text-danger" asp-validation-for="BasariOrani"></span>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 row">
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Kategori <span class="text-danger">*</span></label>
                         <select asp-for="KategoriId" asp-items="ViewBag.SkillCategories" class="k-textbox form-control">
@@ -55,7 +53,7 @@
                         <span class="text-danger" asp-validation-for="KategoriId"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Renk</label>
                         <br />
@@ -64,9 +62,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 m-2 clearfix">
-                <button class="k-button pull-right">KAYDET</button>
-            </div>
+
+            <button class="k-button saveButton">KAYDET</button>
         </form>
     </div>
 

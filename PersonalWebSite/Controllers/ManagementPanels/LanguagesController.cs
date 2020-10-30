@@ -33,7 +33,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.RatingA1 = _lists.GetLanguageRating(true);
             ViewBag.Rating = _lists.GetLanguageRating(false);
-            return this.AddExtension(Views.Operations);
+            return this.AddExtension(Views.Operations.ToString());
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.RatingA1 = _lists.GetLanguageRating(true);
             ViewBag.Rating = _lists.GetLanguageRating(false);
-            return this.AddDbExtension(_repository, model, Views.Operations);
+            return this.AddDbExtension(_repository, model, Views.Operations.ToString());
         }
 
         [HttpGet]
@@ -53,7 +53,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.RatingA1 = _lists.GetLanguageRating(true);
             ViewBag.Rating = _lists.GetLanguageRating(false);
-            return this.UpdateExtension(_repository, id, Views.Operations);
+            return this.UpdateExtension(_repository, id, Views.Operations.ToString());
         }
 
         [HttpPost]
@@ -63,7 +63,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.RatingA1 = _lists.GetLanguageRating(true);
             ViewBag.Rating = _lists.GetLanguageRating(false);
-            return this.UpdateDbExtension(_repository, model, Views.Operations);
+            return this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
         }
     }
 }

@@ -1,6 +1,5 @@
-﻿@model DB.ViewModels.CvViewModel
+﻿@model DB.Models.Cv
 @{
-    ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +9,7 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/KendoHelper.js"></script>
 <script src="~/js/ManagementPanel/CV.js"></script>
 
 <partial name="_Alert" />
@@ -27,25 +27,23 @@
     <div>
         <form asp-controller="CV" asp-action="Operations" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
-            <div class="col-12 row">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>CV'nin Adı <span class="text-danger">*</span></label>
                         <input asp-for="CvAdi" class="k-textbox form-control" />
                         <span class="text-danger" asp-validation-for="CvAdi"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>CV</label>
-                        <input asp-for="File" name="File" id="File" type="file" />
+                        <input name="File" id="File" type="file" />
                         <div class="demo-hint">Sadece <strong>PDF</strong> Dosyası Yüklenebilir.</div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 m-2 clearfix">
-                <button class="k-button pull-right">KAYDET</button>
-            </div>
+            <button class="k-button saveButton">KAYDET</button>
         </form>
     </div>
 

@@ -1,6 +1,5 @@
 ﻿@model DB.Models.YetenekKategori
 @{
-    ViewData["Title"] = "Add";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +9,7 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/KendoHelper.js"></script>
 <script src="~/js/ManagementPanel/SkillCategories.js"></script>
 
 <partial name="_Alert" />
@@ -29,18 +29,13 @@
               asp-action="@(ViewBag.Update != null && (bool)ViewBag.Update ? "UpdateDB": "Operations")"
               method="post">
             @Html.AntiForgeryToken()
-            <div class="col-12 row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <label>Kategori Adı <span class="text-danger">*</span></label>
-                        <input asp-for="Adi" class="k-textbox form-control" />
-                        <span class="text-danger" asp-validation-for="Adi"></span>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label>Kategori Adı <span class="text-danger">*</span></label>
+                <input asp-for="Adi" class="k-textbox form-control" />
+                <span class="text-danger" asp-validation-for="Adi"></span>
             </div>
-            <div class="col-12 m-2 clearfix">
-                <button class="k-button pull-right">KAYDET</button>
-            </div>
+
+            <button class="k-button saveButton">KAYDET</button>
         </form>
     </div>
 

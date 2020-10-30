@@ -6,64 +6,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login V6</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
-    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/icons/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/zmdi/css/material-design-iconic-font.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/Login/animate.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/Login/hamburgers.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/Login/animsition.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/Login/select2.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/Login/main.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/Login/util.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="~/ManagementLayout/login.css" rel="stylesheet" />
 </head>
 <body>
-
-    <div class="limiter">
-        <div class="container-login100">
-            <div class="wrap-login100 p-t-85 p-b-20">
-                <span class="login100-form-title p-b-70">
-                    Hoşgeldiniz
-                </span>
-                <span class="login100-form-avatar">
-                    <img src="~/ManagementLayout/Content/images/avatar.png" />
-                </span>
-                <form asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@Context.Request.Query["returnUrl"]">
-                    <h5 class="mt-3" style="color: red;">@Html.ValidationSummary()</h5>
-                    @Html.AntiForgeryToken()
-                    <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate="Enter username">
-                        <input class="input100" asp-for="Email">
-                        <span class="focus-input100" data-placeholder="Kullanıcı Adı"></span>
-                    </div>
-
-                    <div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
-                        <input class="input100" type="password" asp-for="Password">
-                        <span class="focus-input100" data-placeholder="Şifre"></span>
-                    </div>
-
-                    <div class="container-login100-form-btn">
-                        <button class="login100-form-btn" type="submit"> GİRİŞ </button>
-                    </div>
-                </form>
+    <form asp-controller="Account" asp-action="Login" method="post" asp-route-returnUrl="@Context.Request.Query["returnUrl"]">
+        <div class="wrapper">
+            <img width="150" height="150" src="~/ManagementLayout/images/avatar.png" alt="">
+            <div class="summary">
+                @Html.ValidationSummary()
             </div>
+            <div class="input">
+                <label>E-mail</label>
+                <input asp-for="Email">
+            </div>
+            <div class="input">
+                <label>Şifre</label>
+                <input type="password" asp-for="Password">
+            </div>
+            <button>GİRİŞ</button>
         </div>
-    </div>
-
-
-    <div id="dropDownSelect1"></div>
-
+    </form>
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/ManagementLayout/Content/js/jquery-3.5.0.min.js"></script>
-    <link href="~/ManagementLayout/Content/css/Login/animsition.min.css" rel="stylesheet" />
-    <script src="~/ManagementLayout/Content/js/popper.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/ManagementLayout/Content/js/Login/select2.min.js"></script>
-    <script src="~/ManagementLayout/Content/js/Login/daterangepicker.js"></script>
-    <script src="~/ManagementLayout/Content/js/Login/moment.min.js"></script>
-    <script src="~/ManagementLayout/Content/js/Login/countdowntime.js"></script>
-    <script src="~/ManagementLayout/Content/js/Login/main.js"></script>
 </body>
 </html>

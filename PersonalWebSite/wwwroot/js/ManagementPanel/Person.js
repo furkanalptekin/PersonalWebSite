@@ -1,9 +1,10 @@
 ﻿$(document).ready(function () {
     window.setTimeout(RemoveAlert, 5000);
-    kendo.culture("tr-TR");
 
-    $("#DogumTarihi").kendoDatePicker();
-    $("#TecilTarihi").kendoDatePicker();
+    const helper = new KendoHelper("Person");
+    helper.createDatePicker("DogumTarihi");
+    helper.createDatePicker("TecilTarihi");
+    helper.createTabStrip("tabstrip");
 
     $("#Ehliyet").kendoMultiSelect({
         autoClose: false
@@ -13,13 +14,6 @@
         multiple: false
     });
 
-    $("#tabstrip").kendoTabStrip({
-        animation: {
-            open: {
-                effects: "fadeIn"
-            }
-        }
-    });
 });
 
 function GetDistricts(CitySelectName, DistrictsSelectName) {

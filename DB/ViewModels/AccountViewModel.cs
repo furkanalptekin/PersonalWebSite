@@ -15,7 +15,7 @@ namespace DB.ViewModels
         public string Sifre { get; set; }
         public string EskiSifre { get; set; }
         [Required(ErrorMessage = "Ad Soyad Bilgisi Boş Geçilemez."), MaxLength(256, ErrorMessage = "Maksimum 256 Karakter Olabilir.")]
-        public string AdSoyad { get; set; }
+        public string NameSurname { get; set; }
         public bool Aktif { get; set; }
         public DateTime EklemeTarihi { get; set; }
         public DateTime? DegisimTarihi { get; set; }

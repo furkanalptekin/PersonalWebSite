@@ -1,6 +1,5 @@
 ﻿@model DB.ViewModels.BlogViewModel
 @{
-    ViewData["Title"] = "Operations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +9,7 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/KendoHelper.js"></script>
 <script src="~/js/ManagementPanel/Blog.js"></script>
 
 <partial name="_Alert" />
@@ -36,29 +36,27 @@
                     <li>Blog Detayı</li>
                 </ul>
                 <div>
-                    <div class="col-12 row">
-                        <div class="col-6">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label>Başlık <span class="text-danger">*</span></label>
                                 <input asp-for="Baslik" class="k-textbox form-control" />
                                 <span class="text-danger" asp-validation-for="Baslik"></span>
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label>Blog Fotoğrafı</label>
                                 <input asp-for="FotoFile" name="FotoFile" id="File" type="file" />
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 row">
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label>Gösterim Başlangıç Tarihi</label>
                                 <input id="Baslangic" asp-for="GosterimBaslangicTarihi" class="form-control" />
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label>Gösterim Bitiş Tarihi</label>
                                 <input id="Bitis" asp-for="GosterimBitisTarihi" class="form-control" />
@@ -83,11 +81,10 @@
                     </div>
                 </div>
             </div>
+
             @if (ViewBag.Show == null)
             {
-                <div class="col-12 m-2 clearfix">
-                    <button class="k-button pull-right">KAYDET</button>
-                </div>
+                <button class="k-button saveButton">KAYDET</button>
             }
         </form>
     </div>

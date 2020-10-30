@@ -30,7 +30,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Operations()
         {
             ViewBag.SkillCategories = _lists.GetSkillCategories();
-            return this.AddExtension(Views.Operations);
+            return this.AddExtension(Views.Operations.ToString());
         }
 
         [HttpPost]
@@ -38,7 +38,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Operations(Yetenekler model)
         {
             ViewBag.SkillCategories = _lists.GetSkillCategories();
-            return this.AddDbExtension(_repository, model, Views.Operations);
+            return this.AddDbExtension(_repository, model, Views.Operations.ToString());
         }
 
         [HttpPost]
@@ -54,7 +54,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Update(int? id)
         {
             ViewBag.SkillCategories = _lists.GetSkillCategories();
-            return this.UpdateExtension(_repository, id, Views.Operations);
+            return this.UpdateExtension(_repository, id, Views.Operations.ToString());
         }
 
         [HttpPost]
@@ -63,7 +63,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult UpdateDb(Yetenekler model)
         {
             ViewBag.SkillCategories = _lists.GetSkillCategories();
-            return this.UpdateDbExtension(_repository, model, Views.Operations);
+            return this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
         }
     }
 }

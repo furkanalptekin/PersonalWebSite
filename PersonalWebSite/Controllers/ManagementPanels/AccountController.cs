@@ -1,7 +1,8 @@
-﻿using DB.Models;
+﻿using AutoMapper;
+using DB.Models;
 using DB.ViewModels;
-using Logic;
 using Logic.Extensions;
+using Logic.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,19 +15,21 @@ namespace PersonalWebSite.Controllers.ManagementPanels
 {
     public class AccountController : Controller
     {
-        private readonly AccountLogic logic = new AccountLogic();
-
+        private readonly AccountRepository _repository = new AccountRepository();
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginViewModel> _logger;
+        private readonly IMapper _mapper;
 
         public AccountController(SignInManager<ApplicationUser> signInManager,
             ILogger<LoginViewModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager, 
+            IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -81,14 +84,14 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [Authorize]
         public async Task<IActionResult> Delete(string id)
         {
-            return Json(new { success = await logic.Delete(_userManager, id) });
+            return Json(new { success = await _repository.Delete(_userManager, id) });
         }
 
         [HttpGet]
         [Authorize]
         public IActionResult List()
         {
-            return Json(new { success = true, data = logic.GetList(_userManager).ToJsonList() });
+            return Json(new { success = true, data = _repository.GetList(_userManager).ToJsonList() });
         }
 
         [HttpGet]
@@ -107,7 +110,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
             ViewBag.Update = false;
             if (ModelState.IsValid)
             {
-                await logic.Add(model, _userManager);
+                ViewBag.Alert = await _repository.Add(model, _userManager);
                 ModelState.Clear();
             }
             return View();
@@ -119,10 +122,10 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.Show = true;
             ViewBag.Update = false;
-            var account = logic.GetFromId(_userManager, id).Result;
+            var account = _repository.GetFromId(_userManager, id).Result;
             if (account != null)
             {
-                return View("Operations", account);
+                return View("Operations", _mapper.Map<AccountViewModel>(account));
             }
             return NotFound();
         }
@@ -132,7 +135,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public async Task<IActionResult> Update(string Id)
         {
             ViewBag.Update = true;
-            AccountViewModel acc = await logic.GetFromId(_userManager, Id);
+            AccountViewModel acc = _mapper.Map<AccountViewModel>(await _repository.GetFromId(_userManager, Id));
             if (acc != null)
             {
                 HttpContext.Session.SetString("UPDATESTR", acc.Id);
@@ -153,7 +156,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
                 if (!string.IsNullOrEmpty(id))
                 {
                     model.Id = id;
-                    TempData["Alert"] = await logic.Update(model, _userManager);
+                    TempData["Alert"] = await _repository.Update(model, _userManager);
                     HttpContext.Session.SetString("UPDATESTR", string.Empty);
                     ModelState.Clear();
                 }

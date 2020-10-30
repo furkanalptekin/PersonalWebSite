@@ -49,7 +49,7 @@ namespace PersonelWebSite
             services.AddScoped(typeof(ILanguageRepository), typeof(LanguageRepository));
             services.AddScoped(typeof(ICertificateRepository), typeof(CertificateRepository));
             #endregion
-
+            
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromDays(1);

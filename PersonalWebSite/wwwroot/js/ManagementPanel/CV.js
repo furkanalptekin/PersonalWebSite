@@ -1,14 +1,8 @@
 ﻿$(document).ready(function () {
     window.setTimeout(RemoveAlert, 5000);
-    kendo.culture("tr-TR");
 
-    $("#tabstrip").kendoTabStrip({
-        animation: {
-            open: {
-                effects: "fadeIn"
-            }
-        }
-    });
+    const helper = new KendoHelper("CV");
+    helper.createTabStrip("tabstrip");
 
     $("#File").kendoUpload({
         validation: {
@@ -21,66 +15,30 @@
         }
     });
 
-    $("#CV").kendoGrid({
-        dataSource: {
-            data: GetCVs(),
-            type: "odata",
-            serverPaging: true,
-            serverSorting: true,
-            pageSize: 10,
-        },
-        autoSync: true,
-        batch: true,
-        height: "75vh",
-        scrollable: false,
-        cancel: function (e) {
-            GetCVs()
-        },
-        columns: [
-            { field: "Id", title: "Id" },
-            { field: "CvAdi", title: "Cv Adı" },
-            { field: "EklemeTarihi", title: "Ekleme Tarihi" },
-            {
-                title: "İşlemler",
-                command: [{
+    var columns = [
+        { field: "Id", title: "Id" },
+        { field: "CvAdi", title: "Cv Adı" },
+        { field: "EklemeTarihi", title: "Ekleme Tarihi" },
+        {
+            title: "İşlemler",
+            command: [
+                {
                     name: "goster",
                     text: "",
-                    iconClass: "k-icon k-i-file-pdf m-0",
+                    iconClass: "k-icon k-i-select-all m-0",
                     click: function (e) {
                         e.preventDefault();
                         var data = this.dataItem($(e.target).closest("tr"));
                         OpenPDF(data.Id);
                     }
                 },
-                {
-                    name: "sil",
-                    text: "",
-                    iconClass: "k-icon k-i-delete m-0",
-                    click: function (e) {
-                        e.preventDefault();
-                        var tr = $(e.target).closest("tr");
-                        var data = this.dataItem(tr);
-                        Delete('/CV/Delete/', data.Id, tr);
-                    }
-                }]
-            }
-        ]
-    });
-});
-
-function GetCVs() {
-    var cv = $('#CV').data("kendoGrid");
-    if (cv !== undefined) {
-        cv.dataSource.data([]);
-    }
-    $.ajax({
-        url: '/CV/List/',
-        type: "GET",
-        success: function (response) {
-            response.data.forEach(element => AddData(JSON.parse(element)));
+                helper.fieldDelete()
+            ]
         }
-    });
-}
+    ]
+
+    helper.createGrid("CV", columns);
+});
 
 function AddData(data) {
     var grid = $('#CV').data("kendoGrid");

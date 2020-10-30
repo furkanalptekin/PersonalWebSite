@@ -51,7 +51,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Operations(PersonViewModel model)
         {
             ViewBag.Cities = _lists.GetCities();
-            return this.AddDbExtension(_repository, model, Views.Operations);
+            return this.AddDbExtension(_repository, model, Views.Operations.ToString());
         }
 
         public IActionResult Show(int? id) => throw new NotImplementedException();
@@ -83,7 +83,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
             ViewBag.Cities = _lists.GetCities();
             ViewBag.DogumDistricts = _lists.GetDistricts((int)model.DogumSehirId, false);
             ViewBag.KonumDistricts = _lists.GetDistricts((int)model.KonumSehirId, false);
-            return this.UpdateDbExtension(_repository, model, Views.Operations);
+            return this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
         }
 
         [HttpPost]

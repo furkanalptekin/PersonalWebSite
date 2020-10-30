@@ -8,6 +8,10 @@ namespace DB.Dtos
     {
         public AutoMapperProfiles()
         {
+            #region Account
+            CreateMap<ApplicationUser, AccountViewModel>();
+            #endregion
+
             #region Sosyal Medya
             CreateMap<SosyalMedya, SocialMediaViewModel>();
             #endregion
@@ -26,11 +30,6 @@ namespace DB.Dtos
 
             #region Kariyer
             CreateMap<MeslekiDeneyim, CareerViewModel>();
-            #endregion
-
-            #region CV
-            CreateMap<Cv, CvDto>();
-            CreateMap<Cv, CvViewModel>();
             #endregion
 
             #region Hobi

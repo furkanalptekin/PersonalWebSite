@@ -23,21 +23,21 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult List() => Json(new { success = true, data = _repository.Where(x => x.Aktif).ToJsonList() });
 
         [HttpGet]
-        public IActionResult Operations() => this.AddExtension(Views.Operations);
+        public IActionResult Operations() => this.AddExtension(Views.Operations.ToString());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(Projeler model) => this.AddDbExtension(_repository, model, Views.Operations);
+        public IActionResult Operations(Projeler model) => this.AddDbExtension(_repository, model, Views.Operations.ToString());
 
         [HttpGet]
-        public IActionResult Show(int? id) => this.ShowExtension(_repository, id, Views.Operations);
+        public IActionResult Show(int? id) => this.ShowExtension(_repository, id, Views.Operations.ToString());
 
         [HttpGet]
-        public IActionResult Update(int? id) => this.UpdateExtension(_repository, id, Views.Operations);
+        public IActionResult Update(int? id) => this.UpdateExtension(_repository, id, Views.Operations.ToString());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateUpdateId]
-        public IActionResult UpdateDb(Projeler model) => this.UpdateDbExtension(_repository, model, Views.Operations);
+        public IActionResult UpdateDb(Projeler model) => this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
     }
 }

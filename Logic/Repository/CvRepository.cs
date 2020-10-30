@@ -1,7 +1,7 @@
 ﻿using DB.Models;
-using DB.ViewModels;
 using Logic.Extensions;
 using Logic.Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Logic.Repository
 {
@@ -9,12 +9,22 @@ namespace Logic.Repository
     {
         public override bool Add(Cv model, params object[] parameters)
         {
-            var cv = model as CvViewModel;
-            if (cv.File != null)
+            if (parameters.Length == 0)
+                return false;
+
+            var anonymousType = parameters[0];
+            var File = anonymousType.GetType().GetProperty("File").GetValue(anonymousType);
+            var FolderName = anonymousType.GetType().GetProperty("FolderName").GetValue(anonymousType).ToString();
+            var wwwrootPath = anonymousType.GetType().GetProperty("wwwrootPath").GetValue(anonymousType).ToString();
+            string[] AllowedFileExtensions = { "pdf" };
+            var filePath = ((IFormFile)File).CopyFile(wwwrootPath, FolderName, AllowedFileExtensions);
+
+            if (filePath != null)
             {
-                cv.B64 = cv.File.PDFToBase64();
+                model.FilePath = filePath;
+                return _context.AddEntity(model) > 0;
             }
-            return _context.AddEntity(model) > 0;
+            return false;
         }
     }
 }

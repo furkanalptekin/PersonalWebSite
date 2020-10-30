@@ -1,6 +1,5 @@
 ﻿@model DB.Models.YabanciDil
 @{
-    ViewData["Title"] = "Operations";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -10,6 +9,7 @@
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.culture.tr-TR.min.js"></script>
 <script src="~/ManagementLayout/Content/Kendo/localization/kendo.messages.tr-TR.min.js"></script>
 <script src="~/js/ManagementPanel/BasicFunctions.js"></script>
+<script src="~/js/ManagementPanel/KendoHelper.js"></script>
 <script src="~/js/ManagementPanel/Languages.js"></script>
 
 <partial name="_Alert" />
@@ -29,38 +29,36 @@
               asp-action="@((bool)ViewBag.Update ? "UpdateDB": "Operations")"
               method="post">
             @Html.AntiForgeryToken()
-            <div class="col-12 row">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Adı <span class="text-danger">*</span></label>
                         <input asp-for="Adi" class="k-textbox form-control" />
                         <span class="text-danger" asp-validation-for="Adi"></span>
                     </div>
                 </div>
-                <div class="col-6">
+                <div class="col-12 col-md-6">
                     <div class="form-group">
                         <label>Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="Seviyesi" asp-items="ViewBag.RatingA1" class="k-textbox form-control"></select>
                         <span class="text-danger" asp-validation-for="Seviyesi"></span>
                     </div>
                 </div>
-            </div>
-            <div class="col-12 row">
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     <div class="form-group">
                         <label>Okuma Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="OkumaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
                         <span class="text-danger" asp-validation-for="OkumaSeviyesi"></span>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     <div class="form-group">
                         <label>Yazma Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="YazmaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
                         <span class="text-danger" asp-validation-for="YazmaSeviyesi"></span>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col-12 col-md-4">
                     <div class="form-group">
                         <label>Konuşma Seviyesi <span class="text-danger">*</span></label>
                         <select asp-for="KonusmaSeviyesi" asp-items="ViewBag.Rating" class="k-textbox form-control"></select>
@@ -68,9 +66,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 m-2 clearfix">
-                <button class="k-button pull-right">KAYDET</button>
-            </div>
+
+            <button class="k-button saveButton">KAYDET</button>
         </form>
     </div>
 

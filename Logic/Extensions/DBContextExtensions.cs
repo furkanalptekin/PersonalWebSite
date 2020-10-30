@@ -5,6 +5,13 @@ namespace Logic.Extensions
 {
     public static class DBContextExtensions
     {
+        /// <summary>
+        /// Entity veritabanına kayıt eder.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="context"></param>
+        /// <param name="entity"></param>
+        /// <returns>(<see cref="int"/>) İşlem başarılı ise 0'dan büyük, başarısız ise -1 döner.</returns>
         public static int AddEntity<TEntity>(this DbContext context, TEntity entity) where TEntity : class
         {
             if (entity == null)
@@ -14,6 +21,15 @@ namespace Logic.Extensions
             return context.SaveChanges();
         }
 
+        /// <summary>
+        /// Veritabanında bulunan nesneyi parametredeki nesneye göre <see cref="System.Reflection"/> yardımı ile update eder.
+        /// Update etmek istemediğimiz değişkenleri <paramref name="propertiesToIgnore"/> nesnesi ile ayarlayabiliriz.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="context"></param>
+        /// <param name="entity"></param>
+        /// <param name="propertiesToIgnore"></param>
+        /// <returns>(<see cref="int"/>) İşlem başarılı ise 0'dan büyük, başarısız ise -1 döner.</returns>
         public static int UpdateEntity<TEntity>(this DbContext context, TEntity entity, params string[] propertiesToIgnore) where TEntity : class
         {
             if (entity == null)
@@ -34,6 +50,13 @@ namespace Logic.Extensions
             return context.SaveChanges();
         }
 
+        /// <summary>
+        /// Verilen Id'ye göre veritabanından nesneyi siler.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="context"></param>
+        /// <param name="Id"></param>
+        /// <returns>(<see cref="int"/>) İşlem başarılı ise 0'dan büyük, başarısız ise -1 döner.</returns>
         public static int RemoveEntity<TEntity>(this DbContext context, int? Id) where TEntity : class
         {
             if (Id == null)

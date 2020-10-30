@@ -1,4 +1,25 @@
-﻿@if (ViewBag.Alert != null)
+﻿<style>
+    .alert{
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: bold;
+        color: black;
+        padding: 20px;
+        margin: 20px;
+        z-index: 999;
+    }
+        .alert success {
+            background-color: forestgreen;
+        }
+
+        .alert error {
+            background-color: red;
+        }
+</style>
+@if (ViewBag.Alert != null)
 {
     if ((bool)ViewBag.Alert == true)
     {
@@ -8,7 +29,7 @@
     }
     else
     {
-        <div id="Alert" class="alert alert-danger" role="alert">
+        <div id="Alert" class="alert alert-error" role="alert">
             İŞLEM SIRASINDA BİR HATA OLUŞTU. LÜTFEN DAHA SONRA TEKRAR DENEYİNİZ
         </div>
     }

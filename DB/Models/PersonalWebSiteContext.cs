@@ -39,6 +39,7 @@ namespace DB.Models
         public virtual DbSet<YabanciDil> YabanciDil { get; set; }
         public virtual DbSet<YetenekKategori> YetenekKategori { get; set; }
         public virtual DbSet<Yetenekler> Yetenekler { get; set; }
+        public virtual DbSet<SiteBilgileri> SiteBilgileri { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -205,7 +206,7 @@ namespace DB.Models
             {
                 entity.ToTable("CV");
 
-                entity.Property(e => e.B64).IsRequired();
+                entity.Property(e => e.FilePath).IsRequired();
 
                 entity.Property(e => e.CvAdi)
                     .IsRequired()
@@ -453,6 +454,13 @@ namespace DB.Models
                 entity.Property(e => e.GecerlilikSuresi).HasColumnType("datetime");
 
                 entity.Property(e => e.Tarih).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<SiteBilgileri>(entity =>
+            {
+                entity.Property(e => e.Id)
+                .IsRequired()
+                .UseIdentityColumn();
             });
 
             modelBuilder.Entity<SosyalMedya>(entity =>

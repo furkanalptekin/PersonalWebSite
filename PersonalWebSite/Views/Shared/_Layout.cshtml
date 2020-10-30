@@ -1,162 +1,86 @@
-﻿@using Microsoft.AspNetCore.Http
- 
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="keyword" content="" />
-
-    <title>Managemenet Panel</title>
-
-    <!-- Theme icon -->
-    @*<link rel="shortcut icon" href="~/Content/images/Logo1.png" />*@
-
-    <link href="~/ManagementLayout/Content/zmdi/css/material-design-iconic-font.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@400;500;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a140cabbe8.js" crossorigin="anonymous"></script>
     <link href="~/ManagementLayout/Content/css/bootstrap.min.css" rel="stylesheet" />
-    <!-- Theme Css -->
-    <link href="~/ManagementLayout/Content/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/slidebars.min.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/icons.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/menu.css" rel="stylesheet" />
-    <link href="~/ManagementLayout/Content/css/style.css" rel="stylesheet" />
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/ManagementLayout/layout.css" rel="stylesheet" />
 </head>
 
-<body class="sticky-header">
-    <partial name="_Loading" />
-
-    <section>
-        <!-- sidebar left start-->
-        <div class="sidebar-left">
-            <div class="sidebar-left-info">
-                <div class="user-box">
-                    <div class="d-flex justify-content-center">
-                        <img src="~/ManagementLayout/Content/images/avatar.png" alt="" class="img-fluid rounded-circle" />
-                    </div>
-                    <div class="text-center text-white mt-2">
-                        <h6>@Context.Session.GetString("NAME")</h6>
-                        <p class="text-muted m-0">ADMIN</p>
-                    </div>
-                </div>
-
-                <!--sidebar nav start-->
-                <ul class="side-navigation">
-                    <li>
-                        <a href="~/Accomplishment/Operations"><i class="zmdi zmdi-flag"></i> <span>Başarılarım</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Blog/Operations"><i class="zmdi zmdi-view-web"></i> <span>Blog</span></a>
-                    </li>
-                    <li>
-                        <a href="~/CV/Operations"><i class="zmdi zmdi-assignment-o"></i> <span>CV</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Education/Operations"><i class="zmdi zmdi-graduation-cap"></i> <span>Eğitimlerim</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Account/Operations"><i class="zmdi zmdi-key"></i> <span>Hesap</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Hobby/Operations"><i class="zmdi zmdi-bike"></i> <span>Hobilerim</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Person/Operations"><i class="zmdi zmdi-account"></i> <span>Kişi</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Career/Operations"><i class="zmdi zmdi-card-travel"></i> <span>Mesleki Deneyimlerim</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Projects/Operations"><i class="zmdi zmdi-laptop-mac"></i> <span>Projelerim</span></a>
-                    </li>
-                    <li>
-                        <a href="~/References/Operations"><i class="zmdi zmdi-badge-check"></i> <span>Referanslarım</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Certificates/Operations"><i class="zmdi zmdi-book"></i> <span>Sertifikalarım</span></a>
-                    </li>
-                    <li>
-                        <a href="~/SocialMedia/Operations"><i class="zmdi zmdi-share"></i> <span>Sosyal Medya</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Languages/Operations"><i class="zmdi zmdi-yahoo"></i> <span>Yabancı Diller</span></a>
-                    </li>
-                    <li>
-                        <a href="~/Skills/Operations"><i class="zmdi zmdi-github-alt"></i> <span>Yeteneklerim</span></a>
-                    </li>
-                    <li>
-                        <a href="~/SkillCategories/Operations"><i class="zmdi zmdi-menu"></i> <span>Yetenek Kategorileri</span></a>
-                    </li>
-                </ul><!--sidebar nav end-->
-            </div>
-        </div><!-- sidebar left end-->
-        <!-- body content start-->
-        <div class="body-content" style="background-image: url('/ManagementLayout/Content/images/background.jpg');">
-            <!-- header section start-->
-            <div class="header-section">
-                <!--logo and logo icon start-->
-                <div style="height:70px;" class="logo">
-                    <a href="~/Home/Index">
-                        <span class="logo-img">
-                            <img class="mt-1" src="~/ManagementLayout/Content/images/management.png" alt="" height="50" />
-                        </span>
-                        <!--<i class="fa fa-maxcdn"></i>-->
-                        <span class="brand-name" style="font-size:11px;"><br />Management Panel</span>
-                    </a>
-                </div>
-
-                <!--toggle button start-->
-                <a class="toggle-btn"><i class="ti ti-menu"></i></a>
-                <!--toggle button end-->
-                <div class="notification-wrap">
-                    <!--right notification start-->
-                    <div class="right-notification mt-2">
-                        <a style="position: relative; top: 25%;" class="notification-menu mr-5" href="~/Account/Logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış</a>
-                    </div><!--right notification end-->
-                </div>
-            </div>
-            <!-- header section end-->
-
-            <div class="container-fluid">
-                <div class="page-head m-3 p-2" style="min-width: 80vw; min-height: 85vh; margin: 15px; border: 0px solid #000000; -webkit-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); -moz-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45);">
-                    @RenderBody()
-                </div>
-
-            </div><!--end container-->
-            <!--footer section start-->
-            <footer class="footer" style="position: fixed; bottom: 0px; text-align: center;">
-                @DateTime.Now.Year ©
-            </footer>
-            <!--footer section end-->
+<body>
+    <div id="sidePanelButton">
+        <i id="fa" class="fas fa-bars fa-2x"></i>
+    </div>
+    <div id="sidePanel" class="sidePanel">
+        <div class="admin">
+            <img width="150" height="150" src="~/ManagementLayout/images/avatar.png" alt="">
+            <p class="name">Necati Furkan</p>
+            <p class="surname">ALPTEKİN</p>
         </div>
-        <!--end body content-->
-    </section>
+        <ul>
+            <li>
+                <a href="~/Accomplishment/Operations"><i class="fas fa-trophy fa-sm"></i> Başarılarım</a>
+            </li>
+            <li>
+                <a href="~/Blog/Operations"><i class="fas fa-blog fa-sm"></i> Blog</a>
+            </li>
+            <li>
+                <a href="~/CV/Operations"><i class="fas fa-portrait fa-sm"></i> CV</a>
+            </li>
+            <li>
+                <a href="~/Education/Operations"><i class="fas fa-graduation-cap fa-sm"></i> Eğitimlerim</a>
+            </li>
+            <li>
+                <a href="~/Account/Operations"><i class="fas fa-key fa-sm"></i> Hesap</a>
+            </li>
+            <li>
+                <a href="~/Hobby/Operations"><i class="fas fa-bicycle fa-sm"></i> Hobilerim</a>
+            </li>
+            <li>
+                <a href="~/Person/Operations"><i class="fas fa-user fa-sm"></i> Kişi</a>
+            </li>
+            <li>
+                <a href="~/Career/Operations"><i class="fas fa-atlas fa-sm"></i> Mesleki Deneyimlerim</a>
+            </li>
+            <li>
+                <a href="~/Projects/Operations"><i class="fas fa-laptop-code fa-sm"></i> Projelerim</a>
+            </li>
+            <li>
+                <a href="~/References/Operations"><i class="fas fa-user-check fa-sm"></i> Referanslarım</a>
+            </li>
+            <li>
+                <a href="~/Certificates/Operations"><i class="fas fa-certificate fa-sm"></i> Sertifikalarım</a>
+            </li>
+            <li>
+                <a href="~/SocialMedia/Operations"><i class="fas fa-share-alt fa-sm"></i> Sosyal Medya</a>
+            </li>
+            <li>
+                <a href="~/Languages/Operations"><i class="fas fa-language fa-sm"></i> Yabancı Diller</a>
+            </li>
+            <li>
+                <a href="~/Skills/Operations"><i class="fab fa-github fa-sm"></i> Yeteneklerim</a>
+            </li>
+            <li>
+                <a href="~/SkillCategories/Operations"><i class="fab fa-elementor fa-sm"></i> Yetenek Kategorileri</a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <div class="upperPanel">
+            <a href="~/Account/Logout"><i class="fas fa-sign-out-alt fa-sm"></i>Çıkış</a>
+        </div>
+        <div class="wrapper">
+            <div class="render">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
 
-    @*<script src="~/ManagementLayout/Content/js/jquery-3.5.0.min.js"></script>*@
-    <!-- jQuery -->
+    <script src="~/ManagementLayout/layout.js"></script>
     <script src="~/ManagementLayout/Content/js/bootstrap.min.js"></script>
-    <script src="~/ManagementLayout/Content/js/slidebars.min.js"></script>
-    <script src="~/ManagementLayout/Content/js/popper.min.js"></script>
-    <script src="~/ManagementLayout/Content/js/jquery.slimscroll.min.js"></script>
-
-    <!--app js-->
-    <script src="~/ManagementLayout/Content/js/jquery.app.js"></script>
-
-    <script>
-
-        function displayLoadingIndicator() {
-            $('.loading').show();
-        }
-
-        $(window).on('beforeunload', function () {
-            displayLoadingIndicator();
-        });
-
-        $(document).on('submit', 'form', function () {
-            displayLoadingIndicator();
-        });
-    </script>
 </body>
 </html>

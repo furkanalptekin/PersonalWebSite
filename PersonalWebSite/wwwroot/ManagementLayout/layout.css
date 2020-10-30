@@ -1,0 +1,182 @@
+body{
+    --font-color-content: #36353A;
+    --font-color-sidepanel: #efeef3dc;
+    --font-size-header-main: 1.5em;
+    --font-size-header-sub: 1.2em;
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    line-height: 1;
+    color: var(--font-color-content);
+}
+
+* {
+    margin: 0;
+}
+
+.sidePanel {
+    background-color: var(--font-color-content);
+    color: var(--font-color-sidepanel);
+    min-width: 16vw;
+    min-height: 100vh;
+    padding: 0em 1.5em 0em 1.5em;
+    width: auto;
+    z-index: 1;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.sidePanel.open {
+    position: absolute;
+    z-index: 99;
+}
+
+.sidePanel ul {
+    margin-top: 1em;
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidePanel i {
+    min-width: 1.5em;
+}
+
+.sidePanel a:link,
+.sidePanel a:visited,
+.sidePanel a:active {
+    color: var(--font-color-sidepanel);
+    text-decoration: none;
+    padding-left: 0.4em;
+}
+
+.sidePanel a:hover {
+    text-decoration: none;
+    color: #FFFFFF;
+    padding-left: 0.4em;
+}
+
+.sidePanel li {
+    font-size: var(--font-size-header-sub);
+    font-weight: 300;
+    padding: 0.55em 0em 0.55em 0em;
+    width: inherit;
+}
+
+#sidePanelButton {
+    color: var(--font-color-content);
+    background-color: var(--font-color-sidepanel);
+    border: 0.2em solid #000000;
+    position: absolute;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    top: 1em;
+    left: 1em;
+    z-index: 100;
+    padding: 0.3em;
+    width: 2em;
+    height: 2em;
+    display: none;
+    box-sizing: initial;
+}
+
+.admin {
+    margin-top: 3em;
+    text-align: center;
+}
+
+.admin p.name {
+    margin-top: 1em;
+    font-size: var(--font-size-header-main);
+    font-weight: 400;
+    padding-top: 0.3em;
+    border-top: 0.15em solid var(--font-color-sidepanel);
+}
+
+.admin p.surname {
+    font-size: var(--font-size-header-main);
+    font-weight: 700;
+    padding-bottom: 0.3em;
+    border-bottom: 0.15em solid var(--font-color-sidepanel);
+}
+
+.admin img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 100%;
+    border: 2px solid #000000;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 100;
+}
+
+.upperPanel {
+    max-height: 4em;
+    display: flex;
+    background-color: #D4D4D4;
+    z-index: 3;
+    align-items: flex-end;
+    justify-content: flex-end;
+    font-size: 1.2em;
+    padding: 1em;
+    border-bottom: 0.1em solid var(--font-color-content);
+    border-top: 0.1em solid var(--font-color-content);
+    -webkit-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); 
+    -moz-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); 
+    box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45);
+}
+
+.upperPanel a:link, 
+.upperPanel a:visited, 
+.upperPanel a:hover, 
+.upperPanel a:active {
+    color: var(--font-color-content);
+    text-decoration: none;
+    font-weight: 700;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+.render {
+    display: flex;
+    flex-grow: 100;
+    border: 0px solid #000000;
+    margin: 2.3em;
+    -webkit-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); 
+    -moz-box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45); 
+    box-shadow: 3px -5px 37px -2px rgba(0,0,0,0.45);
+}
+
+.wrapper {
+    display: flex;
+    flex-grow: 100;
+    background: url(images/background.jpg);
+}
+
+.k-tabstrip-wrapper {
+    width: 100%;
+}
+
+form{
+    position: relative;
+}
+
+.saveButton {
+    position: absolute !important;
+    bottom: -50px;
+    right: 0;
+    z-index: 100;
+}
+
+@media only screen and (max-width: 720px) {
+    #sidePanel {
+        display: none;
+    }
+    #sidePanelButton {
+        display: inherit;
+    }
+}

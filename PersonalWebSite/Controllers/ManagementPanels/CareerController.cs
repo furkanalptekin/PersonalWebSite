@@ -30,21 +30,21 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult List() => Json(new { success = true, data = _repository.Where(x => x.Aktif).ToJsonList() });
 
         [HttpGet]
-        public IActionResult Operations() => this.AddExtension(Views.Operations);
+        public IActionResult Operations() => this.AddExtension(Views.Operations.ToString());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(CareerViewModel model) => this.AddDbExtension(_repository, model, Views.Operations);
+        public IActionResult Operations(CareerViewModel model) => this.AddDbExtension(_repository, model, Views.Operations.ToString());
 
         [HttpGet]
         public IActionResult Show(int? id) => throw new NotImplementedException();
 
         [HttpGet]
-        public IActionResult Update(int? id) => this.UpdateExtensionMapper<MeslekiDeneyim, CareerViewModel>(_repository, _mapper, id, Views.Operations);
+        public IActionResult Update(int? id) => this.UpdateExtensionMapper<MeslekiDeneyim, CareerViewModel>(_repository, _mapper, id, Views.Operations.ToString());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateUpdateId]
-        public IActionResult UpdateDb(CareerViewModel model) => this.UpdateDbExtension(_repository, model, Views.Operations);
+        public IActionResult UpdateDb(CareerViewModel model) => this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
     }
 }

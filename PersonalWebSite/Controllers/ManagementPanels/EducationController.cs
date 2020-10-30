@@ -33,7 +33,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.EducationTypes = _lists.GetEducationTypes();
             ViewBag.Cities = _lists.GetCities();
-            return this.AddExtension(Views.Operations);
+            return this.AddExtension(Views.Operations.ToString());
         }
 
         [HttpPost]
@@ -42,7 +42,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.EducationTypes = _lists.GetEducationTypes();
             ViewBag.Cities = _lists.GetCities();
-            return this.AddDbExtension(_repository, model, Views.Operations);
+            return this.AddDbExtension(_repository, model, Views.Operations.ToString());
         }
 
         [HttpGet]
@@ -84,7 +84,7 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         {
             ViewBag.EducationTypes = _lists.GetEducationTypes();
             ViewBag.Cities = _lists.GetCities();
-            return this.UpdateDbExtension(_repository, model, Views.Operations);
+            return this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
         }
 
         [HttpPost]

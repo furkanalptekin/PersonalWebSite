@@ -31,11 +31,11 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult List() => Json(new { success = true, data = _mapper.Map<IList<BlogDto>>(_repository.Where(x => x.Aktif)).ToJsonList() });
 
         [HttpGet]
-        public IActionResult Operations() => this.AddExtension(Views.Operations);
+        public IActionResult Operations() => this.AddExtension(Views.Operations.ToString());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(BlogViewModel model) => this.AddDbExtension(_repository, model, Views.Operations);
+        public IActionResult Operations(BlogViewModel model) => this.AddDbExtension(_repository, model, Views.Operations.ToString());
 
         [HttpGet]
         public IActionResult Show(int? id)
@@ -66,6 +66,6 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateUpdateId]
-        public IActionResult UpdateDb(BlogViewModel model) => this.UpdateDbExtension(_repository, model, Views.Operations);
+        public IActionResult UpdateDb(BlogViewModel model) => this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
     }
 }

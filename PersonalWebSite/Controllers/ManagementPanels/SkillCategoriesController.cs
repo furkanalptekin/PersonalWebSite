@@ -17,11 +17,11 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public SkillCategoriesController(ISkillCategoriesRepository repository) => _repository = repository;
 
         [HttpGet]
-        public IActionResult Operations() => this.AddExtension(Views.Operations);
+        public IActionResult Operations() => this.AddExtension(Views.Operations.ToString());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Operations(YetenekKategori model) => this.AddDbExtension(_repository, model, Views.Operations);
+        public IActionResult Operations(YetenekKategori model) => this.AddDbExtension(_repository, model, Views.Operations.ToString());
 
         [HttpPost]
         public IActionResult Delete(int? id) => Json(new { success = _repository.Remove(id) });
@@ -33,11 +33,11 @@ namespace PersonalWebSite.Controllers.ManagementPanels
         public IActionResult Show(int? id) => NotFound();
 
         [HttpGet]
-        public IActionResult Update(int? id) => this.UpdateExtension(_repository, id, Views.Operations);
+        public IActionResult Update(int? id) => this.UpdateExtension(_repository, id, Views.Operations.ToString());
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateUpdateId]
-        public IActionResult UpdateDb(YetenekKategori model) => this.UpdateDbExtension(_repository, model, Views.Operations);
+        public IActionResult UpdateDb(YetenekKategori model) => this.UpdateDbExtension(_repository, model, Views.Operations.ToString());
     }
 }

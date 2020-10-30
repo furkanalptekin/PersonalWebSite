@@ -18,11 +18,6 @@ namespace Logic.Repository
             //_context = RepositorySingleton.GetInstance();
         }
 
-        ~Repository()
-        {
-            _context.Dispose();
-        }
-
         public virtual bool Add(TEntity model, params object[] parameters)
         {
             return _context.AddEntity(model) > 0;
